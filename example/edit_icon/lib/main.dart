@@ -40,10 +40,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class MyData extends ElementSelectorData {
-  MyData({Widget? Function(BuildContext)? builder, Key? key, this.name})
+  MyData(
+      {Widget? Function(BuildContext)? builder,
+      Key? key,
+      this.name,
+      required this.delegate})
       : super(builder: builder, key: key);
 
   final String? name;
+  TrayIconImageDelegate delegate;
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -63,14 +68,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _setTrayIcon(MyData element) {
     _icon.setTooltip(element.name ?? element.key.toString());
-    _icon.setIcon();
+    _icon.setIcon(delegate: element.delegate);
     _icon.show();
   }
 
   final _delegate = ElementSelectorDelegate(initialItems: [
-    MyData(name: "A", builder: (_) => const FlutterLogo()),
-    MyData(name: "B", builder: (_) => const FlutterLogo()),
-    MyData(builder: (_) => const FlutterLogo()),
+    MyData(
+        name: "A",
+        delegate: TrayIconImageDelegate.fromAsset("assets/dart.ico"),
+        builder: (_) => const FlutterLogo()),
+    MyData(
+        name: "B",
+        delegate: TrayIconImageDelegate.fromAsset("assets/flutter.ico"),
+        builder: (_) => const FlutterLogo()),
+    MyData(
+        delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.information),
+        builder: (_) => const FlutterLogo()),
   ]);
 
   @override
@@ -89,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
             type: FileType.custom, allowedExtensions: const ["ico", "png"]);
         if (result == null) return;
         final path = result.files.first.path!;
-        _delegate.add(MyData(builder: (_) => Image.file(File(path))));
+        _delegate.add(MyData(
+            delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.application),
+            builder: (_) => Image.file(File(path))));
       },
     ));
   }
