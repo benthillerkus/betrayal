@@ -9,7 +9,7 @@ import 'package:path/path.dart' as p;
 /// A helper that sets the image of a [TrayIcon].
 @immutable
 class TrayIconImageDelegate {
-  /// A [TrayIconImageDelegate] that loads an image from a `.ico` file.
+  /// A [TrayIconImageDelegate] that uses a `.ico` file.
   ///
   /// If both [uri] and [path] are given, [uri] takes precedence.
   /// [path] needs to use Windows style `\\` notation.
@@ -31,7 +31,7 @@ class TrayIconImageDelegate {
     setIcon = (id, plugin) => plugin.setIconFromPath(id, path!);
   }
 
-  /// A [TrayIconImageDelegate] that loads a `.ico` file from the Flutter assets directory.
+  /// A [TrayIconImageDelegate] that uses a `.ico` file from the Flutter assets directory.
   TrayIconImageDelegate.fromAsset(String asset) {
     final path = p.joinAll(
         [p.dirname(Platform.resolvedExecutable), 'data/flutter_assets', asset]);
@@ -39,12 +39,12 @@ class TrayIconImageDelegate {
     setIcon = (id, plugin) => plugin.setIconFromPath(id, path);
   }
 
-  /// A [TrayIconImageDelegate] that sets an image from the default Windows icons.
+  /// A [TrayIconImageDelegate] that uses a Windows system icon.
   TrayIconImageDelegate.fromWinIcon(WinIcon winIcon) {
     setIcon = (id, plugin) => plugin.setIconAsWinIcon(id, winIcon.code);
   }
 
-  /// A [TrayIconImageDelegate] that sets an image from a buffer.
+  /// A [TrayIconImageDelegate] that uses an RGBA image buffer.
   ///
   /// The buffer is expected to be in the format of a 32x32 RGBA image.
   TrayIconImageDelegate.fromBytes(ByteBuffer pixels) {
