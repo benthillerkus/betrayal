@@ -36,10 +36,9 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
 
     icon.setIcon(
-        image: img,
-        // picture: picture,
+        pixels: (await img?.toByteData(format: ui.ImageByteFormat.rawRgba))
+            ?.buffer,
         // asset: "assets/flutter.ico",
-        freeResources: false,
         winIcon: WinIcon.shield);
     icon.show();
   }

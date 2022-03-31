@@ -6,6 +6,7 @@
     "HWND",
     "LPARAM",
     "LRESULT",
+    "LTWH",
     "scrollbars",
     "ulid",
     "Ulid"

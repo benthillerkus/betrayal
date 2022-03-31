@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
-import 'dart:ui';
+import 'dart:typed_data';
 
+import 'package:betrayal/src/image.dart';
 import 'package:betrayal/src/plugin.dart';
 import 'package:betrayal/src/data.dart';
 import 'package:betrayal/src/win_icon.dart';
-import 'package:path/path.dart' as p;
 
 class TrayIcon {
   static final BetrayalPlugin _plugin = BetrayalPlugin();
@@ -80,41 +79,34 @@ class TrayIcon {
     await _plugin.setTooltip(_id, tooltip);
   }
 
-  void setIcon(
-      {Picture? picture,
-      Image? image,
-      Uri? path,
-      String? asset,
-      WinIcon winIcon = WinIcon.question,
-      bool freeResources = false}) async {
+  /// Sets the image on this icon.
+  ///
+  /// If multiple arguments are passed, they are resolved in this order:
+  /// 1. [imageDelegate]
+  /// 2. [pixels]
+  /// 3. [path]
+  /// 4. [asset]
+  /// 5. [winIcon]
+  void setIcon({
+    TrayIconImageDelegate? imageDelegate,
+    Uri? path,
+    ByteBuffer? pixels,
+    String? asset,
+    WinIcon winIcon = WinIcon.question,
+  }) async {
     _ensureIsActive();
     await _makeRealIfNeeded();
 
-    if (picture != null) {
-      if (freeResources) image?.dispose();
-      image = await picture.toImage(32, 32);
-      if (freeResources) picture.dispose();
-    }
-
-    if (image != null) {
-      final bytes = (await image.toByteData(format: ImageByteFormat.rawRgba))!
-          .buffer
-          .asInt32List();
-
-      await _plugin.setIconFromPixels(_id, image.width, image.height, bytes);
-
-      if (freeResources) image.dispose();
+    if (imageDelegate != null) {
+    } else if (pixels != null) {
+      imageDelegate = TrayIconImageDelegate.fromBytes(pixels);
     } else if (asset != null) {
-      var res = p.joinAll([
-        p.dirname(Platform.resolvedExecutable),
-        'data/flutter_assets',
-        asset
-      ]);
-      await _plugin.setIconFromPath(_id, res);
+      imageDelegate = TrayIconImageDelegate.fromAsset(asset);
     } else if (path != null) {
-      await _plugin.setIconFromPath(_id, path.toFilePath(windows: true));
+      imageDelegate = TrayIconImageDelegate.fromPath(uri: path);
     } else {
-      await _plugin.setIconAsWinIcon(_id, winIcon.code);
+      imageDelegate = TrayIconImageDelegate.fromWinIcon(winIcon);
     }
+    await imageDelegate.setIcon(_id, _plugin);
   }
 }
