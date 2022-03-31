@@ -33,8 +33,8 @@ samples, guidance on mobile development, and a full API reference.
 Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
 
 Scopes and their meaning:
-- `(plugin):` internal changes mostly in the `Dart part` of the plugin
-- `(windows):` internal change mostly in the C++ part if the plugin
+- `(plugin):` internal changes mostly in the Dart part of the plugin
+- `(windows):` internal changes mostly in the C++ part of the plugin
 - `(api):` changes to the public api
 - `(example):` any type of change in one of the examples
 
