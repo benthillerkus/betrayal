@@ -50,9 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
   late final TrayIcon _icon = TrayIcon(const TrayIconData());
 
   @override
+  void initState() {
+    super.initState();
+    _setTrayIcon(_delegate.elementAt(0));
+  }
+
+  @override
   void dispose() {
     _icon.dispose();
     super.dispose();
+  }
+
+  void _setTrayIcon(MyData element) {
+    _icon.setTooltip(element.name ?? element.key.toString());
+    _icon.setIcon();
+    _icon.show();
   }
 
   final _delegate = ElementSelectorDelegate(initialItems: [
@@ -68,10 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       axis: Axis.vertical,
       onSelectionChanged: (index) {
         final element = _delegate.elementAt(index);
-
-        _icon.setTooltip(element.name ?? element.key.toString());
-        _icon.setIcon();
-        _icon.show();
+        _setTrayIcon(element);
       },
       addTooltip: "Add new Image",
       delegate: _delegate,
