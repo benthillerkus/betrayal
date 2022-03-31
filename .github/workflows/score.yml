@@ -1,8 +1,16 @@
 name: Package Analysis
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'lib/'
+      - 'windows/'
+      - 'pubspec.yaml'
+    branches:
+      main
 
 jobs:
   package-analysis:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
