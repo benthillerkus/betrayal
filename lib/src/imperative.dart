@@ -14,6 +14,7 @@ class TrayIcon {
   static final Random _random = Random();
   static Id _newId() => _random.nextInt(0x8FFF - 0x7FFF);
 
+  /// The id used by Windows to distinguish this icon.
   final Id _id;
   final TrayIconData data;
   bool _isVisible = false;
