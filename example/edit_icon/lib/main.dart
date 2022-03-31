@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final _items = [
-    ElementSelectorData((_) => const FlutterLogo()),
-    ElementSelectorData((_) => const FlutterLogo()),
-    ElementSelectorData((_) => const FlutterLogo()),
+    ElementSelectorData(builder: (_) => const FlutterLogo()),
+    ElementSelectorData(builder: (_) => const FlutterLogo()),
+    ElementSelectorData(builder: (_) => const FlutterLogo()),
   ];
 
   late final _delegate = ElementSelectorDelegate(initialItems: _items);
@@ -73,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
             type: FileType.custom, allowedExtensions: const ["ico", "png"]);
         if (result == null) return;
         final path = result.files.first.path!;
-        _delegate.add(ElementSelectorData((_) => Image.file(File(path))));
+        _delegate
+            .add(ElementSelectorData(builder: (_) => Image.file(File(path))));
       },
     ));
   }

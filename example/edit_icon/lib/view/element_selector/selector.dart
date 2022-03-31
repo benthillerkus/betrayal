@@ -162,7 +162,7 @@ class _ElementSelectorState extends State<ElementSelector>
               isSelected: isSelected,
               child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: item.widget(context)));
+                  child: item.builder(context)));
         }
 
         final double slideFactor = index >= _currentPage ? -1 : 0;

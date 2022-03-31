@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 class ElementSelectorData {
-  ElementSelectorData(this.widget, {Key? key}) {
+  ElementSelectorData({Widget? Function(BuildContext)? builder, Key? key}) {
     this.key = key ?? GlobalKey();
+    this.builder = builder ?? (BuildContext context) => null;
   }
 
-  final Widget Function(BuildContext) widget;
+  late final Widget? Function(BuildContext) builder;
   late final Key key;
 }
