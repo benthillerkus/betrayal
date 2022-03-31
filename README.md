@@ -37,5 +37,6 @@ Scopes and their meaning:
 - `(windows):` internal changes mostly in the C++ part of the plugin
 - `(api):` changes to the public api
 - `(example):` any type of change in one of the examples
+- `(readme):` edits to readme files; unrelated to source code
 
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
