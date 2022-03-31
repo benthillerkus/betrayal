@@ -85,7 +85,7 @@ class TrayIcon {
       Uri? path,
       String? asset,
       WinIcon winIcon = WinIcon.question,
-      bool freeResources = true}) async {
+      bool freeResources = false}) async {
     _ensureIsActive();
     await _makeRealIfNeeded();
 
