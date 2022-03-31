@@ -234,6 +234,7 @@ namespace Betrayal
       }
 
       icon->set_tooltip(tooltip);
+      icon->update();
       result->Success(flutter::EncodableValue(true));
     };
 
@@ -279,7 +280,7 @@ namespace Betrayal
     };
 
 #pragma warning(disable : 4244)
-      // https://cs.github.com/openjdk/jdk/blob/6013d09e82693a1c07cf0bf6daffd95114b3cbfa/src/java.desktop/windows/native/libawt/windows/awt_TrayIcon.cpp#L649
+    // https://cs.github.com/openjdk/jdk/blob/6013d09e82693a1c07cf0bf6daffd95114b3cbfa/src/java.desktop/windows/native/libawt/windows/awt_TrayIcon.cpp#L649
     HICON CreateIconFromBytes(HWND hWnd, int width, int height, uint32_t *bytes, TrayIcon *icon)
     {
 
