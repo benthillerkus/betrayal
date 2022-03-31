@@ -82,15 +82,20 @@ class _ElementSelectorState extends State<ElementSelector>
     await _animationController.reverse();
     setState(() {
       _animationController.reset();
+      _onPageChanged(widget.delegate.numItems - 1);
     });
   }
 
   Future<void> _reactToRemovedElement(int index) async {
     await _animationController.forward();
     setState(() {
-      // widget.delegate.removeAt(index);
       _animationController.reset();
+      if (_currentPage == index) {
+        _onPageChanged(max(index - 1, 0));
+      }
     });
+    _controller.animateToPage(max(index - 1, 0),
+        duration: const Duration(milliseconds: 300), curve: Curves.easeOutBack);
   }
 
   int _currentPage = 0;
@@ -98,6 +103,19 @@ class _ElementSelectorState extends State<ElementSelector>
       ? widget.delegate.numItems + 1
       : widget.delegate.numItems;
   late PageController _controller;
+
+  void _onPageChanged(int pageIndex) {
+    final isAddButton = pageIndex == widget.delegate.numItems;
+
+    if (isAddButton) return;
+
+    setState(() {
+      _currentPage = pageIndex;
+    });
+    if (widget.onSelectionChanged != null) {
+      widget.onSelectionChanged!(pageIndex);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +129,7 @@ class _ElementSelectorState extends State<ElementSelector>
       allowImplicitScrolling: true,
       scrollDirection: widget.axis,
       itemCount: _numPages,
-      onPageChanged: (pageIndex) {
-        setState(() {
-          _currentPage = pageIndex;
-        });
-        if (widget.onSelectionChanged != null &&
-            pageIndex < widget.delegate.numItems) {
-          widget.onSelectionChanged!(pageIndex);
-        }
-      },
+      onPageChanged: _onPageChanged,
       itemBuilder: (BuildContext context, int index) {
         final animateHere = () {
           _controller.animateToPage(index,
