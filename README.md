@@ -26,4 +26,6 @@ samples, guidance on mobile development, and a full API reference.
 - TODO Add second example using the Widget API
 - TODO Support setting titlebar / application icon
 
-Use [https://www.conventionalcommits.org/en/v1.0.0/](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
+Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
+
+Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
