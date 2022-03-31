@@ -28,28 +28,133 @@ class MyApp extends StatelessWidget {
               seedColor: const Color.fromARGB(255, 199, 184, 116),
               brightness: Brightness.dark)),
       themeMode: ThemeMode.system,
-      home: const Scaffold(
-          body: ElementSelector(
-        axis: Axis.vertical,
-      )),
+      home: const HomeScreen(),
     );
   }
 }
 
-class Data {
-  Data(this.widget, this.key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final TrayIcon _icon = TrayIcon(const TrayIconData());
+
+  @override
+  void dispose() {
+    _icon.dispose();
+    super.dispose();
+  }
+
+  final _items = [
+    ElementSelectorData((_) => const FlutterLogo()),
+    ElementSelectorData((_) => const FlutterLogo()),
+    ElementSelectorData((_) => const FlutterLogo()),
+  ];
+
+  late final _delegate = ElementSelectorDelegate(initialItems: _items);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: ElementSelector(
+      axis: Axis.vertical,
+      onSelectionChanged: (index) {
+        _icon.setTooltip(_delegate.elementAt(index).key.toString());
+        _icon.setIcon();
+        _icon.show();
+      },
+      delegate: _delegate,
+      onAddPressed: () async {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+            type: FileType.custom, allowedExtensions: const ["ico", "png"]);
+        if (result == null) return;
+        final path = result.files.first.path!;
+        _delegate.add(ElementSelectorData((_) => Image.file(File(path))));
+      },
+    ));
+  }
+}
+
+class ElementSelectorData {
+  ElementSelectorData(this.widget, {Key? key}) {
+    this.key = key ?? GlobalKey();
+  }
 
   final Function(BuildContext) widget;
-  final Key key;
+  late final Key key;
+}
+
+class ElementSelectorDelegate {
+  ElementSelectorDelegate({Iterable<ElementSelectorData>? initialItems}) {
+    _items = initialItems?.toList() ?? <ElementSelectorData>[];
+  }
+
+  late final List<ElementSelectorData> _items;
+  get numItems => _items.length;
+  final List<ElementSelectorDelegateSubscription> _subscriptions = [];
+
+  void add(ElementSelectorData item) async {
+    _items.add(item);
+    for (var sub in _subscriptions) {
+      if (sub.onAdd != null) await sub.onAdd!();
+    }
+  }
+
+  Future<void> removeAt(int index) async {
+    _items.removeAt(index);
+    for (var sub in _subscriptions) {
+      if (sub.onRemove != null) await sub.onRemove!(index);
+    }
+  }
+
+  ElementSelectorDelegateSubscription subscribe(
+      {Function? onAdd, Function(int index)? onRemove}) {
+    var sub = ElementSelectorDelegateSubscription(
+        onAdd: onAdd, onRemove: onRemove, delegate: this);
+    _subscriptions.add(sub);
+    return sub;
+  }
+
+  void removeSubscription(ElementSelectorDelegateSubscription sub) {
+    _subscriptions.remove(sub);
+  }
+
+  ElementSelectorData elementAt(int index) => _items.elementAt(index);
+}
+
+class ElementSelectorDelegateSubscription {
+  ElementSelectorDelegateSubscription(
+      {this.onAdd, this.onRemove, required this.delegate});
+  Function? onAdd;
+  Function(int index)? onRemove;
+  ElementSelectorDelegate delegate;
+
+  void unsubscribe() {
+    onAdd = null;
+    onRemove = null;
+    delegate.removeSubscription(this);
+  }
 }
 
 class ElementSelector extends StatefulWidget {
   const ElementSelector(
-      {Key? key, this.dimension = 150, this.axis = Axis.vertical})
+      {Key? key,
+      this.dimension = 150,
+      this.axis = Axis.vertical,
+      this.onSelectionChanged,
+      this.onAddPressed,
+      required this.delegate})
       : super(key: key);
 
   final double dimension;
   final Axis axis;
+  final ElementSelectorDelegate delegate;
+  final Function(int index)? onSelectionChanged;
+  final Function? onAddPressed;
 
   @override
   State<ElementSelector> createState() => _ElementSelectorState();
@@ -67,22 +172,52 @@ class _ElementSelectorState extends State<ElementSelector>
     curve: Curves.easeOutBack,
   );
 
-  late final TrayIcon _icon = TrayIcon(const TrayIconData());
+  late ElementSelectorDelegateSubscription _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = widget.delegate.subscribe(
+        onAdd: _reactToAddedElement, onRemove: _reactToRemovedElement);
+  }
+
+  @override
+  void didUpdateWidget(ElementSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _currentPage = max(min(_currentPage, _numPages - 1), 0);
+    if (oldWidget.delegate != widget.delegate) {
+      _subscription.unsubscribe();
+      _subscription = widget.delegate.subscribe(
+          onAdd: _reactToAddedElement, onRemove: _reactToRemovedElement);
+    }
+  }
 
   @override
   void dispose() {
     _animationController.dispose();
-    _icon.dispose();
+    _subscription.unsubscribe();
     super.dispose();
   }
 
-  final _items = [
-    Data((_) => const FlutterLogo(), GlobalKey()),
-    Data((_) => const FlutterLogo(), GlobalKey()),
-    Data((_) => const FlutterLogo(), GlobalKey()),
-  ];
+  Future<void> _reactToAddedElement() async {
+    await _animationController.reverse();
+    setState(() {
+      _animationController.reset();
+    });
+  }
+
+  Future<void> _reactToRemovedElement(int index) async {
+    await _animationController.forward();
+    setState(() {
+      // widget.delegate.removeAt(index);
+      _animationController.reset();
+    });
+  }
 
   int _currentPage = 0;
+  get _numPages => widget.onAddPressed != null
+      ? widget.delegate.numItems + 1
+      : widget.delegate.numItems;
   late PageController _controller;
 
   @override
@@ -96,14 +231,15 @@ class _ElementSelectorState extends State<ElementSelector>
     return PageView.builder(
       allowImplicitScrolling: true,
       scrollDirection: widget.axis,
-      itemCount: _items.length + 1,
+      itemCount: _numPages,
       onPageChanged: (pageIndex) {
         setState(() {
           _currentPage = pageIndex;
         });
-        _icon.setTooltip(_items[_currentPage].key.toString());
-        _icon.setIcon();
-        _icon.show();
+        if (widget.onSelectionChanged != null &&
+            pageIndex < widget.delegate.numItems) {
+          widget.onSelectionChanged!(pageIndex);
+        }
       },
       itemBuilder: (BuildContext context, int index) {
         final animateHere = () {
@@ -115,40 +251,25 @@ class _ElementSelectorState extends State<ElementSelector>
 
         Widget res;
 
-        if (index == _items.length) {
+        if (widget.onAddPressed != null && index == widget.delegate.numItems) {
           res = IconButton(
             tooltip: "Add new Image",
             iconSize: widget.dimension * 0.5,
             icon: Icon(Icons.add,
                 color: Theme.of(context).colorScheme.onBackground),
             onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles(
-                  type: FileType.custom,
-                  allowedExtensions: const ["ico", "png"]);
-              if (result == null) return;
-              final path = result.files.first.path!;
-              await _animationController.reverse();
-              setState(() {
-                _items.add(Data((_) => Image.file(File(path)), GlobalKey()));
-                _animationController.reset();
-              });
+              await widget.onAddPressed!();
             },
           );
         } else {
-          final item = _items[index];
+          final item = widget.delegate._items[index];
 
           res = Selectable(
               axis: widget.axis,
               key: item.key,
               dimension: widget.dimension,
               onTap: animateHere,
-              onRemove: () async {
-                await _animationController.forward();
-                setState(() {
-                  _items.removeAt(index);
-                  _animationController.reset();
-                });
-              },
+              onRemove: () async => await widget.delegate.removeAt(index),
               isSelected: isSelected,
               child: Padding(
                   padding: const EdgeInsets.all(8),
@@ -210,8 +331,8 @@ class _SelectableState extends State<Selectable> {
 
   @override
   void didUpdateWidget(Selectable oldWidget) {
-    _isSelected = widget.isSelected;
     super.didUpdateWidget(oldWidget);
+    _isSelected = widget.isSelected;
   }
 
   @override
