@@ -20,8 +20,8 @@ class Selectable extends StatefulWidget {
   final Widget? child;
   final double gap;
   final double dimension;
-  final Function()? onTap;
-  final Function()? onRemove;
+  final void Function()? onTap;
+  final void Function()? onRemove;
   final Duration timeToRemove;
 
   @override

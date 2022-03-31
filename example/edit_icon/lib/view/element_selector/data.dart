@@ -5,6 +5,6 @@ class ElementSelectorData {
     this.key = key ?? GlobalKey();
   }
 
-  final Function(BuildContext) widget;
+  final Widget Function(BuildContext) widget;
   late final Key key;
 }
