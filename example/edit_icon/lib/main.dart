@@ -39,6 +39,13 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+class MyData extends ElementSelectorData {
+  MyData({Widget? Function(BuildContext)? builder, Key? key, this.name})
+      : super(builder: builder, key: key);
+
+  final String? name;
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   late final TrayIcon _icon = TrayIcon(const TrayIconData());
 
@@ -48,13 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  final _items = [
-    ElementSelectorData(builder: (_) => const FlutterLogo()),
-    ElementSelectorData(builder: (_) => const FlutterLogo()),
-    ElementSelectorData(builder: (_) => const FlutterLogo()),
-  ];
-
-  late final _delegate = ElementSelectorDelegate(initialItems: _items);
+  final _delegate = ElementSelectorDelegate(initialItems: [
+    MyData(name: "A", builder: (_) => const FlutterLogo()),
+    MyData(name: "B", builder: (_) => const FlutterLogo()),
+    MyData(builder: (_) => const FlutterLogo()),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
         body: ElementSelector(
       axis: Axis.vertical,
       onSelectionChanged: (index) {
-        _icon.setTooltip(_delegate.elementAt(index).key.toString());
+        final element = _delegate.elementAt(index);
+
+        _icon.setTooltip(element.name ?? element.key.toString());
         _icon.setIcon();
         _icon.show();
       },
@@ -73,8 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             type: FileType.custom, allowedExtensions: const ["ico", "png"]);
         if (result == null) return;
         final path = result.files.first.path!;
-        _delegate
-            .add(ElementSelectorData(builder: (_) => Image.file(File(path))));
+        _delegate.add(MyData(builder: (_) => Image.file(File(path))));
       },
     ));
   }

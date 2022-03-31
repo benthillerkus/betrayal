@@ -1,16 +1,16 @@
 import 'data.dart';
 import 'subscription.dart';
 
-class ElementSelectorDelegate {
-  ElementSelectorDelegate({Iterable<ElementSelectorData>? initialItems}) {
-    _items = initialItems?.toList() ?? <ElementSelectorData>[];
+class ElementSelectorDelegate<DataType extends ElementSelectorData> {
+  ElementSelectorDelegate({Iterable<DataType>? initialItems}) {
+    _items = initialItems?.toList() ?? <DataType>[];
   }
 
-  late final List<ElementSelectorData> _items;
+  late final List<DataType> _items;
   get numItems => _items.length;
   final List<ElementSelectorDelegateSubscription> _subscriptions = [];
 
-  void add(ElementSelectorData item) async {
+  void add(DataType item) async {
     _items.add(item);
     for (var sub in _subscriptions) {
       if (sub.onAdd != null) await sub.onAdd!();
@@ -36,5 +36,5 @@ class ElementSelectorDelegate {
     _subscriptions.remove(sub);
   }
 
-  ElementSelectorData elementAt(int index) => _items.elementAt(index);
+  DataType elementAt(int index) => _items.elementAt(index);
 }
