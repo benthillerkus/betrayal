@@ -2,6 +2,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github'
+      - '.vscode'
+      - 'test'
+      
 name: release-please
 jobs:
   release-please:
