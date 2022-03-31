@@ -82,13 +82,13 @@ class TrayIcon {
   /// Sets the image on this icon.
   ///
   /// If multiple arguments are passed, they are resolved in this order:
-  /// 1. [imageDelegate]
+  /// 1. [delegate]
   /// 2. [pixels]
   /// 3. [path]
   /// 4. [asset]
   /// 5. [winIcon]
   void setIcon({
-    TrayIconImageDelegate? imageDelegate,
+    TrayIconImageDelegate? delegate,
     Uri? path,
     ByteBuffer? pixels,
     String? asset,
@@ -97,16 +97,16 @@ class TrayIcon {
     _ensureIsActive();
     await _makeRealIfNeeded();
 
-    if (imageDelegate != null) {
+    if (delegate != null) {
     } else if (pixels != null) {
-      imageDelegate = TrayIconImageDelegate.fromBytes(pixels);
+      delegate = TrayIconImageDelegate.fromBytes(pixels);
     } else if (asset != null) {
-      imageDelegate = TrayIconImageDelegate.fromAsset(asset);
+      delegate = TrayIconImageDelegate.fromAsset(asset);
     } else if (path != null) {
-      imageDelegate = TrayIconImageDelegate.fromPath(uri: path);
+      delegate = TrayIconImageDelegate.fromPath(uri: path);
     } else {
-      imageDelegate = TrayIconImageDelegate.fromWinIcon(winIcon);
+      delegate = TrayIconImageDelegate.fromWinIcon(winIcon);
     }
-    await imageDelegate.setIcon(_id, _plugin);
+    await delegate.setIcon(_id, _plugin);
   }
 }
