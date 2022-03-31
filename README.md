@@ -13,7 +13,9 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+# Development
 ## TBD
+
 - FIXME Find out all possible errors and repackage / handle them
 - TODO Write documentation
 - TODO Support Windows default icons ([MAKEINTRESOURCE....](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-loadicona))
@@ -26,6 +28,14 @@ samples, guidance on mobile development, and a full API reference.
 - TODO Add second example using the Widget API
 - TODO Support setting titlebar / application icon
 
+## Style
+
 Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
+
+Scopes and their meaning:
+- `(plugin):` internal changes mostly in the `Dart part` of the plugin
+- `(windows):` internal change mostly in the C++ part if the plugin
+- `(api):` changes to the public api
+- `(example):` any type of change in one of the examples
 
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
