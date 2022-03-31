@@ -178,7 +178,7 @@ class _ElementSelectorState extends State<ElementSelector>
 }
 
 class Selectable extends StatefulWidget {
-  Selectable(
+  const Selectable(
       {Key? key,
       this.isSelected = false,
       required this.dimension,
@@ -190,7 +190,7 @@ class Selectable extends StatefulWidget {
       this.timeToRemove = const Duration(milliseconds: 200)})
       : super(key: key);
 
-  bool isSelected;
+  final bool isSelected;
   final Axis axis;
   final Widget? child;
   final double gap;
@@ -205,7 +205,14 @@ class Selectable extends StatefulWidget {
 
 class _SelectableState extends State<Selectable> {
   final iconInsetFactor = 0.7;
+  late bool _isSelected = widget.isSelected;
   bool _removing = false;
+
+  @override
+  void didUpdateWidget(Selectable oldWidget) {
+    _isSelected = widget.isSelected;
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -235,19 +242,21 @@ class _SelectableState extends State<Selectable> {
                 canRequestFocus: true,
                 focusColor: transparent,
                 child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 400),
+                    duration: _removing
+                        ? widget.timeToRemove
+                        : const Duration(milliseconds: 800),
                     curve: Curves.ease,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: widget.isSelected
+                        color: _isSelected
                             ? Color.lerp(theme.colorScheme.background,
                                 theme.colorScheme.outline, 0.15)
                             : transparent),
                     foregroundDecoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                            width: widget.isSelected ? 2.0 : 0,
-                            color: widget.isSelected
+                            width: _isSelected ? 2.0 : 0,
+                            color: _isSelected
                                 ? theme.colorScheme.outline
                                 : transparent)),
                     child: Padding(
@@ -260,7 +269,7 @@ class _SelectableState extends State<Selectable> {
               ),
             ),
           ),
-          if (widget.isSelected && widget.onRemove != null)
+          if (_isSelected && widget.onRemove != null)
             Positioned.fill(
                 left: (widget.dimension -
                         (widget.axis == Axis.horizontal ? widget.gap * 2 : 0)) *
@@ -279,7 +288,7 @@ class _SelectableState extends State<Selectable> {
                     hoverElevation: 0,
                     onPressed: () async {
                       setState(() {
-                        widget.isSelected = false;
+                        _isSelected = false;
                         _removing = true;
                       });
                       Focus.maybeOf(context)?.unfocus();
