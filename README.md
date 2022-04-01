@@ -41,12 +41,12 @@ samples, guidance on mobile development, and a full API reference.
 Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
 
 Scopes and their meaning:
-- [`(plugin)`]((https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=plugin)): internal changes mostly in the Dart part of the plugin
+- [`(plugin)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=plugin): internal changes mostly in the Dart part of the plugin
 - [`(windows)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=windows): internal changes mostly in the C++ part of the plugin
 - [`(api)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=api): changes to the public api
 - [`(example)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=example): any type of change in one of the examples
 - [`(readme)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=commits): edits to readme files; unrelated to source code
-- [`(ci)`]((https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=ci)): changes to the ci/cd tools / workflows
+- [`(ci)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=ci): changes to the ci/cd tools / workflows
 
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
 
