@@ -123,7 +123,7 @@ class _ElementSelectorState extends State<ElementSelector>
         initialPage: _currentPage,
         viewportFraction: widget.dimension /
             (widget.axis == Axis.vertical
-                ? MediaQuery.of(context).size.height
+                ? (MediaQuery.of(context).size.height)
                 : MediaQuery.of(context).size.width));
     return PageView.builder(
       allowImplicitScrolling: true,
@@ -145,7 +145,10 @@ class _ElementSelectorState extends State<ElementSelector>
             tooltip: widget.addTooltip,
             iconSize: widget.dimension * 0.5,
             icon: Icon(Icons.add,
-                color: Theme.of(context).colorScheme.onBackground),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onBackground
+                    .withOpacity(0.3)),
             onPressed: () async {
               await widget.onAddPressed!();
             },

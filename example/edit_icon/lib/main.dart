@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:betrayal/betrayal.dart';
 import 'package:edit_icon/view/view.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 
 void main() {
   runApp(const MyApp());
@@ -104,10 +106,27 @@ class _HomeScreenState extends State<HomeScreen> {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
             type: FileType.custom, allowedExtensions: const ["ico", "png"]);
         if (result == null) return;
-        final path = result.files.first.path!;
+        final file = result.files.first;
+        final path = file.path!;
+
+        late TrayIconImageDelegate iconSource;
+        switch (file.extension) {
+          case "ico":
+            iconSource = TrayIconImageDelegate.fromPath(path: path);
+            break;
+          case "png":
+            var resized = await compute((String path) {
+              var org = img.decodePng(File(path).readAsBytesSync());
+              var resized = img.copyResizeCropSquare(org!, 32);
+              return resized.getBytes().buffer;
+            }, path);
+
+            iconSource = TrayIconImageDelegate.fromBytes(resized);
+            break;
+        }
+
         _delegate.add(MyData(
-            delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.application),
-            builder: (_) => Image.file(File(path))));
+            delegate: iconSource, builder: (_) => Image.file(File(path))));
       },
     ));
   }
