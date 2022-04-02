@@ -74,16 +74,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _delegate = ElementSelectorDelegate(initialItems: [
     MyData(
-        name: "A",
+        name: "Dart",
         delegate: TrayIconImageDelegate.fromAsset("assets/dart.ico"),
-        builder: (_) => const FlutterLogo()),
+        builder: (_) => Image.network(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dart-logo.png/600px-Dart-logo.png")),
     MyData(
-        name: "B",
+        name: "Question",
+        delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.question),
+        builder: (_) => Image.network(
+            "https://www.clipartmax.com/png/middle/149-1499106_question-mark-animation-clip-art-question-mark-animation.png")),
+    MyData(
         delegate: TrayIconImageDelegate.fromAsset("assets/flutter.ico"),
-        builder: (_) => const FlutterLogo()),
-    MyData(
-        delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.information),
-        builder: (_) => const FlutterLogo()),
+        builder: (_) => const FlutterLogo(),
+        name: "Flutter"),
   ]);
 
   @override

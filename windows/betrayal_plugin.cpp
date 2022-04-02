@@ -260,6 +260,7 @@ namespace Betrayal
               LR_LOADFROMFILE + (is_shared ? LR_SHARED : 0x0)));
 
       icon->set_icon(hIcon, is_shared);
+      icon->update();
       result->Success(flutter::EncodableValue(true));
     };
 
@@ -276,6 +277,7 @@ namespace Betrayal
       }
 
       icon->set_icon(LoadIcon(nullptr, MAKEINTRESOURCE(resource_id)), true);
+      icon->update();
       result->Success(flutter::EncodableValue(true));
     };
 
