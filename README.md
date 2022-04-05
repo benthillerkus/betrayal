@@ -35,6 +35,8 @@ samples, guidance on mobile development, and a full API reference.
 - TODO Support interaction
 - TODO Add function to configure a TrayIcon in one call (maybe via a dynamic map actually)
   - FIXME Use OnWidgetUpdated or smth like that to diff changes between widget dependencies and flush them to the plugin
+- TODO Logging
+- FIXME Remove zombie icons after hot restart
 
 ## Style
 
@@ -47,6 +49,8 @@ Scopes and their meaning:
 - [`(example)`](https://github.com/benthillerkus/betrayal/search?q=%28example%29&type=commits): any type of change in one of the examples
 - [`(readme)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=commits): edits to readme files; unrelated to source code
 - [`(ci)`](https://github.com/benthillerkus/betrayal/search?q=%28ci%29&type=commits): changes to the ci/cd tools / workflows
+
+Tbh all of this needs to change once 1.0 is out lol
 
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
 
