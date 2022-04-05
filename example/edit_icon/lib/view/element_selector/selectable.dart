@@ -136,7 +136,11 @@ class _SelectableState extends State<Selectable> {
                 child: AnimatedOpacity(
                     duration: widget.timeToRemove,
                     curve: Curves.easeOut,
-                    opacity: widget.isSelected ? 1 : .6,
+                    opacity: _removing
+                        ? 0
+                        : widget.isSelected
+                            ? 1
+                            : .6,
                     child: Text(
                       widget.label!,
                       style: theme.textTheme.caption,
