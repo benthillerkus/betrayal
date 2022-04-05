@@ -45,11 +45,10 @@ class MyData extends ElementSelectorData {
   MyData(
       {Widget? Function(BuildContext)? builder,
       Key? key,
-      this.name,
+      String? name,
       required this.delegate})
-      : super(builder: builder, key: key);
+      : super(builder: builder, key: key, name: name);
 
-  final String? name;
   TrayIconImageDelegate delegate;
 }
 
@@ -101,6 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _setTrayIcon(element);
       },
       addTooltip: "Add new Image",
+      dimension: 150,
+      gap: 24,
       delegate: _delegate,
       onAddPressed: () async {
         FilePickerResult? result = await FilePicker.platform.pickFiles(

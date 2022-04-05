@@ -13,6 +13,7 @@ class ElementSelector extends StatefulWidget {
   const ElementSelector(
       {Key? key,
       this.dimension = 150,
+      this.gap = 24,
       this.axis = Axis.vertical,
       this.onSelectionChanged,
       this.onAddPressed,
@@ -22,6 +23,8 @@ class ElementSelector extends StatefulWidget {
 
   /// Edge length of a selectable child.
   final double dimension;
+
+  final double gap;
 
   /// Direction in which the elements are laid out.
   final Axis axis;
@@ -121,9 +124,9 @@ class _ElementSelectorState extends State<ElementSelector>
   Widget build(BuildContext context) {
     _controller = PageController(
         initialPage: _currentPage,
-        viewportFraction: widget.dimension /
+        viewportFraction: (widget.dimension + widget.gap * 2) /
             (widget.axis == Axis.vertical
-                ? (MediaQuery.of(context).size.height)
+                ? MediaQuery.of(context).size.height
                 : MediaQuery.of(context).size.width));
     return PageView.builder(
       allowImplicitScrolling: true,
@@ -161,6 +164,8 @@ class _ElementSelectorState extends State<ElementSelector>
               key: item.key,
               dimension: widget.dimension,
               onTap: animateHere,
+              gap: widget.gap,
+              label: item.name,
               onRemove: () async => await widget.delegate.removeAt(index),
               isSelected: isSelected,
               child: Padding(

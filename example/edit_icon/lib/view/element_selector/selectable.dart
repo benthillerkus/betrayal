@@ -5,21 +5,23 @@ import 'package:flutter/material.dart';
 class Selectable extends StatefulWidget {
   const Selectable(
       {Key? key,
+      this.axis = Axis.vertical,
       this.isSelected = false,
       required this.dimension,
       this.gap = 8.0,
-      this.axis = Axis.vertical,
-      this.onTap,
+      this.label,
       this.child,
+      this.onTap,
       this.onRemove,
       this.timeToRemove = const Duration(milliseconds: 200)})
       : super(key: key);
 
-  final bool isSelected;
   final Axis axis;
-  final Widget? child;
-  final double gap;
+  final bool isSelected;
   final double dimension;
+  final double gap;
+  final String? label;
+  final Widget? child;
   final void Function()? onTap;
   final void Function()? onRemove;
   final Duration timeToRemove;
@@ -96,12 +98,8 @@ class _SelectableState extends State<Selectable> {
           ),
           if (_isSelected && widget.onRemove != null)
             Positioned.fill(
-                left: (widget.dimension -
-                        (widget.axis == Axis.horizontal ? widget.gap * 2 : 0)) *
-                    iconInsetFactor,
-                bottom: (widget.dimension -
-                        (widget.axis == Axis.vertical ? widget.gap * 2 : 0)) *
-                    iconInsetFactor,
+                left: widget.dimension * iconInsetFactor,
+                bottom: widget.dimension * iconInsetFactor,
                 child: Transform.scale(
                   scale: .6,
                   child: FloatingActionButton(
@@ -128,6 +126,22 @@ class _SelectableState extends State<Selectable> {
                         )),
                   ),
                 )),
+          if (widget.label != null)
+            Transform.translate(
+                offset: Offset(
+                    0,
+                    widget.dimension / 2 +
+                        (theme.textTheme.caption?.fontSize ?? 14) / 2 +
+                        8),
+                child: AnimatedOpacity(
+                    duration: widget.timeToRemove,
+                    curve: Curves.easeOut,
+                    opacity: widget.isSelected ? 1 : .6,
+                    child: Text(
+                      widget.label!,
+                      style: theme.textTheme.caption,
+                      textScaleFactor: 1.5,
+                    )))
         ],
       ),
     );
