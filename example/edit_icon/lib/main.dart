@@ -50,6 +50,17 @@ class MyData extends ElementSelectorData {
       : super(builder: builder, key: key, name: name);
 
   TrayIconImageDelegate delegate;
+
+  @override
+  MyData copyWith(
+          {Widget? Function(BuildContext context)? builder,
+          String? name,
+          Key? key}) =>
+      MyData(
+          builder: builder ?? this.builder,
+          name: name ?? this.name,
+          key: key ?? this.key,
+          delegate: delegate);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -73,23 +84,27 @@ class _HomeScreenState extends State<HomeScreen> {
     _icon.show();
   }
 
-  late final _delegate =
-      ElementSelectorDelegate(onEmptied: _icon.hide, initialItems: [
-    MyData(
-        name: "Dart",
-        delegate: TrayIconImageDelegate.fromAsset("assets/dart.ico"),
-        builder: (_) => Image.network(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dart-logo.png/600px-Dart-logo.png")),
-    MyData(
-        name: "Question",
-        delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.question),
-        builder: (_) => Image.network(
-            "https://www.clipartmax.com/png/middle/149-1499106_question-mark-animation-clip-art-question-mark-animation.png")),
-    MyData(
-        delegate: TrayIconImageDelegate.fromAsset("assets/flutter.ico"),
-        builder: (_) => const FlutterLogo(),
-        name: "Flutter"),
-  ]);
+  late final _delegate = ElementSelectorDelegate(
+      onEmptied: _icon.hide,
+      onElementChanged: (MyData element) {
+        _icon.setTooltip(element.name ?? element.key.toString());
+      },
+      initialItems: [
+        MyData(
+            name: "Dart",
+            delegate: TrayIconImageDelegate.fromAsset("assets/dart.ico"),
+            builder: (_) => Image.network(
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dart-logo.png/600px-Dart-logo.png")),
+        MyData(
+            name: "Question",
+            delegate: TrayIconImageDelegate.fromWinIcon(WinIcon.question),
+            builder: (_) => Image.network(
+                "https://www.clipartmax.com/png/middle/149-1499106_question-mark-animation-clip-art-question-mark-animation.png")),
+        MyData(
+            delegate: TrayIconImageDelegate.fromAsset("assets/flutter.ico"),
+            builder: (_) => const FlutterLogo(),
+            name: "Flutter"),
+      ]);
 
   @override
   Widget build(BuildContext context) {

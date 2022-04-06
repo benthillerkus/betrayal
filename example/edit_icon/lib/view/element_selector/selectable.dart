@@ -13,7 +13,8 @@ class Selectable extends StatefulWidget {
       this.child,
       this.onTap,
       this.onRemove,
-      this.timeToRemove = const Duration(milliseconds: 200)})
+      this.onTextChanged,
+      this.timeToRemove = const Duration(milliseconds: 300)})
       : super(key: key);
 
   final Axis axis;
@@ -23,6 +24,7 @@ class Selectable extends StatefulWidget {
   final String? label;
   final Widget? child;
   final void Function()? onTap;
+  final void Function(String)? onTextChanged;
   final void Function()? onRemove;
   final Duration timeToRemove;
 
@@ -30,15 +32,40 @@ class Selectable extends StatefulWidget {
   State<Selectable> createState() => _SelectableState();
 }
 
-class _SelectableState extends State<Selectable> {
+class _SelectableState extends State<Selectable> with TickerProviderStateMixin {
   final iconInsetFactor = 0.7;
   late bool _isSelected = widget.isSelected;
   bool _removing = false;
+  final _focus = FocusNode();
 
   @override
   void didUpdateWidget(Selectable oldWidget) {
     super.didUpdateWidget(oldWidget);
     _isSelected = widget.isSelected;
+    if (!_isSelected) {
+      _focus.unfocus();
+    }
+    _controller.duration = widget.timeToRemove;
+  }
+
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: widget.timeToRemove,
+  );
+
+  late final _animation =
+      CurvedAnimation(parent: _controller, curve: Curves.ease);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -47,9 +74,9 @@ class _SelectableState extends State<Selectable> {
     final transparent = theme.colorScheme.background.withOpacity(0.0);
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: widget.axis == Axis.vertical ? widget.gap : 0,
-          horizontal: widget.axis == Axis.horizontal ? widget.gap : 0),
+      padding: EdgeInsets.only(
+          top: widget.axis == Axis.vertical ? widget.gap : 0,
+          left: widget.axis == Axis.horizontal ? widget.gap : 0),
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -88,10 +115,13 @@ class _SelectableState extends State<Selectable> {
                                 : transparent)),
                     child: Padding(
                       padding: EdgeInsets.all(sqrt(widget.dimension)),
-                      child: AnimatedOpacity(
-                          opacity: _removing ? 0.0 : 1.0,
-                          duration: widget.timeToRemove,
-                          child: widget.child),
+                      child: ScaleTransition(
+                        scale: _animation,
+                        child: AnimatedOpacity(
+                            opacity: _removing ? 0.0 : 1.0,
+                            duration: widget.timeToRemove,
+                            child: widget.child),
+                      ),
                     )),
               ),
             ),
@@ -113,6 +143,7 @@ class _SelectableState extends State<Selectable> {
                       setState(() {
                         _isSelected = false;
                         _removing = true;
+                        _controller.reverse();
                       });
                       Focus.maybeOf(context)?.unfocus();
                       await Future.delayed(widget.timeToRemove);
@@ -126,26 +157,60 @@ class _SelectableState extends State<Selectable> {
                         )),
                   ),
                 )),
-          if (widget.label != null)
-            Transform.translate(
-                offset: Offset(
-                    0,
-                    widget.dimension / 2 +
-                        (theme.textTheme.caption?.fontSize ?? 14) / 2 +
-                        8),
+          Transform.translate(
+            offset: Offset(
+                0,
+                widget.dimension / 2 +
+                    (theme.textTheme.caption?.fontSize ?? 14) / 2 +
+                    8),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Opacity(
+                  opacity: 0,
+                  child: Padding(
+                      padding: EdgeInsets.all(12), child: Icon(Icons.label))),
+              SizedBox(
+                width: widget.dimension * 2 / 3,
                 child: AnimatedOpacity(
-                    duration: widget.timeToRemove,
-                    curve: Curves.easeOut,
-                    opacity: _removing
-                        ? 0
-                        : widget.isSelected
-                            ? 1
-                            : .6,
-                    child: Text(
-                      widget.label!,
-                      style: theme.textTheme.caption,
-                      textScaleFactor: 1.5,
-                    )))
+                  duration: widget.timeToRemove,
+                  curve: Curves.easeOut,
+                  opacity: _removing
+                      ? 0
+                      : widget.isSelected
+                          ? 1
+                          : .6,
+                  child: EditableText(
+                    readOnly: !_isSelected,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.caption!,
+                    showSelectionHandles: true,
+                    textScaleFactor: 1.5,
+                    keyboardAppearance: theme.brightness,
+                    onChanged: widget.onTextChanged,
+                    backgroundCursorColor:
+                        const Color.fromARGB(255, 38, 194, 155),
+                    controller: TextEditingController(text: widget.label),
+                    cursorColor: theme.colorScheme.outline,
+                    focusNode: _focus,
+                  ),
+                ),
+              ),
+              AnimatedOpacity(
+                duration: widget.timeToRemove,
+                curve: Curves.easeOut,
+                opacity: _removing
+                    ? 0
+                    : widget.isSelected
+                        ? 1
+                        : 0,
+                child: IconButton(
+                    tooltip: "Edit",
+                    color: theme.colorScheme.primary,
+                    padding: EdgeInsets.zero,
+                    onPressed: _focus.requestFocus,
+                    icon: const Icon(Icons.edit)),
+              )
+            ]),
+          ),
         ],
       ),
     );

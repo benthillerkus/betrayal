@@ -60,7 +60,9 @@ class _ElementSelectorState extends State<ElementSelector>
   void initState() {
     super.initState();
     _subscription = widget.delegate.subscribe(
-        onAdd: _reactToAddedElement, onRemove: _reactToRemovedElement);
+      onAdd: _reactToAddedElement,
+      onRemove: _reactToRemovedElement,
+    );
   }
 
   @override
@@ -70,7 +72,9 @@ class _ElementSelectorState extends State<ElementSelector>
     if (oldWidget.delegate != widget.delegate) {
       _subscription.unsubscribe();
       _subscription = widget.delegate.subscribe(
-          onAdd: _reactToAddedElement, onRemove: _reactToRemovedElement);
+        onAdd: _reactToAddedElement,
+        onRemove: _reactToRemovedElement,
+      );
     }
   }
 
@@ -173,6 +177,8 @@ class _ElementSelectorState extends State<ElementSelector>
               gap: widget.gap,
               label: item.name,
               onRemove: () async => await widget.delegate.removeAt(index),
+              onTextChanged: (value) async => await widget.delegate
+                  .replaceAt(index, item.copyWith(name: value)),
               isSelected: isSelected,
               child: Padding(
                   padding: const EdgeInsets.all(8),
