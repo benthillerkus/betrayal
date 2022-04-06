@@ -73,7 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _icon.show();
   }
 
-  final _delegate = ElementSelectorDelegate(initialItems: [
+  late final _delegate =
+      ElementSelectorDelegate(onEmptied: _icon.hide, initialItems: [
     MyData(
         name: "Dart",
         delegate: TrayIconImageDelegate.fromAsset("assets/dart.ico"),
