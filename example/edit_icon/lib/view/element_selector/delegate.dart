@@ -23,7 +23,7 @@ class ElementSelectorDelegate<DataType extends ElementSelectorData> {
     for (var sub in _subscriptions) {
       if (sub.onRemove != null) await sub.onRemove!(index);
     }
-    onEmptied?.call();
+    if (_items.isEmpty) onEmptied?.call();
   }
 
   ElementSelectorDelegateSubscription subscribe(
