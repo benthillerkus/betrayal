@@ -3,9 +3,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - '.github'
-      - '.vscode'
-      - 'test'
+      - '.github/**'
+      - '.vscode/**'
+      - 'test/**'
       
 name: release-please
 jobs:
