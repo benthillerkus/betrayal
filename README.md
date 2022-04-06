@@ -48,7 +48,6 @@ Scopes and their meaning:
 - [`(api)`](https://github.com/benthillerkus/betrayal/search?q=%28api%29&type=commits): changes to the public api
 - [`(example)`](https://github.com/benthillerkus/betrayal/search?q=%28example%29&type=commits): any type of change in one of the examples
 - [`(readme)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=commits): edits to readme files; unrelated to source code
-- [`(ci)`](https://github.com/benthillerkus/betrayal/search?q=%28ci%29&type=commits): changes to the ci/cd tools / workflows
 
 Tbh all of this needs to change once 1.0 is out lol
 
