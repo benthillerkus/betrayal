@@ -2,8 +2,8 @@ name: pub score
 on:
   push:
     paths:
-      - 'lib/'
-      - 'windows/'
+      - 'lib/**'
+      - 'windows/**'
       - 'pubspec.yaml'
     branches:
       main
