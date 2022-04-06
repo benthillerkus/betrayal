@@ -1,7 +1,7 @@
 import 'data.dart';
 import 'subscription.dart';
 
-class ElementSelectorDelegate<DataType extends ElementSelectorData> {
+class ElementSelectorDelegate<DataType extends SelectableData> {
   ElementSelectorDelegate(
       {Iterable<DataType>? initialItems,
       this.onEmptied,

@@ -41,7 +41,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class MyData extends ElementSelectorData {
+class MyData extends SelectableData {
   MyData(
       {Widget? Function(BuildContext)? builder,
       Key? key,

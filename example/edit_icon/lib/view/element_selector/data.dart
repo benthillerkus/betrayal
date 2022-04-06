@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class ElementSelectorData {
-  ElementSelectorData(
+class SelectableData {
+  SelectableData(
       {Widget? Function(BuildContext context)? builder, Key? key, this.name}) {
     this.key = key ?? GlobalKey();
     this.builder = builder ?? (BuildContext context) => null;
@@ -11,11 +11,11 @@ class ElementSelectorData {
   late final Key key;
   final String? name;
 
-  ElementSelectorData copyWith(
+  SelectableData copyWith(
           {Widget? Function(BuildContext context)? builder,
           String? name,
           Key? key}) =>
-      ElementSelectorData(
+      SelectableData(
           builder: builder ?? this.builder,
           name: name ?? this.name,
           key: key ?? this.key);

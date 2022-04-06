@@ -156,12 +156,9 @@ class _ElementSelectorState extends State<ElementSelector>
         if (_isIndexAddButton(index)) {
           res = IconButton(
             tooltip: widget.addTooltip,
-            iconSize: widget.dimension * 0.5,
-            icon: Icon(Icons.add,
-                color: Theme.of(context)
-                    .colorScheme
-                    .onBackground
-                    .withOpacity(0.3)),
+            iconSize: widget.dimension / 2,
+            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.3),
+            icon: const Icon(Icons.add),
             onPressed: () async {
               await widget.onAddPressed!();
             },
@@ -194,7 +191,11 @@ class _ElementSelectorState extends State<ElementSelector>
                   widget.axis == Axis.horizontal ? slideFactor : 0,
                   widget.axis == Axis.vertical ? slideFactor : 0,
                 ))),
-            child: res);
+            child: Padding(
+                padding: EdgeInsets.only(
+                    top: widget.axis == Axis.vertical ? widget.gap : 0,
+                    left: widget.axis == Axis.horizontal ? widget.gap : 0),
+                child: res));
       },
       scrollBehavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
         PointerDeviceKind.mouse,
