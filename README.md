@@ -36,7 +36,6 @@ samples, guidance on mobile development, and a full API reference.
 - TODO Add function to configure a TrayIcon in one call (maybe via a dynamic map actually)
   - FIXME Use OnWidgetUpdated or smth like that to diff changes between widget dependencies and flush them to the plugin
 - TODO Logging
-- FIXME Remove zombie icons after hot restart
 
 ## Style
 
