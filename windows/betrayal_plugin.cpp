@@ -96,35 +96,39 @@ namespace Betrayal
         const flutter::MethodCall<flutter::EncodableValue> &method_call,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
     {
-      if (method_call.method_name().compare("addTray") == 0)
+      auto method = method_call.method_name();
+      if (method.compare("init") == 0) {
+        icons.clear_all();
+      }
+      else if (method.compare("addTray") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         AddTray(hWnd, id, std::move(result));
       }
-      else if (method_call.method_name().compare("disposeTray") == 0)
+      else if (method.compare("disposeTray") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         DisposeTray(hWnd, id, std::move(result));
       }
-      else if (method_call.method_name().compare("hideIcon") == 0)
+      else if (method.compare("hideIcon") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         HideIcon(hWnd, id, std::move(result));
       }
-      else if (method_call.method_name().compare("showIcon") == 0)
+      else if (method.compare("showIcon") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         ShowIcon(hWnd, id, std::move(result));
       }
-      else if (method_call.method_name().compare("setTooltip") == 0)
+      else if (method.compare("setTooltip") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
@@ -132,7 +136,7 @@ namespace Betrayal
         auto tooltip = std::get<std::string>(args.at(flutter::EncodableValue("tooltip")));
         SetTooltip(hWnd, id, tooltip, std::move(result));
       }
-      else if (method_call.method_name().compare("setIconFromPath") == 0)
+      else if (method.compare("setIconFromPath") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
@@ -141,7 +145,7 @@ namespace Betrayal
         auto is_shared = std::get<bool>(args.at(flutter::EncodableValue("isShared")));
         SetIconFromPath(hWnd, id, path, is_shared, std::move(result));
       }
-      else if (method_call.method_name().compare("setIconAsWinIcon") == 0)
+      else if (method.compare("setIconAsWinIcon") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
@@ -149,7 +153,7 @@ namespace Betrayal
         auto resource_id = std::get<int>(args.at(flutter::EncodableValue("resourceId")));
         SetIconAsWinIcon(hWnd, id, resource_id, std::move(result));
       }
-      else if (method_call.method_name().compare("setIconFromPixels") == 0)
+      else if (method.compare("setIconFromPixels") == 0)
       {
         WITH_ARGS;
         WITH_HWND;

@@ -11,6 +11,7 @@ class BetrayalPlugin {
   static const MethodChannel _channel = MethodChannel('betrayal');
 
   BetrayalPlugin._internal() {
+    _channel.invokeMethod('init');
     _channel.setMethodCallHandler(_handleMethod);
   }
 
