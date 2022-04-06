@@ -91,20 +91,26 @@ class _ElementSelectorState extends State<ElementSelector>
 
   Future<void> _reactToRemovedElement(int index) async {
     await _animationController.forward();
+
     setState(() {
       _animationController.reset();
-      if (_currentPage == index) {
-        _onPageChanged(max(index - 1, 0));
-      }
+      _onPageChanged(index);
     });
-    _controller.animateToPage(max(index - 1, 0),
-        duration: const Duration(milliseconds: 300), curve: Curves.easeOutBack);
+    if (_isIndexAddButton(index)) {
+      _controller.animateToPage(max(index - 1, 0),
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOutBack);
+    }
   }
 
   int _currentPage = 0;
   get _numPages => widget.onAddPressed != null
       ? widget.delegate.numItems + 1
       : widget.delegate.numItems;
+
+  bool _isIndexAddButton(int index) =>
+      widget.onAddPressed != null && index == widget.delegate.numItems;
+
   late PageController _controller;
 
   void _onPageChanged(int pageIndex) {
@@ -143,7 +149,7 @@ class _ElementSelectorState extends State<ElementSelector>
 
         Widget res;
 
-        if (widget.onAddPressed != null && index == widget.delegate.numItems) {
+        if (_isIndexAddButton(index)) {
           res = IconButton(
             tooltip: widget.addTooltip,
             iconSize: widget.dimension * 0.5,
