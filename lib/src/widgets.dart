@@ -2,9 +2,8 @@ import 'package:betrayal/betrayal.dart';
 import 'package:flutter/widgets.dart';
 
 class TrayIconWidget extends StatefulWidget {
-  final TrayIconData data;
 
-  const TrayIconWidget({Key? key, required this.data}) : super(key: key);
+  const TrayIconWidget({Key? key}) : super(key: key);
 
   @override
   State<TrayIconWidget> createState() => _TrayIconWidgetState();
@@ -16,7 +15,7 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   @override
   void initState() async {
     super.initState();
-    _trayIcon = TrayIcon(widget.data);
+    _trayIcon = TrayIcon();
     _trayIcon.show();
   }
 

@@ -64,7 +64,7 @@ class MyData extends SelectableData {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final TrayIcon _icon = TrayIcon(const TrayIconData());
+  late final TrayIcon _icon = TrayIcon();
 
   @override
   void initState() {

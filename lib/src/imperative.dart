@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:betrayal/src/image.dart';
 import 'package:betrayal/src/plugin.dart';
-import 'package:betrayal/src/data.dart';
 import 'package:betrayal/src/win_icon.dart';
 
 class TrayIcon {
@@ -15,7 +14,6 @@ class TrayIcon {
 
   /// The id used by Windows to distinguish this icon.
   final Id _id;
-  final TrayIconData data;
   bool _isVisible = false;
   bool get isVisible => _isVisible;
 
@@ -27,7 +25,7 @@ class TrayIcon {
   /// This is deferred until usage, because constructors can't be `async`.
   bool _isReal = false;
 
-  TrayIcon(this.data) : _id = _newId() {
+  TrayIcon() : _id = _newId() {
     _allIcons[_id] = this;
     _isActive = true;
   }

@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   ui.Image? img;
 
   void add() async {
-    var icon = TrayIcon(const TrayIconData());
+    var icon = TrayIcon();
     _icons.add(icon);
     icon.setTooltip("${_icons.length}");
 
