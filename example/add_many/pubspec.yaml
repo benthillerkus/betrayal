@@ -1,5 +1,5 @@
 name: add_many
-description: Demonstrates how to use the betrayal plugin.
+description: Demonstrates how to add multiple icons to the system tray with Betrayal.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
