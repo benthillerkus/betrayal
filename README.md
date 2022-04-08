@@ -51,16 +51,6 @@ Please refer to the [example subdirectory](example) for more [information](examp
 ## Style
 
 Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits.
-
-Scopes and their meaning:
-- [`(plugin)`](https://github.com/benthillerkus/betrayal/search?q=%28plugin%29&type=commits): internal changes mostly in the Dart part of the plugin
-- [`(windows)`](https://github.com/benthillerkus/betrayal/search?q=%28windows%29&type=commits): internal changes mostly in the C++ part of the plugin
-- [`(api)`](https://github.com/benthillerkus/betrayal/search?q=%28api%29&type=commits): changes to the public api
-- [`(example)`](https://github.com/benthillerkus/betrayal/search?q=%28example%29&type=commits): any type of change in one of the examples
-- [`(readme)`](https://github.com/benthillerkus/betrayal/search?q=%28readme%29&type=commits): edits to readme files; unrelated to source code
-
-Tbh all of this needs to change once 1.0 is out lol
-
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
 
 ## Overview
