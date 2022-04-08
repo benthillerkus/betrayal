@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
 Check out the [Widgets Api](widget_api/lib/main.dart) example to learn more about this approach
 and have a look at [widgets_api](widgets_api/lib/main.dart) for a small demo app that uses it.
 
+[skeleton_example](skeleton_example/lib/src/app.dart) is an abridged version of the Flutter skeleton template
+that persists an icon over multiple pages.
+
 ## Ok, but I want to work with `TrayIcon`s directly, please!
 
 Sure, you can use the [imperative api](../lib/src/imperative.dart) to create and control `TrayIcon`s directly.
