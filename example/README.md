@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Check out the [Widgets Api](widget_api/lib/main.dart) example to learn more about this approach.
+Check out the [Widgets Api](widget_api/lib/main.dart) example to learn more about this approach
+and have a look at [widgets_api](widgets_api/lib/main.dart) for a small demo app that uses it.
 
 ## Ok, but I want to work with `TrayIcon`s directly, please!
 
@@ -70,3 +71,7 @@ Widget build(BuildContext context) {
   );
 }
 ```
+
+Check out the [edit_icon](edit_icon/README.md) example for a more complex app that uses the imperative api.
+
+If you want to see how *Betrayal* can work with multiple icons and how to generate images at runtime through `Canvas` please look at the [add_many](add_many/lib/main.dart)

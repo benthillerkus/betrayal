@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ElementSelector(
+      // Try changing this to `Axis.horizontal` 😉
       axis: Axis.vertical,
       onSelectionChanged: (index) {
         final element = _delegate.elementAt(index);
@@ -102,6 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
       gap: 24,
       delegate: _delegate,
       onAddPressed: () async {
+        // Open a file picker, let the user select an image
+        // if an image was selected, scale it down
+        // and set it as the tray icon
         FilePickerResult? result = await FilePicker.platform.pickFiles(
             type: FileType.custom, allowedExtensions: const ["ico", "png"]);
         if (result == null) return;

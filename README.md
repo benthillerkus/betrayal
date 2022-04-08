@@ -7,23 +7,37 @@ A plugin for the [taskbar notification area](https://devblogs.microsoft.com/oldn
 
 ## Features
 
-- Multiple tray icons
-- Many options for setting the tray icon's image
+- Control multiple tray icons
+- Many options for setting the tray icons image
   - `.ico` file either from the file system or the Flutter assets directory
   - Set the pixels directly through an image buffer - you can use this to dynamically create an image via canvas!
   - Use default system icons like the ❔ or the elevation prompt 🛡️
 - Widget Api - treat the tray icon as part of your UI and compose it in your build methods
 
-## Getting Started
+## Usage
+```dart
+import 'package:betrayal/betrayal.dart';
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+// ...
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+@override
+Widget build(BuildContext context) => MaterialApp(
+  home: Scaffold(
+    appBar: AppBar(
+      title: const Text("Look at the system tray 👀")
+    ),
+    body: Center(
+      child: TrayIconWidget(
+        winIcon: WinIcon.application,
+        tooltip: "Here I am!"
+        child: FlutterLogo()
+      )
+    )
+  )
+);
+```
+
+Please refer to the [example subdirectory](example) for more [information](example/README.md) and code.
 
 # Development
 ## TBD before v1
@@ -48,5 +62,28 @@ Scopes and their meaning:
 Tbh all of this needs to change once 1.0 is out lol
 
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
+
+## Overview
+
+```mermaid
+  graph LR;
+    BetrayalPlugin -- connects via platform channel to --> betrayal_plugin.cpp
+    subgraph dart
+    TrayIconWidget -- manages --> TrayIcon -- calls --> BetrayalPlugin
+    TrayIcon -- uses --> TrayIconImageDelegate -- calls --> BetrayalPlugin
+    end
+    subgraph native
+    betrayal_plugin.cpp -- holds --> IconManager.hpp
+    IconManager.hpp -- provides TrayIcon.hpp to --> betrayal_plugin.cpp
+    betrayal_plugin.cpp -- calls --> TrayIcon.hpp
+    end
+    click BetrayalPlugin "https://github.com/benthillerkus/betrayal/blob/main/lib/src/plugin.dart"
+    click TrayIcon "https://github.com/benthillerkus/betrayal/blob/main/lib/src/imperative.dart"
+    click TrayIconWidget "https://github.com/benthillerkus/betrayal/blob/main/lib/src/widgets.dart"
+    click TrayIconImageDelegate "https://github.com/benthillerkus/betrayal/blob/main/lib/src/image.dart"
+    click betrayal_plugin.cpp "https://github.com/benthillerkus/betrayal/blob/main/windows/betrayal_plugin.cpp"
+    click IconManager.hpp "https://github.com/benthillerkus/betrayal/blob/main/windows/icon_manager.hpp"
+    click TrayIcon.hpp "https://github.com/benthillerkus/betrayal/blob/main/windows/tray_icon.hpp"
+```
 
 [^1]: This is a lie. Flutter does not support Windows 2000. Betrayal.
