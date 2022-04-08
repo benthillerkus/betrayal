@@ -42,13 +42,27 @@ public:
     data.uFlags |= NIF_TIP | NIF_SHOWTIP;
   };
 
-  void set_icon(const HICON &icon, bool is_shared)
+  void remove_tooltip()
+  {
+    data.uFlags &= ~(NIF_TIP | NIF_SHOWTIP);
+  };
+
+  void set_image(const HICON &icon, bool is_shared)
   {
     if (data.hIcon && !m_icon_is_shared)
       DestroyIcon(data.hIcon);
     m_icon_is_shared = is_shared;
     data.hIcon = icon;
     data.uFlags |= NIF_ICON;
+  };
+
+  void remove_image()
+  {
+    if (data.hIcon && !m_icon_is_shared)
+      DestroyIcon(data.hIcon);
+    m_icon_is_shared = false;
+    data.hIcon = NULL;
+    data.uFlags &= ~NIF_ICON;
   };
 
   // Wrapper around NIM_ADD

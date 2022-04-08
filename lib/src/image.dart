@@ -28,7 +28,7 @@ class TrayIconImageDelegate {
 
     // path.endsWith(".ico");
 
-    setIcon = (id, plugin) => plugin.setIconFromPath(id, path!);
+    setIcon = (id, plugin) => plugin.setImageFromPath(id, path!);
   }
 
   /// A [TrayIconImageDelegate] that uses a `.ico` file from the Flutter assets directory.
@@ -36,12 +36,12 @@ class TrayIconImageDelegate {
     final path = p.joinAll(
         [p.dirname(Platform.resolvedExecutable), 'data/flutter_assets', asset]);
 
-    setIcon = (id, plugin) => plugin.setIconFromPath(id, path);
+    setIcon = (id, plugin) => plugin.setImageFromPath(id, path);
   }
 
   /// A [TrayIconImageDelegate] that uses a Windows system icon.
   TrayIconImageDelegate.fromWinIcon(WinIcon winIcon) {
-    setIcon = (id, plugin) => plugin.setIconAsWinIcon(id, winIcon.code);
+    setIcon = (id, plugin) => plugin.setImageAsWinIcon(id, winIcon.code);
   }
 
   /// A [TrayIconImageDelegate] that uses an RGBA image buffer.
@@ -53,7 +53,12 @@ class TrayIconImageDelegate {
           "The buffer must be 32x32 pixels and 4 bytes per pixel.");
     }
     setIcon = (id, plugin) =>
-        plugin.setIconFromPixels(id, 32, 32, pixels.asInt32List());
+        plugin.setImageFromPixels(id, 32, 32, pixels.asInt32List());
+  }
+
+  /// A [TrayIconImageDelegate] that uses no image and will remove existing images.
+  TrayIconImageDelegate.noImage() {
+    setIcon = (id, plugin) => plugin.removeImage(id);
   }
 
   /// The call into the plugin to set the image for a [TrayIcon] with the given [id].

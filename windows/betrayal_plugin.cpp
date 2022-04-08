@@ -97,7 +97,8 @@ namespace Betrayal
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
     {
       auto method = method_call.method_name();
-      if (method.compare("init") == 0) {
+      if (method.compare("reset") == 0)
+      {
         icons.clear_all();
       }
       else if (method.compare("addTray") == 0)
@@ -136,24 +137,32 @@ namespace Betrayal
         auto tooltip = std::get<std::string>(args.at(flutter::EncodableValue("tooltip")));
         SetTooltip(hWnd, id, tooltip, std::move(result));
       }
-      else if (method.compare("setIconFromPath") == 0)
+      else if (method.compare("removeTooltip") == 0)
+      {
+        WITH_ARGS;
+        WITH_HWND;
+        WITH_ID;
+
+        RemoveTooltip(hWnd, id, std::move(result));
+      }
+      else if (method.compare("setImageFromPath") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         auto path = std::get<std::string>(args.at(flutter::EncodableValue("path")));
         auto is_shared = std::get<bool>(args.at(flutter::EncodableValue("isShared")));
-        SetIconFromPath(hWnd, id, path, is_shared, std::move(result));
+        SetImageFromPath(hWnd, id, path, is_shared, std::move(result));
       }
-      else if (method.compare("setIconAsWinIcon") == 0)
+      else if (method.compare("setImageAsWinIcon") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
         WITH_ID;
         auto resource_id = std::get<int>(args.at(flutter::EncodableValue("resourceId")));
-        SetIconAsWinIcon(hWnd, id, resource_id, std::move(result));
+        SetImageAsWinIcon(hWnd, id, resource_id, std::move(result));
       }
-      else if (method.compare("setIconFromPixels") == 0)
+      else if (method.compare("setImageFromPixels") == 0)
       {
         WITH_ARGS;
         WITH_HWND;
@@ -162,7 +171,15 @@ namespace Betrayal
         auto height = std::get<int>(args.at(flutter::EncodableValue("height")));
         auto pixels = std::get<std::vector<int32_t>>(args.at(flutter::EncodableValue("pixels")));
 
-        SetIconFromPixels(hWnd, id, width, height, (uint32_t *)pixels.data(), std::move(result));
+        SetImageFromPixels(hWnd, id, width, height, (uint32_t *)pixels.data(), std::move(result));
+      }
+      else if (method.compare("removeImage") == 0)
+      {
+        WITH_ARGS;
+        WITH_HWND;
+        WITH_ID;
+
+        RemoveImage(hWnd, id, std::move(result));
       }
       else
       {
@@ -242,7 +259,22 @@ namespace Betrayal
       result->Success(flutter::EncodableValue(true));
     };
 
-    void SetIconFromPath(
+    void RemoveTooltip(
+        const HWND hWnd, const UINT id, std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
+    {
+      auto icon = icons.get(hWnd, id);
+      if (icon == nullptr)
+      {
+        result->Error("Icon not found");
+        return;
+      }
+
+      icon->remove_tooltip();
+      icon->update();
+      result->Success(flutter::EncodableValue(true));
+    }
+
+    void SetImageFromPath(
         const HWND hWnd, const UINT id, const std::string &filepath, const bool is_shared,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
@@ -263,12 +295,12 @@ namespace Betrayal
               GetSystemMetrics(SM_CYSMICON),
               LR_LOADFROMFILE + (is_shared ? LR_SHARED : 0x0)));
 
-      icon->set_icon(hIcon, is_shared);
+      icon->set_image(hIcon, is_shared);
       icon->update();
       result->Success(flutter::EncodableValue(true));
     };
 
-    void SetIconAsWinIcon(
+    void SetImageAsWinIcon(
         const HWND hWnd, const UINT id, const UINT resource_id,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
@@ -280,7 +312,23 @@ namespace Betrayal
         return;
       }
 
-      icon->set_icon(LoadIcon(nullptr, MAKEINTRESOURCE(resource_id)), true);
+      icon->set_image(LoadIcon(nullptr, MAKEINTRESOURCE(resource_id)), true);
+      icon->update();
+      result->Success(flutter::EncodableValue(true));
+    };
+
+    void RemoveImage(const HWND hWnd, const UINT id,
+                     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+                         result)
+    {
+      auto icon = icons.get(hWnd, id);
+      if (icon == nullptr)
+      {
+        result->Error("Icon not found");
+        return;
+      }
+
+      icon->remove_image();
       icon->update();
       result->Success(flutter::EncodableValue(true));
     };
@@ -351,7 +399,7 @@ namespace Betrayal
       return hIcon;
     }
 
-    void SetIconFromPixels(
+    void SetImageFromPixels(
         const HWND hWnd, const UINT id, const UINT width, const UINT height,
         uint32_t *pixels,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
@@ -367,7 +415,7 @@ namespace Betrayal
       auto hIcon = CreateIconFromBytes(
           hWnd, width, height, pixels, icon);
 
-      icon->set_icon(hIcon, true);
+      icon->set_image(hIcon, true);
       icon->update();
 
       result->Success(flutter::EncodableValue(true));

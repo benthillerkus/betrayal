@@ -13,6 +13,13 @@ void main() {
   runApp(const MyApp());
 }
 
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -34,22 +41,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
 class MyData extends SelectableData {
+  TrayIconImageDelegate delegate;
+
   MyData(
       {Widget? Function(BuildContext)? builder,
       Key? key,
       String? name,
       required this.delegate})
       : super(builder: builder, key: key, name: name);
-
-  TrayIconImageDelegate delegate;
 
   @override
   MyData copyWith(
@@ -65,24 +65,6 @@ class MyData extends SelectableData {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final TrayIcon _icon = TrayIcon();
-
-  @override
-  void initState() {
-    super.initState();
-    _setTrayIcon(_delegate.elementAt(0));
-  }
-
-  @override
-  void dispose() {
-    _icon.dispose();
-    super.dispose();
-  }
-
-  void _setTrayIcon(MyData element) {
-    _icon.setTooltip(element.name ?? element.key.toString());
-    _icon.setIcon(delegate: element.delegate);
-    _icon.show();
-  }
 
   late final _delegate = ElementSelectorDelegate(
       onEmptied: _icon.hide,
@@ -146,5 +128,23 @@ class _HomeScreenState extends State<HomeScreen> {
             delegate: iconSource, builder: (_) => Image.file(File(path))));
       },
     ));
+  }
+
+  @override
+  void dispose() {
+    _icon.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setTrayIcon(_delegate.elementAt(0));
+  }
+
+  void _setTrayIcon(MyData element) {
+    _icon.setTooltip(element.name ?? element.key.toString());
+    _icon.setImage(delegate: element.delegate);
+    _icon.show();
   }
 }

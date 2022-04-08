@@ -30,11 +30,8 @@ samples, guidance on mobile development, and a full API reference.
 
 - FIXME Find out all possible errors and repackage / handle them
 - TODO Write documentation
-- TODO Support images
-  - TODO Find out, communicate and memoize the correct system metrics (icon resolution)
+- TODO Find out, communicate and memoize the correct system metrics (icon resolution)
 - TODO Support interaction
-- TODO Add function to configure a TrayIcon in one call (maybe via a dynamic map actually)
-  - FIXME Use OnWidgetUpdated or smth like that to diff changes between widget dependencies and flush them to the plugin
 - TODO Logging
 
 ## Style

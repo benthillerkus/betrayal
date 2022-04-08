@@ -2,11 +2,25 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:betrayal/betrayal.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+class Lol extends CustomPainter {
+  ui.Image img;
+
+  Lol(this.img);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawImage(img, Offset.zero, Paint());
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
 class MyApp extends StatefulWidget {
@@ -17,11 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-
   final _icons = List<TrayIcon>.empty(growable: true);
 
   ui.Image? img;
@@ -35,56 +44,12 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {});
 
-    icon.setIcon(
+    icon.setImage(
         pixels:
             (await img?.toByteData(format: ui.ImageByteFormat.rawRgba))?.buffer,
         // asset: "assets/flutter.ico",
         winIcon: WinIcon.shield);
     icon.show();
-  }
-
-  Future<void> draw() async {
-    final recorder = PictureRecorder();
-    final canvas = Canvas(recorder);
-    const center = Offset(16, 16);
-    final Paint paint = Paint()..color = const Color(0xFFF400BB);
-    canvas.drawRect(const Rect.fromLTWH(0, 0, 16, 16), paint);
-    canvas.drawRect(
-        const Rect.fromLTWH(16, 0, 16, 16), paint..color = Colors.green);
-    canvas.drawRect(
-        const Rect.fromLTWH(0, 16, 16, 16), paint..color = Colors.blue);
-    canvas.drawCircle(center, sqrt(_icons.length.ceilToDouble()),
-        paint..color = const Color.fromARGB(255, 211, 168, 202));
-    TextPainter(
-        text: TextSpan(text: "${_icons.length}"),
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
-        maxLines: 1)
-      ..layout()
-      ..paint(canvas, Offset.zero);
-    canvas.drawRect(
-        const Rect.fromLTWH(1, 0, 1, 1), paint..color = Colors.green);
-    canvas.drawRect(
-        const Rect.fromLTWH(2, 0, 1, 1), paint..color = Colors.blue);
-
-    final picture = recorder.endRecording();
-
-    img = await picture.toImage(32, 32);
-  }
-
-  void remove() async {
-    _icons.removeLast().dispose();
-    await draw();
-    setState(() {});
-  }
-
-  void removeAll() async {
-    for (var icon in _icons) {
-      icon.dispose();
-    }
-    _icons.clear();
-    await draw();
-    setState(() {});
   }
 
   @override
@@ -154,18 +119,48 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
 
-class Lol extends CustomPainter {
-  Lol(this.img);
+  Future<void> draw() async {
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder);
+    const center = Offset(16, 16);
+    final Paint paint = Paint()..color = const Color(0xFFF400BB);
+    canvas.drawRect(const Rect.fromLTWH(0, 0, 16, 16), paint);
+    canvas.drawRect(
+        const Rect.fromLTWH(16, 0, 16, 16), paint..color = Colors.green);
+    canvas.drawRect(
+        const Rect.fromLTWH(0, 16, 16, 16), paint..color = Colors.blue);
+    canvas.drawCircle(center, sqrt(_icons.length.ceilToDouble()),
+        paint..color = const Color.fromARGB(255, 211, 168, 202));
+    TextPainter(
+        text: TextSpan(text: "${_icons.length}"),
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+        maxLines: 1)
+      ..layout()
+      ..paint(canvas, Offset.zero);
+    canvas.drawRect(
+        const Rect.fromLTWH(1, 0, 1, 1), paint..color = Colors.green);
+    canvas.drawRect(
+        const Rect.fromLTWH(2, 0, 1, 1), paint..color = Colors.blue);
 
-  ui.Image img;
+    final picture = recorder.endRecording();
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawImage(img, Offset.zero, Paint());
+    img = await picture.toImage(32, 32);
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  void remove() async {
+    _icons.removeLast().dispose();
+    await draw();
+    setState(() {});
+  }
+
+  void removeAll() async {
+    for (var icon in _icons) {
+      icon.dispose();
+    }
+    _icons.clear();
+    await draw();
+    setState(() {});
+  }
 }

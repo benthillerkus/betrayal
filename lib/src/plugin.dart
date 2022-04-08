@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 typedef Id = int;
 
@@ -11,8 +12,9 @@ class BetrayalPlugin {
   static const MethodChannel _channel = MethodChannel('betrayal');
 
   BetrayalPlugin._internal() {
-    _channel.invokeMethod('init');
+    WidgetsFlutterBinding.ensureInitialized();
     _channel.setMethodCallHandler(_handleMethod);
+    reset();
   }
 
   Future<dynamic> _handleMethod(MethodCall methodCall) async {
@@ -30,6 +32,11 @@ class BetrayalPlugin {
             "message: $message, wParam: $wParam, lParam: $lParam, hWnd: $hWnd");
         break;
     }
+  }
+
+  /// Removes any residual icons managed by the plugin.
+  Future<void> reset() async {
+    await _channel.invokeMethod('reset');
   }
 
   Future<void> disposeTray(Id id) async {
@@ -52,20 +59,28 @@ class BetrayalPlugin {
     await _channel.invokeMethod('setTooltip', {'id': id, 'tooltip': tooltip});
   }
 
-  Future<void> setIconFromPath(Id id, String path,
+  Future<void> removeTooltip(Id id) async {
+    await _channel.invokeMethod('removeTooltip', {'id': id});
+  }
+
+  Future<void> setImageFromPath(Id id, String path,
       {bool isShared = false}) async {
     await _channel.invokeMethod(
-        'setIconFromPath', {'id': id, 'path': path, 'isShared': isShared});
+        'setImageFromPath', {'id': id, 'path': path, 'isShared': isShared});
   }
 
-  Future<void> setIconAsWinIcon(Id id, int resourceId) async {
-    await _channel
-        .invokeMethod('setIconAsWinIcon', {'id': id, 'resourceId': resourceId});
+  Future<void> setImageAsWinIcon(Id id, int resourceId) async {
+    await _channel.invokeMethod(
+        'setImageAsWinIcon', {'id': id, 'resourceId': resourceId});
   }
 
-  Future<void> setIconFromPixels(
+  Future<void> setImageFromPixels(
       Id id, int width, int height, Int32List pixels) async {
-    await _channel.invokeMethod('setIconFromPixels',
+    await _channel.invokeMethod('setImageFromPixels',
         {'id': id, 'pixels': pixels, 'width': width, 'height': height});
+  }
+
+  Future<void> removeImage(Id id) async {
+    await _channel.invokeMethod('removeImage', {'id': id});
   }
 }
