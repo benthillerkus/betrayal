@@ -12,7 +12,9 @@ void main() {
   // Now the app will immediately need a new [TrayIcon]
   // and the old one can be removed.
   if (kDebugMode) TrayIcon.clearAll();
-
+  // Configure plugin log levels
+  BetrayalLogConfig.allowIndividualLevels();
+  BetrayalLogConfig.level = kDebugMode ? "FINE" : "INFO";
   runApp(const MyApp());
 }
 

@@ -51,18 +51,7 @@ namespace Betrayal
       }
       else if (message >= WM_USER && message < WM_APP)
       {
-        switch (lParam)
-        {
-        case WM_LBUTTONUP:
-          Print("Left Click!");
-          break;
-        case WM_RBUTTONUP:
-          Print("Right Click!");
-          break;
-        default:
-          LogWindowProc(hWnd, message, wParam, lParam);
-          break;
-        }
+        LogWindowProc(hWnd, message, wParam, lParam);
       }
 
       return result;

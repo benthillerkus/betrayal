@@ -2,11 +2,21 @@
 /// However, note that trying to interfere with icons managed by a [TrayIcon]´
 /// will break stuff.
 
+import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:betrayal/src/logging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+
+import 'image.dart';
+import 'win_icon.dart';
+import 'win_event.dart';
+
+part 'imperative.dart';
+part 'widgets.dart';
 
 /// An identifier.
 ///
@@ -24,18 +34,20 @@ typedef Id = int;
 class BetrayalPlugin {
   static final BetrayalPlugin _instance = BetrayalPlugin._internal();
 
-  /// Creates the singleton instance.
+  /// Retrieves the singleton instance.
   factory BetrayalPlugin() => _instance;
 
   static const MethodChannel _channel = MethodChannel('betrayal');
 
-  final Logger _logger = Logger('betrayal.plugin');
+  final _logger = Logger('betrayal.plugin');
+  final _nativeLogger = Logger('betrayal.native');
 
   /// The singleton constructor.
   ///
   /// Once it is invoked, it will try to clear up any icons registered
   /// with the plugin.
   BetrayalPlugin._internal() {
+    BetrayalLogConfig();
     _logger.finer('initializing plugin...');
     // This makes sure the plugin can be invoked
     // before `runApp` is called in main
@@ -43,22 +55,30 @@ class BetrayalPlugin {
 
     _channel.setMethodCallHandler(_handleMethod);
     reset();
-    _logger.info('BetrayalPlugin initialized!');
+    _logger.info('connection initialized');
   }
 
   Future<dynamic> _handleMethod(MethodCall methodCall) async {
     switch (methodCall.method) {
       case "print":
-        print(methodCall.arguments);
+        _nativeLogger.info(methodCall.arguments);
         break;
       case "logWindowProc":
         final args = methodCall.arguments;
-        final message = args["message"];
-        final wParam = args["wParam"];
-        final lParam = args["lParam"];
-        final hWnd = args["hWnd"];
-        print(
-            "message: $message, wParam: $wParam, lParam: $lParam, hWnd: $hWnd");
+        final int message = args["message"];
+        final int wParam = args["wParam"];
+        final int lParam = args["lParam"];
+        final int hWnd = args["hWnd"];
+
+        try {
+          final action = fromCode(lParam);
+          final icon = TrayIcon._allIcons[message - 0x400]!;
+          _logger.fine(
+              "${action.name} on $icon, wParam: ${wParam.toRadixString(16)}");
+        } on Error {
+          _logger.info(
+              "message: 10b$message 0x${message.toRadixString(16)}, wParam: ${wParam.toRadixString(16)}, lParam: ${lParam.toRadixString(16)}, hWnd: $hWnd");
+        }
         break;
     }
   }

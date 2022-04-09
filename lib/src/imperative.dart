@@ -1,18 +1,6 @@
+part of 'plugin.dart';
+
 // ignore_for_file: invalid_use_of_protected_member
-
-import 'dart:async';
-import 'dart:math';
-import 'dart:typed_data';
-
-import 'package:betrayal/src/plugin.dart';
-import 'package:betrayal/src/image.dart';
-import 'package:betrayal/src/win_icon.dart';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
-import 'package:logging/logging.dart';
-
-part 'widgets.dart';
 
 /// A system tray icon.
 ///
@@ -74,6 +62,10 @@ class TrayIcon {
     // This happens happens the first time [_plugin] is accessed.
     if (kDebugMode) _plugin;
   }
+
+  @override
+  String toString() =>
+      "TrayIcon($_id, hidden: $_isVisible, active: $_isActive)";
 
   /// Retrieve the [TrayIcon] managed by a [TrayIconWidget] further up the tree.
   static TrayIcon of(BuildContext context) {

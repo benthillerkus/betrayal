@@ -78,3 +78,18 @@ Widget build(BuildContext context) {
 Check out the [edit_icon](edit_icon/README.md) example for a more complex app that uses the imperative api.
 
 If you want to see how *Betrayal* can work with multiple icons and how to generate images at runtime through `Canvas` please look at the [add_many](add_many/lib/main.dart)
+
+## Is there a way to get rid of the log messages?
+
+Yeah, you can change the log level, as seen in the [widgets_api](widgets_api/lib/main.dart) example.
+
+```dart
+// sets `hierarchicalLoggingEnabled`
+// from the `logging` package to `true`
+BetrayalLogConfig.allowIndividualLevels();
+
+// disables logging only for *betrayal*
+BetrayalLogConfig.level = "OFF";
+```
+
+To learn more about logging in *betrayal* have a look at the implementation in [logging.dart](../lib/src/logging.dart).

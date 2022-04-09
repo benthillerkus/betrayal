@@ -1,4 +1,4 @@
-part of 'imperative.dart';
+part of 'plugin.dart';
 
 /// A widget that can be used to add a [TrayIcon] to the system tray.
 ///
@@ -120,7 +120,7 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   @override
   void didUpdateWidget(covariant TrayIconWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _logger.info("updating icon…");
+    _logger.fine("updating icon…");
     if (widget.visible != null && !widget.visible!) {
       _icon.hide();
       return;
