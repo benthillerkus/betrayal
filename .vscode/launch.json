@@ -5,34 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "betrayal",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "betrayal (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "betrayal (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    },
-    {
       "name": "add_many",
       "cwd": "example\\add_many",
       "request": "launch",
       "type": "dart"
-    },
-    {
-      "name": "add_many (profile mode)",
-      "cwd": "example\\add_many",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
     },
     {
       "name": "add_many (release mode)",
@@ -48,15 +24,34 @@
       "type": "dart"
     },
     {
-      "name": "edit_icon (profile mode)",
+      "name": "edit_icon (release mode)",
       "cwd": "example\\edit_icon",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "release"
     },
     {
-      "name": "edit_icon (release mode)",
-      "cwd": "example\\edit_icon",
+      "name": "widgets_api",
+      "cwd": "example\\widgets_api",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "widgets_api (release mode)",
+      "cwd": "example\\widgets_api",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "skeleton_example",
+      "cwd": "example\\skeleton_example",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "skeleton_example (release mode)",
+      "cwd": "example\\skeleton_example",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"
