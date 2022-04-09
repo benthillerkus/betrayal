@@ -12,7 +12,7 @@ A plugin for the [taskbar notification area](https://devblogs.microsoft.com/oldn
   - `.ico` file either from the file system or the Flutter assets directory
   - Set the pixels directly through an image buffer - you can use this to dynamically create an image via canvas!
   - Use default system icons like the ❔ or the elevation prompt 🛡️
-- Widget Api - treat the tray icon as part of your UI and compose it in your build methods
+- Widget api - treat the tray icon as part of your UI and compose it in your build methods
 
 ## Usage
 ```dart
@@ -43,7 +43,6 @@ Please refer to the [example subdirectory](example) for more [information](examp
 ## TBD before v1
 
 - FIXME Find out all possible errors and repackage / handle them
-- TODO Write documentation
 - TODO Find out, communicate and memoize the correct system metrics (icon resolution)
 - TODO Support interaction
 - TODO Logging
