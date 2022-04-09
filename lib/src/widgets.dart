@@ -1,7 +1,43 @@
 part of 'imperative.dart';
 
 /// A widget that can be used to add a [TrayIcon] to the system tray.
+///
+/// The icons lifecycle is tied to this widgets [_TrayIconWidgetState].
+///
+/// If an icon persists after navigation and you want it gone, you'll
+/// have to manually remove it.
+/// ```dart
+/// TrayIcon.of(context).hide();
+/// ```
 class TrayIconWidget extends StatefulWidget {
+  /// The widget below this widget in the tree.
+  ///
+  /// {@macro flutter.widgets.ProxyWidget.child}
+  final Widget child;
+
+  /// Whether the [TrayIcon] should be shown or hidden.
+  ///
+  /// A hidden [TrayIcon] will not be in the system tray.
+  /// But its state will be remembered by the plugin,
+  /// so that it can be shown again later.
+  final bool visible;
+
+  /// The tooltip to show when hovering over the [TrayIcon].
+  ///
+  /// If `tooltip == null`, the current tooltip will be kept.
+  /// If `tooltip == ''`, the tooltip will be removed.
+  final String? tooltip;
+
+  /// If `true`, the [TrayIcon] resource this widget manages
+  /// will be accessible via `TrayIcon.of(context)`.
+  ///
+  /// If `false`, this widget doesn't have to update
+  /// all properties of the [TrayIcon] resource, whenever
+  /// it is changed as it can know what properties have changed.
+  final bool addToContext;
+
+  late final TrayIconImageDelegate? _delegate;
+
   /// Manages a [TrayIcon] as a [StatefulWidget].
   ///
   /// The underlying resource will automatically be disposed according to the
@@ -26,47 +62,54 @@ class TrayIconWidget extends StatefulWidget {
       WinIcon? winIcon})
       : super(key: key) {
     if (imageDelegate != null) {
-      delegate = imageDelegate;
+      _delegate = imageDelegate;
     } else if (imagePixels != null) {
-      delegate = TrayIconImageDelegate.fromBytes(imagePixels);
+      _delegate = TrayIconImageDelegate.fromBytes(imagePixels);
     } else if (imageAsset != null) {
-      delegate = TrayIconImageDelegate.fromAsset(imageAsset);
+      _delegate = TrayIconImageDelegate.fromAsset(imageAsset);
     } else if (imagePath != null) {
-      delegate = TrayIconImageDelegate.fromPath(uri: imagePath);
+      _delegate = TrayIconImageDelegate.fromPath(uri: imagePath);
     } else if (winIcon != null) {
-      delegate = TrayIconImageDelegate.fromWinIcon(winIcon);
+      _delegate = TrayIconImageDelegate.fromWinIcon(winIcon);
     } else {
-      delegate = null;
+      _delegate = null;
     }
   }
 
-  final Widget child;
-  final bool visible;
-  final String? tooltip;
-
-  /// If `true`, the [TrayIcon] resource this widget manages
-  /// will be accessible via `TrayIcon.of(context)`.
-  ///
-  /// If `false`, this widget doesn't have to update
-  /// all properties of the [TrayIcon] resource, whenever
-  /// it is changed as it can know what properties have changed.
-  final bool addToContext;
-  late final TrayIconImageDelegate? delegate;
-
   @override
   State<TrayIconWidget> createState() => _TrayIconWidgetState();
+}
+
+class _TrayIconHeritage extends InheritedWidget {
+  final TrayIcon icon;
+
+  const _TrayIconHeritage({required Widget child, required this.icon})
+      : super(child: child);
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return false;
+  }
 }
 
 class _TrayIconWidgetState extends State<TrayIconWidget> {
   late final TrayIcon _icon = TrayIcon();
 
   @override
-  void initState() {
-    super.initState();
-    if (!widget.visible) return;
-    if (widget.delegate != null) _icon.setImage(delegate: widget.delegate);
-    if (widget.tooltip != null) _icon.setTooltip(widget.tooltip!);
+  void activate() {
     _icon.show();
+    super.activate();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.addToContext
+      ? _TrayIconHeritage(child: widget.child, icon: _icon)
+      : widget.child;
+
+  @override
+  void deactivate() {
+    _icon.hide();
+    super.deactivate();
   }
 
   @override
@@ -83,22 +126,10 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
     }
     if (widget.addToContext ||
         !oldWidget.visible ||
-        widget.delegate != oldWidget.delegate) {
-      if (widget.delegate != null) _icon.setImage(delegate: widget.delegate);
+        widget._delegate != oldWidget._delegate) {
+      if (widget._delegate != null) _icon.setImage(delegate: widget._delegate);
     }
     _icon.show();
-  }
-
-  @override
-  void deactivate() {
-    _icon.hide();
-    super.deactivate();
-  }
-
-  @override
-  void activate() {
-    _icon.show();
-    super.activate();
   }
 
   @override
@@ -108,19 +139,11 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.addToContext
-      ? _TrayIconHeritage(child: widget.child, icon: _icon)
-      : widget.child;
-}
-
-class _TrayIconHeritage extends InheritedWidget {
-  const _TrayIconHeritage({required Widget child, required this.icon})
-      : super(child: child);
-
-  final TrayIcon icon;
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    return false;
+  void initState() {
+    super.initState();
+    if (!widget.visible) return;
+    if (widget._delegate != null) _icon.setImage(delegate: widget._delegate);
+    if (widget.tooltip != null) _icon.setTooltip(widget.tooltip!);
+    _icon.show();
   }
 }

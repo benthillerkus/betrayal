@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -62,7 +64,6 @@ class TrayIconImageDelegate {
   }
 
   /// The call into the plugin to set the image for a [TrayIcon] with the given [id].
-  ///
-  /// This is not part of the public API and usage is discouraged.
+  @protected
   late final Future<void> Function(Id id, BetrayalPlugin plugin) setIcon;
 }

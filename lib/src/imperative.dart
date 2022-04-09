@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
@@ -11,6 +13,20 @@ import 'package:flutter/foundation.dart';
 
 part 'widgets.dart';
 
+/// A system tray icon.
+///
+/// Call [show] to show the icon.
+/// And call [dispose] once you don't need it anymore.
+///
+/// With [setTooltip], [setImage] and [hide] you can
+/// change the appearance of the icon.
+///
+/// If an icons has been disposed,
+/// [isActive] will return `false`.
+/// And you cannot interact with it anymore.
+/// Construct a new one.
+///
+/// To nuke all existing icons, use [TrayIcon.clearAll]
 class TrayIcon {
   static final BetrayalPlugin _plugin = BetrayalPlugin();
   static final Map<Id, TrayIcon> _allIcons = {};
@@ -23,12 +39,14 @@ class TrayIcon {
 
   /// The id used by Windows to distinguish this icon.
   final Id _id;
-  bool _isVisible = false;
-  bool get isVisible => _isVisible;
 
-  /// Has this class be disposed?
-  bool _isActive = false;
+  /// Is this [TrayIcon] currently visible?
+  bool get isVisible => _isVisible;
+  bool _isVisible = false;
+
+  /// Has this class been disposed?
   bool get isActive => _isActive;
+  bool _isActive = false;
 
   /// This [StackTrace] is created when [dispose] is called.
   /// That way it's possible to debug
@@ -67,12 +85,16 @@ class TrayIcon {
   ///
   /// ```dart
   /// void main() {
-  ///   TrayIcon.clearAll();
+  ///   // Hot restarts only happen in debug mode
+  ///   if (kDebugMode) TrayIcon.clearAll();
   ///   runApp(const MyApp());
   /// }
   /// ```
   static void clearAll() {
-    if (kDebugMode) _allIcons.clear();
+    for (final TrayIcon icon in _allIcons.values) {
+      icon._isActive = false;
+    }
+    _allIcons.clear();
     _plugin.reset();
   }
 
@@ -81,7 +103,10 @@ class TrayIcon {
   /// This will permanently remove the icon from the system tray.
   /// Resources in native code will be released and this instance
   /// will become unusable.
+  ///
+  /// Calling this method twice is a no-op.
   Future<void> dispose() async {
+    if (!_isActive) return;
     _isActive = false;
     if (_isReal) {
       await _plugin.disposeTray(_id);

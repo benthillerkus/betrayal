@@ -4,6 +4,7 @@
     "autofocus",
     "HICON",
     "HWND",
+    "ints",
     "LPARAM",
     "LRESULT",
     "LTWH",

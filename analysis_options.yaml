@@ -2,3 +2,25 @@ include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+linter:
+  rules:
+    avoid_returning_null_for_future: true
+    avoid_double_and_int_checks: true
+    await_only_futures: true
+    avoid_void_async: true
+    noop_primitive_operations: true
+    prefer_mixin: true
+    public_member_api_docs: true
+    type_annotate_public_apis: true
+    unnecessary_lambdas: true
+    unnecessary_late: true
+    unnecessary_parenthesis: true
+    unnecessary_raw_strings: true
+    #  use_colored_box: true
+    use_decorated_box: true
+    #  use_enums: true
+    #  use_super_parameters: true
+    use_to_and_as_if_applicable: true
+    secure_pubspec_urls: true
+    sort_pub_dependencies: true
