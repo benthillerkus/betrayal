@@ -3,18 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // Configure plugin log levels
+  BetrayalLogConfig.allowIndividualLevels();
+  BetrayalLogConfig.level = kDebugMode ? "FINE" : "INFO";
+
+
+
   // This is only necessary if icons seem to persist after hot restarting.
   // That happens when after restarting the app is not immediately interacting
   // with [TrayIcon]s again.
-  //
+  if (kDebugMode) TrayIcon.clearAll();
   // Try commenting this out and then restart the app.
   // Then set [inserted] in [_MyHomePageState] to `true`.
   // Now the app will immediately need a new [TrayIcon]
   // and the old one can be removed.
-  if (kDebugMode) TrayIcon.clearAll();
-  // Configure plugin log levels
-  BetrayalLogConfig.allowIndividualLevels();
-  BetrayalLogConfig.level = kDebugMode ? "FINE" : "INFO";
+
+
+
   runApp(const MyApp());
 }
 

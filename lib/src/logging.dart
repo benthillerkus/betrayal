@@ -38,7 +38,7 @@ class BetrayalLogConfig {
   /// In this case, you could use it to make *betrayal* shut up, for example.
   /// ```dart
   /// BetrayalLogConfig.allowIndividualLevels();
-  /// BetrayalLogConfig().setLevel(Level.OFF);
+  /// BetrayalLogConfig.level = Level.OFF;
   /// ```
   ///
   /// This function is implemented as
@@ -88,6 +88,10 @@ class BetrayalLogConfig {
           "level must be a Level, String or num, not ${level.runtimeType}!");
     }
     _logger.level = _level;
+
+    // Ensure that the following message is logged.
+    BetrayalLogConfig();
+
     _logger.info("logging level changed to ${_level.name}");
   }
 
