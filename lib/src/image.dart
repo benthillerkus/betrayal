@@ -6,11 +6,14 @@ import 'dart:typed_data';
 import 'package:betrayal/src/plugin.dart';
 import 'package:betrayal/src/win_icon.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
 /// A helper that sets the image of a [TrayIcon].
 @immutable
 class TrayIconImageDelegate {
+  static final _logger = Logger('betrayal.image_delegate');
+
   /// A [TrayIconImageDelegate] that uses a `.ico` file.
   ///
   /// If both [uri] and [path] are given, [uri] takes precedence.
@@ -28,7 +31,10 @@ class TrayIconImageDelegate {
       path = uri.toFilePath(windows: true);
     }
 
-    // path.endsWith(".ico");
+    if (!path!.endsWith(".ico")) {
+      _logger.warning("""'$path' is not an .ico file.
+Continuing under the assumption that only the file extension is wrong""");
+    }
 
     setIcon = (id, plugin) => plugin.setImageFromPath(id, path!);
   }

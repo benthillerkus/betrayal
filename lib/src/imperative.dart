@@ -10,6 +10,7 @@ import 'package:betrayal/src/win_icon.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 
 part 'widgets.dart';
 
@@ -31,6 +32,8 @@ class TrayIcon {
   static final BetrayalPlugin _plugin = BetrayalPlugin();
   static final Map<Id, TrayIcon> _allIcons = {};
   static final Random _random = Random();
+
+  late final Logger _logger;
 
   /// This [Id] is used by the operating system
   /// to identify the icon and address it
@@ -59,8 +62,10 @@ class TrayIcon {
 
   /// Creates a new [TrayIcon] that controls a single icon in the system tray.
   TrayIcon() : _id = _newId() {
+    _logger = Logger("betrayal.icon.$_id");
     _allIcons[_id] = this;
     _isActive = true;
+    _logger.fine("initialized instance");
     // In Debug mode users can hot restart the app.
     // [As of right now, there is no way to detect that.](https://github.com/flutter/flutter/issues/10437)
     // That means we have to call an init method for cleanup.
@@ -75,7 +80,8 @@ class TrayIcon {
     final TrayIcon? result =
         context.dependOnInheritedWidgetOfExactType<_TrayIconHeritage>()?.icon;
     assert(result != null, 'No TrayIcon found in context');
-    return result!;
+    result!._logger.fine("provided by `_TrayIconHeritage`");
+    return result;
   }
 
   /// Disposes all icons and clears up any residual icons.
@@ -93,6 +99,7 @@ class TrayIcon {
   static void clearAll() {
     for (final TrayIcon icon in _allIcons.values) {
       icon._isActive = false;
+      icon._logger.fine("disposed by `clearAll`");
     }
     _allIcons.clear();
     _plugin.reset();
@@ -106,6 +113,7 @@ class TrayIcon {
   ///
   /// Calling this method twice is a no-op.
   Future<void> dispose() async {
+    _logger.finer("trying to dispose");
     if (!_isActive) return;
     _isActive = false;
     if (_isReal) {
@@ -114,6 +122,7 @@ class TrayIcon {
     _allIcons.remove(_id);
 
     _disposedAt = StackTrace.current;
+    _logger.fine("disposed", null, _disposedAt);
   }
 
   /// Ensures the icon has been constructed in native code.
@@ -123,6 +132,7 @@ class TrayIcon {
     if (!_isReal) {
       await _plugin.addTray(_id);
       _isReal = true;
+      _logger.fine("made real (created in native code)");
     }
   }
 

@@ -45,7 +45,6 @@ Please refer to the [example subdirectory](example) for more [information](examp
 - FIXME Find out all possible errors and repackage / handle them
 - TODO Find out, communicate and memoize the correct system metrics (icon resolution)
 - TODO Support interaction
-- TODO Logging
 
 ## Style
 

@@ -20,7 +20,9 @@ class TrayIconWidget extends StatefulWidget {
   /// A hidden [TrayIcon] will not be in the system tray.
   /// But its state will be remembered by the plugin,
   /// so that it can be shown again later.
-  final bool visible;
+  ///
+  /// If `visible == null` the icon will remain as-is.
+  final bool? visible;
 
   /// The tooltip to show when hovering over the [TrayIcon].
   ///
@@ -46,7 +48,7 @@ class TrayIconWidget extends StatefulWidget {
   /// Rebuilding this [TrayIconWidget] will different parameters will update the icon.
   ///
   /// Contrary to [TrayIcon.setImage], if [tooltip] or any of the image related fields
-  /// are not set, the current values are kept. This is to ensure that rebuilds
+  /// are `null`, the current values are kept. This is to ensure that rebuilds
   /// don't interfere with using the [TrayIcon] widget directly through.
   /// [TrayIcon.of(BuildContext context)].
   TrayIconWidget(
@@ -94,10 +96,12 @@ class _TrayIconHeritage extends InheritedWidget {
 
 class _TrayIconWidgetState extends State<TrayIconWidget> {
   late final TrayIcon _icon = TrayIcon();
+  late final _logger = Logger("betrayal.widget.${_icon._id}");
 
   @override
   void activate() {
     _icon.show();
+    _logger.info("reinserted. icon shown again.");
     super.activate();
   }
 
@@ -109,31 +113,32 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   @override
   void deactivate() {
     _icon.hide();
+    _logger.info("removed. icon hidden.");
     super.deactivate();
   }
 
   @override
   void didUpdateWidget(covariant TrayIconWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!widget.visible) {
+    _logger.info("updating icon…");
+    if (widget.visible != null && !widget.visible!) {
       _icon.hide();
       return;
     }
-    if (widget.addToContext ||
-        !oldWidget.visible ||
-        widget.tooltip != oldWidget.tooltip) {
+    if (widget.addToContext || widget.tooltip != oldWidget.tooltip) {
       if (widget.tooltip != null) _icon.setTooltip(widget.tooltip!);
     }
-    if (widget.addToContext ||
-        !oldWidget.visible ||
-        widget._delegate != oldWidget._delegate) {
+    if (widget.addToContext || widget._delegate != oldWidget._delegate) {
       if (widget._delegate != null) _icon.setImage(delegate: widget._delegate);
     }
-    _icon.show();
+    if (widget.visible != null) {
+      _icon.show();
+    }
   }
 
   @override
   void dispose() {
+    _logger.info("disposing…");
     _icon.dispose();
     super.dispose();
   }
@@ -141,9 +146,8 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   @override
   void initState() {
     super.initState();
-    if (!widget.visible) return;
     if (widget._delegate != null) _icon.setImage(delegate: widget._delegate);
     if (widget.tooltip != null) _icon.setTooltip(widget.tooltip!);
-    _icon.show();
+    if (widget.visible ?? false) _icon.show();
   }
 }

@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:logging/logging.dart';
 
 /// An identifier.
 ///
@@ -28,17 +29,21 @@ class BetrayalPlugin {
 
   static const MethodChannel _channel = MethodChannel('betrayal');
 
+  final Logger _logger = Logger('betrayal.plugin');
+
   /// The singleton constructor.
   ///
   /// Once it is invoked, it will try to clear up any icons registered
   /// with the plugin.
   BetrayalPlugin._internal() {
+    _logger.finer('initializing plugin...');
     // This makes sure the plugin can be invoked
     // before `runApp` is called in main
     WidgetsFlutterBinding.ensureInitialized();
 
     _channel.setMethodCallHandler(_handleMethod);
     reset();
+    _logger.info('BetrayalPlugin initialized!');
   }
 
   Future<dynamic> _handleMethod(MethodCall methodCall) async {
@@ -62,6 +67,7 @@ class BetrayalPlugin {
   @protected
   Future<void> reset() async {
     await _channel.invokeMethod('reset');
+    _logger.finer('removed all icons');
   }
 
   /// Removes and cleans up a single item.
