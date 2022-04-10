@@ -26,6 +26,12 @@ part 'widgets.dart';
 /// and call the plugin directly with it!
 typedef Id = int;
 
+/// Allows adding members to [Id] typedef.
+extension HexRepresentation on Id {
+  /// Value in hex [String] notation. (e.g. `0x1234`)
+  String get hex => '0x${toRadixString(16).padLeft(4, '0')}';
+}
+
 /// A singleton [MethodChannel] wrapper that communicates with the native plugin.
 ///
 /// It will be lazily constructed
@@ -63,21 +69,27 @@ class BetrayalPlugin {
       case "print":
         _nativeLogger.info(methodCall.arguments);
         break;
-      case "logWindowProc":
+      case "handleInteraction":
         final args = methodCall.arguments;
         final int message = args["message"];
-        final int wParam = args["wParam"];
-        final int lParam = args["lParam"];
         final int hWnd = args["hWnd"];
+        final Offset position =
+            Offset(args["x"].toDouble(), args["y"].toDouble());
+        final int event = args["event"];
+        final Id id = args["id"];
 
         try {
-          final action = fromCode(lParam);
-          final icon = TrayIcon._allIcons[message - 0x400]!;
-          _logger.fine(
-              "${action.name} on $icon, wParam: ${wParam.toRadixString(16)}");
+          if (event == WinEvent.mouseFirst.code && id == 0) {
+            final icon = TrayIcon._allIcons[message - 0x0400]!;
+            icon._logger.info("added to tray at $position");
+          } else {
+            final action = fromCode(event);
+            final icon = TrayIcon._allIcons[id]!;
+            icon._logger.fine("${action.name} at $position}");
+          }
         } on Error {
-          _logger.info(
-              "message: 10b$message 0x${message.toRadixString(16)}, wParam: ${wParam.toRadixString(16)}, lParam: ${lParam.toRadixString(16)}, hWnd: $hWnd");
+          _logger.warning(
+              "message: 10b$message ${message.hex}, id: ${id.hex}, event: ${event.toRadixString(16)}, position: $position}, hWnd: $hWnd");
         }
         break;
     }

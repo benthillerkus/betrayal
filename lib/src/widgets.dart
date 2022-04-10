@@ -96,7 +96,7 @@ class _TrayIconHeritage extends InheritedWidget {
 
 class _TrayIconWidgetState extends State<TrayIconWidget> {
   late final TrayIcon _icon = TrayIcon();
-  late final _logger = Logger("betrayal.widget.${_icon._id}");
+  late final _logger = Logger("betrayal.widget.${_icon._id.hex}");
 
   @override
   void activate() {

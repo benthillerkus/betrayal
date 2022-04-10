@@ -50,7 +50,7 @@ class TrayIcon {
 
   /// Creates a new [TrayIcon] that controls a single icon in the system tray.
   TrayIcon() : _id = _newId() {
-    _logger = Logger("betrayal.icon.$_id");
+    _logger = Logger("betrayal.icon.${_id.hex}");
     _allIcons[_id] = this;
     _isActive = true;
     _logger.fine("initialized instance");
@@ -65,7 +65,7 @@ class TrayIcon {
 
   @override
   String toString() =>
-      "TrayIcon($_id, hidden: $_isVisible, active: $_isActive)";
+      "TrayIcon(${_id.hex}, active: $_isActive, visible: $_isVisible)";
 
   /// Retrieve the [TrayIcon] managed by a [TrayIconWidget] further up the tree.
   static TrayIcon of(BuildContext context) {

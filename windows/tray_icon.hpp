@@ -20,11 +20,13 @@ public:
 
   TrayIcon(HWND hWnd, UINT id)
   {
+    // https://docs.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-notifyicondataw
     data.cbSize = sizeof(data);
     data.hWnd = hWnd;
     data.uID = id;
     data.uCallbackMessage = WM_USER + id;
     data.uFlags = NIF_MESSAGE;
+    data.uVersion = NOTIFYICON_VERSION_4;
   };
 
   ~TrayIcon()
@@ -69,6 +71,7 @@ public:
   bool show()
   {
     m_is_visible = Shell_NotifyIcon(NIM_ADD, &data) != 0;
+    Shell_NotifyIcon(NIM_SETVERSION, &data);
     return is_visible();
   };
   // Wrapper around NIM_MODIFY

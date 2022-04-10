@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   // Configure plugin log levels
   BetrayalLogConfig.allowIndividualLevels();
-  BetrayalLogConfig.level = kDebugMode ? "FINE" : "INFO";
+  BetrayalLogConfig.level = kDebugMode ? "FINER" : "INFO";
 
 
 

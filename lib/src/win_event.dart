@@ -2,34 +2,45 @@ import 'package:flutter/widgets.dart';
 
 /// Represents constants in WinUser.h
 enum WinEvent {
-  /// `0x200`, equivalent to `EVENT_SYSTEM_MOVESIZESTART`
+  /// `0x0400` equivalent to `onTap`
+  select,
+
+  /// `0x007b` equivalent to `onSecondaryTap`
+  ///
+  /// https://docs.microsoft.com/en-us/windows/win32/menurc/wm-contextmenu
+  contextMenu,
+
+  /// `0x0200`
+  mouseFirst,
+
+  /// `0x0200`
   mouseMove,
 
-  /// `0x201`, equivalent to `onTapDown`
+  /// `0x0201` equivalent to `onTapDown`
   leftButtonDown,
 
-  /// `0x202`, equivalent to `onTapUp`
+  /// `0x0202` equivalent to `onTapUp`
   leftButtonUp,
 
-  /// `0x203`, equivalent to `onDoubleTap`
+  /// `0x0203` equivalent to `onDoubleTap`
   leftButtonDoubleClick,
 
-  /// `0x204`, equivalent to `onSecondaryTapDown`
+  /// `0x0204` equivalent to `onSecondaryTapDown`
   rightButtonDown,
 
-  /// `0x205`, equivalent to `onSecondaryTapUp`
+  /// `0x0205` equivalent to `onSecondaryTapUp`
   rightButtonUp,
 
-  /// `0x206`
+  /// `0x0206`
   rightButtonDoubleClick,
 
-  /// `0x207`, equivalent to `onTertiaryTapDown`
+  /// `0x0207` equivalent to `onTertiaryTapDown`
   middleButtonDown,
 
-  /// `0x207`, equivalent to `onTertiaryTapUp`
+  /// `0x0208` equivalent to `onTertiaryTapUp`
   middleButtonUp,
 
-  /// `0x207`
+  /// `0x0209`
   middleButtonDoubleClick,
 }
 
@@ -37,25 +48,29 @@ enum WinEvent {
 @protected
 WinEvent fromCode(int code) {
   switch (code) {
-    case 0x200:
+    case 0x0400:
+      return WinEvent.select;
+    case 0x007b:
+      return WinEvent.contextMenu;
+    case 0x0200:
       return WinEvent.mouseMove;
-    case 0x201:
+    case 0x0201:
       return WinEvent.leftButtonDown;
-    case 0x202:
+    case 0x0202:
       return WinEvent.leftButtonUp;
-    case 0x203:
+    case 0x0203:
       return WinEvent.leftButtonDoubleClick;
-    case 0x204:
+    case 0x0204:
       return WinEvent.rightButtonDown;
-    case 0x205:
+    case 0x0205:
       return WinEvent.rightButtonUp;
-    case 0x206:
+    case 0x0206:
       return WinEvent.rightButtonDoubleClick;
-    case 0x207:
+    case 0x0207:
       return WinEvent.middleButtonDown;
-    case 0x208:
+    case 0x0208:
       return WinEvent.middleButtonUp;
-    case 0x209:
+    case 0x0209:
       return WinEvent.middleButtonDoubleClick;
   }
   throw ArgumentError.value(code, "code", "Unknown code");
@@ -69,26 +84,31 @@ extension EventCodes on WinEvent {
   /// The internal constant used by Windows.
   int get code {
     switch (this) {
+      case WinEvent.select:
+        return 0x0400;
+      case WinEvent.contextMenu:
+        return 0x007b;
+      case WinEvent.mouseFirst:
       case WinEvent.mouseMove:
-        return 0x200;
+        return 0x0200;
       case WinEvent.leftButtonDown:
-        return 0x201;
+        return 0x0201;
       case WinEvent.leftButtonUp:
-        return 0x202;
+        return 0x0202;
       case WinEvent.leftButtonDoubleClick:
-        return 0x203;
+        return 0x0203;
       case WinEvent.rightButtonDown:
-        return 0x204;
+        return 0x0204;
       case WinEvent.rightButtonUp:
-        return 0x205;
+        return 0x0205;
       case WinEvent.rightButtonDoubleClick:
-        return 0x206;
+        return 0x0206;
       case WinEvent.middleButtonDown:
-        return 0x207;
+        return 0x0207;
       case WinEvent.middleButtonUp:
-        return 0x208;
+        return 0x0208;
       case WinEvent.middleButtonDoubleClick:
-        return 0x209;
+        return 0x0209;
     }
   }
 }

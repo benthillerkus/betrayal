@@ -2,6 +2,7 @@
 
 // This must be included before many other Windows headers.
 #include <windows.h>
+#include <windowsx.h>
 
 #include <shellapi.h>
 #include <strsafe.h>
@@ -49,9 +50,18 @@ namespace Betrayal
       {
         icons.clear_all();
       }
+      // https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shell_notifyiconw
+      // https://docs.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-notifyicondataw
       else if (message >= WM_USER && message < WM_APP)
       {
-        LogWindowProc(hWnd, message, wParam, lParam);
+        auto event = LOWORD(lParam);
+        auto id = HIWORD(lParam);
+        auto x = GET_X_LPARAM(wParam);
+        auto y = GET_Y_LPARAM(wParam);
+
+        // if (event == WM_CONTEXTMENU) DefWindowProc(hWnd, message, wParam, lParam);
+
+        invokeInteraction(hWnd, message, event, id, x, y);
       }
 
       return result;
@@ -62,14 +72,16 @@ namespace Betrayal
       return ::GetAncestor(registrar->GetView()->GetNativeWindow(), GA_ROOT);
     };
 
-    void LogWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+    void invokeInteraction(HWND hWnd, UINT message, uint16_t event, uint16_t id, int x, int y)
     {
       flutter::EncodableMap data;
       data[flutter::EncodableValue("message")] = flutter::EncodableValue(static_cast<int>(message));
       data[flutter::EncodableValue("hWnd")] = flutter::EncodableValue(PtrToInt(hWnd));
-      data[flutter::EncodableValue("wParam")] = flutter::EncodableValue(static_cast<int>(wParam));
-      data[flutter::EncodableValue("lParam")] = flutter::EncodableValue(static_cast<int>(lParam));
-      channel->InvokeMethod("logWindowProc", std::make_unique<flutter::EncodableValue>(data));
+      data[flutter::EncodableValue("event")] = flutter::EncodableValue(event);
+      data[flutter::EncodableValue("id")] = flutter::EncodableValue(id);
+      data[flutter::EncodableValue("x")] = flutter::EncodableValue(x);
+      data[flutter::EncodableValue("y")] = flutter::EncodableValue(y);
+      channel->InvokeMethod("handleInteraction", std::make_unique<flutter::EncodableValue>(data));
     }
 
     void Print(const std::string &message)
