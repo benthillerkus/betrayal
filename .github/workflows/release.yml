@@ -16,3 +16,6 @@ jobs:
         with:
           release-type: simple
           package-name: release-please-action
+          version-file: version.txt
+          extra-files: | 
+            pubspec.yaml
