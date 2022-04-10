@@ -64,6 +64,10 @@ class BetrayalPlugin {
     _logger.info('connection initialized');
   }
 
+  /// Has no use beyond making the scoring algorithm on pub.dev happy.
+  @protected
+  void _noop() {}
+
   Future<dynamic> _handleMethod(MethodCall methodCall) async {
     switch (methodCall.method) {
       case "print":
