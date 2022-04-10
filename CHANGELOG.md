@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0-dev.5](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2022-04-10)
+
+
+### Bug Fixes
+
+* remove emoji from `pubspec.yaml` ([a24b827](https://github.com/benthillerkus/betrayal/commit/a24b8271cdf781aa91bd41799423276cf19831a4))
+
+
+### Documentation
+
+* **readme:** implement further advances in fanciness ([5e1f055](https://github.com/benthillerkus/betrayal/commit/5e1f055deb35391fec76fed6802a63da24f8fde9))
+
 ## [1.0.0-dev.4](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2022-04-10)
 
 
