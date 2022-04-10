@@ -2,7 +2,7 @@ name: pub score
 on:
   push:
     branches:
-      main
+      - main
     paths: |
       - '**.dart'
       - 'pubspec.yaml'
