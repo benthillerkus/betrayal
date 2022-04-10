@@ -3,7 +3,7 @@
 
 # betrayal
 
-A plugin for the [taskbar notification area](https://devblogs.microsoft.com/oldnewthing/20030910-00/?p=42583#:~:text=Summary%3A%20It%20is%20never%20correct%20to%20refer%20to%20the%20notification%20area%20as%20the%20tray.%20It%20has%20always%20been%20called%20the%20%E2%80%9Cnotification%20area%E2%80%9D.) in Windows.
+A capable tray icon[^2] plugin for Windows. Manage multiple icons 👨‍👩‍👦‍👦, generate their images at runtime 🎨 and compose them as if they were a regular widget 🎶
 
 ## Features
 
@@ -76,3 +76,4 @@ Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guid
 ```
 
 [^1]: This is a lie. Flutter does not support Windows 2000. Betrayal.
+[^2]: It's actually called the notification area [according to Raymond Chen](https://devblogs.microsoft.com/oldnewthing/20030910-00/?p=42583#:~:text=Summary%3A%20It%20is%20never%20correct%20to%20refer%20to%20the%20notification%20area%20as%20the%20tray.%20It%20has%20always%20been%20called%20the%20%E2%80%9Cnotification%20area%E2%80%9D.)
