@@ -1,5 +1,7 @@
 [![pub score](https://github.com/benthillerkus/betrayal/actions/workflows/score.yml/badge.svg?branch=main)](https://github.com/benthillerkus/betrayal/actions/workflows/score.yml)
+![pub version (including pre-releases)](https://img.shields.io/pub/v/betrayal?include_prereleases)
 ![joke shield[^1]](https://img.shields.io/badge/supports-windows%202000*-blue)
+![pub publisher](https://img.shields.io/pub/publisher/betrayal)
 
 # betrayal
 
