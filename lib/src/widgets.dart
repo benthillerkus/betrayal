@@ -61,6 +61,7 @@ class TrayIconWidget extends StatefulWidget {
       ByteBuffer? imagePixels,
       String? imageAsset,
       Uri? imagePath,
+      StockIcon? stockIcon,
       WinIcon? winIcon})
       : super(key: key) {
     if (imageDelegate != null) {
@@ -71,6 +72,8 @@ class TrayIconWidget extends StatefulWidget {
       _delegate = TrayIconImageDelegate.fromAsset(imageAsset);
     } else if (imagePath != null) {
       _delegate = TrayIconImageDelegate.fromPath(uri: imagePath);
+    } else if (stockIcon != null) {
+      _delegate = TrayIconImageDelegate.fromStockIcon(stockIcon);
     } else if (winIcon != null) {
       _delegate = TrayIconImageDelegate.fromWinIcon(winIcon);
     } else {

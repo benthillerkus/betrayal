@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:betrayal/src/plugin.dart';
 import 'package:betrayal/src/win_icon.dart';
+import 'package:betrayal/src/stock_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
@@ -50,6 +51,11 @@ Continuing under the assumption that only the file extension is wrong""");
   /// A [TrayIconImageDelegate] that uses a Windows system icon.
   TrayIconImageDelegate.fromWinIcon(WinIcon winIcon) {
     setIcon = (id, plugin) => plugin.setImageAsWinIcon(id, winIcon.code);
+  }
+
+  /// A [TrayIconImageDelegate] that uses a Windows system icon.
+  TrayIconImageDelegate.fromStockIcon(StockIcon stockIcon) {
+    setIcon = (id, plugin) => plugin.setImageAsStockIcon(id, stockIcon.code);
   }
 
   /// A [TrayIconImageDelegate] that uses an RGBA image buffer.

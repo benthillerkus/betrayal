@@ -184,6 +184,7 @@ class TrayIcon {
     Uri? path,
     ByteBuffer? pixels,
     String? asset,
+    StockIcon? stockIcon,
     WinIcon? winIcon,
   }) async {
     _ensureIsActive();
@@ -196,6 +197,8 @@ class TrayIcon {
       delegate = TrayIconImageDelegate.fromAsset(asset);
     } else if (path != null) {
       delegate = TrayIconImageDelegate.fromPath(uri: path);
+    } else if (stockIcon != null) {
+      delegate = TrayIconImageDelegate.fromStockIcon(stockIcon);
     } else if (winIcon != null) {
       delegate = TrayIconImageDelegate.fromWinIcon(winIcon);
     } else {

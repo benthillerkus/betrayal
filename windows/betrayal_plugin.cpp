@@ -163,6 +163,14 @@ namespace Betrayal
         auto resource_id = std::get<int>(args.at(flutter::EncodableValue("resourceId")));
         SetImageAsWinIcon(hWnd, id, resource_id, std::move(result));
       }
+      else if (method.compare("setImageAsStockIcon") == 0)
+      {
+        WITH_ARGS;
+        WITH_HWND;
+        WITH_ID;
+        auto stockIconId = std::get<int>(args.at(flutter::EncodableValue("stockIconId")));
+        SetImageAsStockIcon(hWnd, id, stockIconId, std::move(result));
+      }
       else if (method.compare("setImageFromPixels") == 0)
       {
         WITH_ARGS;
@@ -314,6 +322,37 @@ namespace Betrayal
       }
 
       icon->set_image(LoadIcon(nullptr, MAKEINTRESOURCE(resource_id)), true);
+      icon->update();
+      result->Success(flutter::EncodableValue(true));
+    };
+
+    void SetImageAsStockIcon(
+        const HWND hWnd, const UINT id, const UINT stock_icon_id,
+        std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+            result)
+    {
+      auto icon = icons.get(hWnd, id);
+      if (icon == nullptr)
+      {
+        result->Error("Icon not found");
+        return;
+      }
+
+      SHSTOCKICONINFO info = {0};
+      info.cbSize = sizeof(SHSTOCKICONINFO);
+
+      if (0 > SHGetStockIconInfo((SHSTOCKICONID)stock_icon_id, SHGSI_SMALLICON | SHGSI_ICON, &info))
+      {
+        result->Error("Failed to find stock icon");
+        return;
+      }
+      if (info.hIcon == nullptr)
+      {
+        result->Error("Failed to get stock icon");
+        return;
+      }
+
+      icon->set_image(info.hIcon, true);
       icon->update();
       result->Success(flutter::EncodableValue(true));
     };

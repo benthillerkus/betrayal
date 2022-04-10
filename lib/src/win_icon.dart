@@ -1,5 +1,8 @@
 /// A type of icon image that ships with Windows per default.
 ///
+/// You should prefer using the [StockIcon] enum.
+/// As they have more modern styles.
+///
 /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-loadicona
 enum WinIcon {
   /// 📰 An icon that looks similar to a program GUI

@@ -1,13 +1,12 @@
 import 'package:betrayal/betrayal.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   // Configure plugin log levels
   BetrayalLogConfig.allowIndividualLevels();
   BetrayalLogConfig.level = kDebugMode ? "FINER" : "INFO";
-
-
 
   // This is only necessary if icons seem to persist after hot restarting.
   // That happens when after restarting the app is not immediately interacting
@@ -17,8 +16,6 @@ void main() {
   // Then set [inserted] in [_MyHomePageState] to `true`.
   // Now the app will immediately need a new [TrayIcon]
   // and the old one can be removed.
-
-
 
   runApp(const MyApp());
 }
@@ -93,25 +90,34 @@ class _MyHomePageState extends State<MyHomePage> {
                           duration: const Duration(milliseconds: 200),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 32),
-                            child: Builder(
-                              // Get a fresh [BuildContext] that can access the [TrayIcon]
-                              builder: (BuildContext context) => Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  for (var value in WinIcon.values)
-                                    IconButton(
-                                        tooltip: "Set the ${value.name} icon",
+                            child: SizedBox(
+                              height: 75,
+                              child: ScrollConfiguration(
+                                behavior: ScrollConfiguration.of(context)
+                                    .copyWith(dragDevices: {
+                                  PointerDeviceKind.touch,
+                                  PointerDeviceKind.mouse
+                                }, scrollbars: true),
+                                child: ListView.builder(
+                                  itemExtent: 75,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: StockIcon.values.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final icon = StockIcon.values[index];
+                                    return IconButton(
+                                        tooltip: "Set the ${icon.name} icon",
                                         onPressed: shown
                                             ? () => TrayIcon.of(context)
-                                                .setImage(winIcon: value)
+                                                .setImage(stockIcon: icon)
                                             : null,
-                                        icon: Text(value.emoji)),
-                                ],
+                                        icon: Text(icon.emoji));
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )),

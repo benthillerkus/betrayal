@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 import 'image.dart';
+import 'stock_icon.dart';
 import 'win_icon.dart';
 import 'win_event.dart';
 
@@ -173,6 +174,15 @@ class BetrayalPlugin {
   Future<void> setImageAsWinIcon(Id id, int resourceId) async {
     await _channel.invokeMethod(
         'setImageAsWinIcon', {'id': id, 'resourceId': resourceId});
+  }
+
+  /// Sets the icon's image, by loading a stock icon.
+  ///
+  /// Check out the [StockIcon] enum for a list of available icons.
+  @protected
+  Future<void> setImageAsStockIcon(Id id, int stockIconId) async {
+    await _channel.invokeMethod(
+        'setImageAsStockIcon', {'id': id, 'stockIconId': stockIconId});
   }
 
   /// Sets the icon's image, by loading a byte buffer.
