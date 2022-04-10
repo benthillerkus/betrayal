@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.0.0-dev.4](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2022-04-10)
+
+
+### Features
+
+* support windows stock icons ([9e0da85](https://github.com/benthillerkus/betrayal/commit/9e0da856d5e07553d5863b9e2ab9bec9f4d190e1))
+
+
+### Bug Fixes
+
+* forgot to check in some method into sc ([aadab96](https://github.com/benthillerkus/betrayal/commit/aadab9610e0616a9de6dfff70f84c6717663b5f1))
+
+
+### Miscellaneous
+
+* improve code quality ([ca915e2](https://github.com/benthillerkus/betrayal/commit/ca915e29e5e35285bace9762bebc60083adc8c23))
+* **publish:** fix run rules ([073dd81](https://github.com/benthillerkus/betrayal/commit/073dd817bbfaed03650e5bcdbcf00378ffcb5550))
+
+
+### Documentation
+
+* **readme:** add some light fanciness ([a38db9b](https://github.com/benthillerkus/betrayal/commit/a38db9b62ea2fd73519e18e5ed71564736c65cf9))
+* **readme:** increase fanciness even further by doubling the amount of badges ([1362669](https://github.com/benthillerkus/betrayal/commit/13626695fa0039097108d69ac36f4ab54adff750))
+* **readme:** make badges clickable ([1bfcd8e](https://github.com/benthillerkus/betrayal/commit/1bfcd8e69508fbbdada6f9a97aabe4d95baaaf27))
+* **readme:** replace score badge ([b965602](https://github.com/benthillerkus/betrayal/commit/b96560216c97f7505575a9c07263bf276eed10a2))
+
 ## [1.0.0-dev.3](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2022-04-10)
 
 
