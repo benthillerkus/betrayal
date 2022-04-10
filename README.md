@@ -5,7 +5,9 @@
 
 # betrayal
 
-A capable tray icon[^2] plugin for Windows. Manage multiple icons 👨‍👩‍👦‍👦, generate their images at runtime 🎨 and compose them as if they were a regular widget 🎶
+A capable tray icon[^2] plugin for Windows.
+
+> Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at runtime 🎨<br>and compose them just like a widget 🎶
 
 ## Features
 
