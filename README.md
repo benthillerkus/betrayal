@@ -55,10 +55,11 @@ Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guid
 
 ```mermaid
   graph LR;
-    BetrayalPlugin -- connects via platform channel to --> betrayal_plugin.cpp
+    BetrayalPlugin o----o |connects via platform channel to| betrayal_plugin.cpp
     subgraph dart
     TrayIconWidget -- manages --> TrayIcon -- calls --> BetrayalPlugin
     TrayIcon -- uses --> TrayIconImageDelegate -- calls --> BetrayalPlugin
+    BetrayalLogConfig
     end
     subgraph native
     betrayal_plugin.cpp -- holds --> IconManager.hpp
