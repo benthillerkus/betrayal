@@ -1,6 +1,6 @@
 # How to use?
 
-To add an icon to your app, simply use the [`TrayIconWidget`](../lib/src/widgets.dart).
+To add an icon to your app, simply use the [`TrayIconWidget`](https://github.com/benthillerkus/betrayal/blob/main/lib/src/widgets.dart).
 
 ```dart
 import 'package:betrayal/betrayal.dart';
@@ -29,15 +29,15 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Check out the [Widgets Api](widget_api/lib/main.dart) example to learn more about this approach
-and have a look at [widgets_api](widgets_api/lib/main.dart) for a small demo app that uses it.
+Check out the [widgets api](https://github.com/benthillerkus/betrayal/blob/main/lib/src/widgets.dart) example to learn more about this approach
+and have a look at [widgets_api](https://github.com/benthillerkus/betrayal/blob/main/example/widgets_api/lib/main.dart) for a small demo app that uses it.
 
-[skeleton_example](skeleton_example/lib/src/app.dart) is an abridged version of the Flutter skeleton template
+[skeleton_example](https://github.com/benthillerkus/betrayal/blob/main/example/skeleton_example/lib/src/app.dart) is an abridged version of the Flutter skeleton template
 that persists an icon over multiple pages.
 
 ## Ok, but I want to work with `TrayIcon`s directly, please!
 
-Sure, you can use the [imperative api](../lib/src/imperative.dart) to create and control `TrayIcon`s directly.
+Sure, you can use the [imperative api](https://github.com/benthillerkus/betrayal/blob/main/lib/src/imperative.dart) to create and control `TrayIcon`s directly.
 
 ```dart
 final icon = TrayIcon();
@@ -75,13 +75,13 @@ Widget build(BuildContext context) {
 }
 ```
 
-Check out the [edit_icon](edit_icon/README.md) example for a more complex app that uses the imperative api.
+Check out the [edit_icon](https://github.com/benthillerkus/betrayal/blob/main/example/edit_icon) example for a more complex app that uses the imperative api.
 
-If you want to see how *Betrayal* can work with multiple icons and how to generate images at runtime through `Canvas` please look at the [add_many](add_many/lib/main.dart)
+If you want to see how *Betrayal* can work with multiple icons and how to generate images at runtime through `Canvas` please look at the [add_many](https://github.com/benthillerkus/betrayal/blob/main/example/add_many/lib/main.dart)
 
 ## Is there a way to get rid of the log messages?
 
-Yeah, you can change the log level, as seen in the [widgets_api](widgets_api/lib/main.dart) example.
+Yeah, you can change the log level, as seen in the [widgets_api](https://github.com/benthillerkus/betrayal/blob/main/example/widgets_api/README.md) example.
 
 ```dart
 // sets `hierarchicalLoggingEnabled`
@@ -92,4 +92,4 @@ BetrayalLogConfig.allowIndividualLevels();
 BetrayalLogConfig.level = "OFF";
 ```
 
-To learn more about logging in *betrayal* have a look at the implementation in [logging.dart](../lib/src/logging.dart).
+To learn more about logging in *betrayal* have a look at the implementation in [logging.dart](https://github.com/benthillerkus/betrayal/blob/main/lib/src/logging.dart).

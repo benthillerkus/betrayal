@@ -37,7 +37,7 @@ Widget build(BuildContext context) => MaterialApp(
 );
 ```
 
-Please refer to the [example subdirectory](example) for more [information](example/README.md) and code.
+Please refer to the [example subdirectory](https://github.com/benthillerkus/betrayal/tree/main/example) for more [information](https://github.com/benthillerkus/betrayal/blob/main/example/README.md) and code.
 
 # Development
 ## TBD before v1
