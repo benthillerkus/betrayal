@@ -60,7 +60,7 @@ class TrayIcon {
     // This method is automatically called, when the [BetrayalPlugin._instance]
     // is constructed.
     // This happens happens the first time [_plugin] is accessed.
-    if (kDebugMode) _plugin;
+    if (kDebugMode) _plugin._noop();
   }
 
   @override
