@@ -25,6 +25,7 @@ jobs:
               { "type": "fix", "section": "Bug Fixes", "hidden": false },
               { "type": "chore", "section": "Miscellaneous", "hidden": false },
               { "type": "refactor","section": "Miscellaneous", "hidden": false },
+              { "type": "ci","section": "Miscellaneous", "hidden": true },
               { "type": "docs", "section": "Documentation", "hidden": false }
             ]
 
