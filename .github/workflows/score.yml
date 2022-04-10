@@ -3,10 +3,12 @@ on:
   push:
     branches:
       main
+    paths: |
+      - '**.dart'
+      - 'pubspec.yaml'
 
 jobs:
   package-analysis:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
