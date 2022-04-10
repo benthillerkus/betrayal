@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.0-dev.2](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2022-04-10)
+
+
+### Bug Fixes
+
+* add `path` as an explicit dependency ([2b4f8d2](https://github.com/benthillerkus/betrayal/commit/2b4f8d2701259536a71031ce52d2dfad43d10733))
+* **page:** move page to main directory ([f18b844](https://github.com/benthillerkus/betrayal/commit/f18b8443a96a0a1276ec218e98eed888d93ab3d0))
+
+
+### Miscellaneous Chores
+
+* prepare new preview release ([b2b6c54](https://github.com/benthillerkus/betrayal/commit/b2b6c54bace8701f36a1ce1929720bea396292b1))
+
 ## 1.0.0-dev.1 (2022-04-10)
 
 
