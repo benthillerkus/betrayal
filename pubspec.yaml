@@ -1,6 +1,6 @@
 name: betrayal
 description: A tray icon plugin for Windows.
-version: 0.0.1
+version: 0.0.1 # x-release-please-version
 homepage: https://betrayal.bent.party/
 
 environment:
