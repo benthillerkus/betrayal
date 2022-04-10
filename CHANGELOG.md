@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-dev.3](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2022-04-10)
+
+
+### Documentation
+
+* **readme:** change relative links to link to gh ([57780fd](https://github.com/benthillerkus/betrayal/commit/57780fd7c4ac70ca3ba5ecf6d30c5d2642af8b7b))
+
 ## [1.0.0-dev.2](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2022-04-10)
 
 
