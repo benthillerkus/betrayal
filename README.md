@@ -7,7 +7,20 @@
 
 A capable tray icon[^2] plugin for Windows.
 
-> Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at runtime 🎨<br>and compose them just like a widget 🎶
+<table border="0">
+  <tr>
+    <td>
+      <a href="https://pub.dev/packages/betrayal">🔗 package on pub.dev</a><br>
+      <a href="https://github.com/benthillerkus/betrayal">🔗 source on github.com</a><br>
+      <a href="https://pub.dev/documentation/betrayal">🔗 dart docs api reference</a>
+    </td>
+    <td>
+      <pre><br>
+Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at runtime 🎨<br>and compose them just like a widget 🎶
+        </pre>
+    </td>
+  </tr>
+</table>
 
 ## Features
 
