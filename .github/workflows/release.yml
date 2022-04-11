@@ -3,10 +3,10 @@ on:
     branches:
       - main
     paths-ignore:
-      - '.github/**'
-      - '.vscode/**'
-      - 'test/**'
-      
+      - ".github/**"
+      - ".vscode/**"
+      - "test/**"
+
 name: release-please
 jobs:
   release-please:
@@ -17,8 +17,9 @@ jobs:
           release-type: simple
           package-name: release-please-action
           version-file: version.txt
-          extra-files: | 
+          extra-files: |
             pubspec.yaml
+            dartdoc_options.yaml
           changelog-types: |
             [
               { "type": "feat", "section": "Features", "hidden": false },
@@ -28,4 +29,3 @@ jobs:
               { "type": "ci","section": "Miscellaneous", "hidden": true },
               { "type": "docs", "section": "Documentation", "hidden": false }
             ]
-

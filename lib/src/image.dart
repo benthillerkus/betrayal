@@ -75,7 +75,7 @@ Continuing under the assumption that only the file extension is wrong""");
     setIcon = (id, plugin) => plugin.removeImage(id);
   }
 
-  /// The call into the plugin to set the image for a [TrayIcon] with the given [id].
+  /// The call into the plugin to set the image for a [TrayIcon] with the given [Id].
   @protected
   late final Future<void> Function(Id id, BetrayalPlugin plugin) setIcon;
 }

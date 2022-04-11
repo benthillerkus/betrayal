@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-      - '**.dart'
-      - 'pubspec.yaml'
+      - "**.dart"
+      - "pubspec.yaml"
 
 jobs:
   package-analysis:
