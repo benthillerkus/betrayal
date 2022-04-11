@@ -25,7 +25,7 @@ enum StockIcon {
 
   /// Generic application with no custom icon.
   ///
-  /// ![📰](https://docs.microsoft.com/en-us/windows/win32/api/shellapi/images/siid_appgeneric.jpg)
+  /// ![📰](https://docs.microsoft.com/en-us/windows/win32/api/shellapi/images/siid_application.jpg)
   ///
   /// `SIID_APPLICATION = 2`
   application,
@@ -305,7 +305,7 @@ enum StockIcon {
 
   /// CD+ (enhanced audio CD) media.
   ///
-  /// ![💽➕🎶](https://docs.microsoft.com/en-us/windows/win32/api/shellapi/images/siid_mediacdplus.jpg)
+  /// ![💽➕🎶](https://docs.microsoft.com/en-us/windows/win32/api/shellapi/images/siid_mediacdaudioplus.jpg)
   ///
   /// `SIID_MEDIACDAUDIOPLUS = 65`
   cdPlus,
