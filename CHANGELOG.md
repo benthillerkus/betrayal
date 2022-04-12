@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0-dev.6](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2022-04-12)
+
+
+### Features
+
+* introduce support for interactions ([f927a35](https://github.com/benthillerkus/betrayal/commit/f927a35f6354fa498a6e1ae8a5b759b7ccb6f6dc))
+
+
+### Documentation
+
+* fix broken image links ([1a7104c](https://github.com/benthillerkus/betrayal/commit/1a7104cb790223eff84066ad8976c02863633cf0))
+* improve generation setting ([02efff9](https://github.com/benthillerkus/betrayal/commit/02efff94c752b90cb1edb5f29bb817b465359923))
+* **readme:** +1 for fanciness ([0242703](https://github.com/benthillerkus/betrayal/commit/02427033421e223acd45530622fa8b7d2ce06b93))
+
 ## [1.0.0-dev.5](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2022-04-10)
 
 
