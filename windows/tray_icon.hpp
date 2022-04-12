@@ -8,12 +8,14 @@
 #include <string>
 #include <codecvt>
 #include <map>
+#include <vector>
 
 class TrayIcon
 {
 private:
   bool m_is_visible;
   bool m_icon_is_shared;
+  std::vector<UINT> m_subbed_events;
 
 public:
   NOTIFYICONDATA data;
@@ -35,6 +37,28 @@ public:
       hide();
     if (!m_icon_is_shared)
       DestroyIcon(data.hIcon);
+  };
+
+  bool is_subscribed(UINT event)
+  {
+    return std::find(m_subbed_events.begin(), m_subbed_events.end(), event) != m_subbed_events.end();
+  }
+
+  void subscribe(UINT event)
+  {
+    m_subbed_events.push_back(event);
+  };
+
+  void unsubscribe(UINT event)
+  {
+    for (auto it = m_subbed_events.begin(); it != m_subbed_events.end(); ++it)
+    {
+      if (*it == event)
+      {
+        m_subbed_events.erase(it);
+        break;
+      }
+    }
   };
 
   void set_tooltip(const std::string &tooltip)

@@ -40,6 +40,8 @@ class TrayIconWidget extends StatefulWidget {
 
   late final TrayIconImageDelegate? _delegate;
 
+  late final Map<WinEvent, _EventCallback> _callbacks;
+
   /// Manages a [TrayIcon] as a [StatefulWidget].
   ///
   /// The underlying resource will automatically be disposed according to the
@@ -57,6 +59,18 @@ class TrayIconWidget extends StatefulWidget {
       this.visible = true,
       this.addToContext = true,
       this.tooltip,
+      _EventCallback onTap,
+      _EventCallback onSecondaryTap,
+      _EventCallback onTapDown,
+      _EventCallback onSecondaryTapDown,
+      _EventCallback onTertiaryTapDown,
+      _EventCallback onTapUp,
+      _EventCallback onSecondaryTapUp,
+      _EventCallback onTertiaryTapUp,
+      _EventCallback onDoubleTap,
+      _EventCallback onSecondaryDoubleTap,
+      _EventCallback onTertiaryDoubleTap,
+      _EventCallback onPointerMove,
       TrayIconImageDelegate? imageDelegate,
       ByteBuffer? imagePixels,
       String? imageAsset,
@@ -79,6 +93,21 @@ class TrayIconWidget extends StatefulWidget {
     } else {
       _delegate = null;
     }
+
+    _callbacks = {
+      WinEvent.select: onTap,
+      WinEvent.leftButtonDoubleClick: onDoubleTap,
+      WinEvent.leftButtonDown: onTapDown,
+      WinEvent.leftButtonUp: onTapUp,
+      WinEvent.contextMenu: onSecondaryTap,
+      WinEvent.rightButtonDown: onSecondaryTapDown,
+      WinEvent.rightButtonUp: onSecondaryTapUp,
+      WinEvent.rightButtonDoubleClick: onSecondaryDoubleTap,
+      WinEvent.middleButtonDown: onTertiaryTapDown,
+      WinEvent.middleButtonUp: onTertiaryTapUp,
+      WinEvent.middleButtonDoubleClick: onTertiaryDoubleTap,
+      WinEvent.mouseMove: onPointerMove,
+    };
   }
 
   @override
@@ -124,6 +153,7 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
   void didUpdateWidget(covariant TrayIconWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     _logger.fine("updating icon…");
+    _icon._callbacks = widget._callbacks;
     if (widget.visible != null && !widget.visible!) {
       _icon.hide();
       return;
@@ -152,5 +182,6 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
     if (widget._delegate != null) _icon.setImage(delegate: widget._delegate);
     if (widget.tooltip != null) _icon.setTooltip(widget.tooltip!);
     if (widget.visible ?? false) _icon.show();
+    _icon._callbacks = widget._callbacks;
   }
 }

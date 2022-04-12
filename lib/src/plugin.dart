@@ -17,6 +17,7 @@ import 'win_icon.dart';
 import 'win_event.dart';
 
 part 'imperative.dart';
+part 'interaction.dart';
 part 'widgets.dart';
 
 /// An identifier.
@@ -88,9 +89,9 @@ class BetrayalPlugin {
             final icon = TrayIcon._allIcons[message - 0x0400]!;
             icon._logger.info("added to tray at $position");
           } else {
-            final action = fromCode(event);
             final icon = TrayIcon._allIcons[id]!;
-            icon._logger.fine("${action.name} at $position}");
+            icon._handleInteraction(
+                _TrayIconInteraction(fromCode(event), position, id, hWnd));
           }
         } on Error {
           _logger.warning(
@@ -98,6 +99,26 @@ class BetrayalPlugin {
         }
         break;
     }
+  }
+
+  /// Asks the plugin to call [_handleMethod] whenever [id] + [event] happens.
+  ///
+  /// Effectively, this means that events will per default *not* clog up the `MethodChannel`.
+  @protected
+  Future<void> subscribeTo(Id id, WinEvent event) async {
+    await _channel.invokeMethod("subscribeTo", {
+      "id": id,
+      "event": event.code,
+    });
+  }
+
+  /// Notifies the plugin that events that the pattern [id] + [event] can be ignored.
+  @protected
+  Future<void> unsubscribeFrom(Id id, WinEvent event) async {
+    await _channel.invokeMethod("unsubscribeFrom", {
+      "id": id,
+      "event": event.code,
+    });
   }
 
   /// Removes and cleans up any icon managed by the plugin.

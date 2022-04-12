@@ -59,9 +59,7 @@ Please refer to the [example subdirectory](https://github.com/benthillerkus/betr
 # Development
 ## TBD before v1
 
-- FIXME Find out all possible errors and repackage / handle them
 - TODO Find out, communicate and memoize the correct system metrics (icon resolution)
-- TODO Support interaction
 
 ## Style
 

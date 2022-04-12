@@ -59,9 +59,21 @@ namespace Betrayal
         auto x = GET_X_LPARAM(wParam);
         auto y = GET_Y_LPARAM(wParam);
 
-        // if (event == WM_CONTEXTMENU) DefWindowProc(hWnd, message, wParam, lParam);
+        try {
+            auto icon = icons.get(hWnd, id);
+            if (icon != nullptr && icon->is_subscribed(event))
+            {
+                invokeInteraction(hWnd, message, event, id, x, y);
+                return result;
+            }
+        }
+        catch (const std::out_of_range&) {
 
-        invokeInteraction(hWnd, message, event, id, x, y);
+        }
+        if (event == WM_CONTEXTMENU)
+        {
+          DefWindowProc(hWnd, message, wParam, lParam);
+        }
       }
 
       return result;
@@ -89,9 +101,10 @@ namespace Betrayal
       channel->InvokeMethod("print", std::make_unique<flutter::EncodableValue>(message));
     }
 
-#define WITH_ARGS const flutter::EncodableMap &args = std::get<flutter::EncodableMap>(*method_call.arguments())
+#define WITH_ARGS const flutter::EncodableMap &args = std::get<flutter::EncodableMap>(*method_call.arguments());
 #define WITH_HWND HWND hWnd = GetMainWindow();
 #define WITH_ID const int id = std::get<int>(args.at(flutter::EncodableValue("id")));
+#define WITH_ARGS_HWND_ID WITH_ARGS WITH_HWND WITH_ID
 
     void HandleMethodCall(
         const flutter::MethodCall<flutter::EncodableValue> &method_call,
@@ -102,80 +115,81 @@ namespace Betrayal
       {
         icons.clear_all();
       }
+      else if (method.compare("subscribeTo") == 0)
+      {
+        WITH_ARGS_HWND_ID
+        UINT event = std::get<int>(args.at(flutter::EncodableValue("event")));
+        SubscribeTo(hWnd, id, event, std::move(result));
+      }
+      else if (method.compare("unsubscribeFrom") == 0)
+      {
+        WITH_ARGS_HWND_ID
+        UINT event = std::get<int>(args.at(flutter::EncodableValue("event")));
+        UnsubscribeFrom(hWnd, id, event, std::move(result));
+      }
       else if (method.compare("addTray") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         AddTray(hWnd, id, std::move(result));
       }
       else if (method.compare("disposeTray") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         DisposeTray(hWnd, id, std::move(result));
       }
       else if (method.compare("hideIcon") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         HideIcon(hWnd, id, std::move(result));
       }
       else if (method.compare("showIcon") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         ShowIcon(hWnd, id, std::move(result));
       }
       else if (method.compare("setTooltip") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         auto tooltip = std::get<std::string>(args.at(flutter::EncodableValue("tooltip")));
         SetTooltip(hWnd, id, tooltip, std::move(result));
       }
       else if (method.compare("removeTooltip") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
 
         RemoveTooltip(hWnd, id, std::move(result));
       }
       else if (method.compare("setImageFromPath") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         auto path = std::get<std::string>(args.at(flutter::EncodableValue("path")));
         auto is_shared = std::get<bool>(args.at(flutter::EncodableValue("isShared")));
         SetImageFromPath(hWnd, id, path, is_shared, std::move(result));
       }
       else if (method.compare("setImageAsWinIcon") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         auto resource_id = std::get<int>(args.at(flutter::EncodableValue("resourceId")));
         SetImageAsWinIcon(hWnd, id, resource_id, std::move(result));
       }
       else if (method.compare("setImageAsStockIcon") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         auto stockIconId = std::get<int>(args.at(flutter::EncodableValue("stockIconId")));
         SetImageAsStockIcon(hWnd, id, stockIconId, std::move(result));
       }
       else if (method.compare("setImageFromPixels") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
+
         auto width = std::get<int>(args.at(flutter::EncodableValue("width")));
         auto height = std::get<int>(args.at(flutter::EncodableValue("height")));
         auto pixels = std::get<std::vector<int32_t>>(args.at(flutter::EncodableValue("pixels")));
@@ -184,9 +198,7 @@ namespace Betrayal
       }
       else if (method.compare("removeImage") == 0)
       {
-        WITH_ARGS;
-        WITH_HWND;
-        WITH_ID;
+        WITH_ARGS_HWND_ID
 
         RemoveImage(hWnd, id, std::move(result));
       }
@@ -195,10 +207,18 @@ namespace Betrayal
         result->NotImplemented();
       }
     };
-
-#undef WITH_ARGS
-#undef WITH_HWND
+#undef WITH_ARGS_HWND_ID
 #undef WITH_ID
+#undef WITH_HWND
+#undef WITH_ARGS
+
+#define WITH_ICON                  \
+  auto icon = icons.get(hWnd, id); \
+  if (icon == nullptr)             \
+  {                                \
+    result->Error("Icon found");   \
+    return;                        \
+  }
 
     void AddTray(
         const HWND hWnd, const UINT id,
@@ -251,17 +271,36 @@ namespace Betrayal
       }
     };
 
+    void SubscribeTo(
+        const HWND hWnd, const UINT id, const UINT event,
+        std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+            result)
+    {
+      WITH_ICON;
+
+      icon->subscribe(event);
+
+      result->Success(flutter::EncodableValue(static_cast<int>(id)));
+    };
+
+    void UnsubscribeFrom(
+        const HWND hWnd, const UINT id, const UINT event,
+        std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+            result)
+    {
+      WITH_ICON;
+
+      icon->unsubscribe(event);
+
+      result->Success(flutter::EncodableValue(static_cast<int>(id)));
+    };
+
     void SetTooltip(
         const HWND hWnd, const UINT id, const std::string &tooltip,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       icon->set_tooltip(tooltip);
       icon->update();
@@ -271,12 +310,7 @@ namespace Betrayal
     void RemoveTooltip(
         const HWND hWnd, const UINT id, std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       icon->remove_tooltip();
       icon->update();
@@ -288,12 +322,7 @@ namespace Betrayal
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       auto path = std::wstring(filepath.begin(), filepath.end());
 
@@ -314,12 +343,7 @@ namespace Betrayal
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       icon->set_image(LoadIcon(nullptr, MAKEINTRESOURCE(resource_id)), true);
       icon->update();
@@ -331,12 +355,7 @@ namespace Betrayal
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       SHSTOCKICONINFO info = {0};
       info.cbSize = sizeof(SHSTOCKICONINFO);
@@ -361,12 +380,7 @@ namespace Betrayal
                      std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
                          result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       icon->remove_image();
       icon->update();
@@ -445,12 +459,7 @@ namespace Betrayal
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
             result)
     {
-      auto icon = icons.get(hWnd, id);
-      if (icon == nullptr)
-      {
-        result->Error("Icon not found");
-        return;
-      }
+      WITH_ICON;
 
       auto hIcon = CreateIconFromBytes(
           hWnd, width, height, pixels, icon);
@@ -460,6 +469,8 @@ namespace Betrayal
 
       result->Success(flutter::EncodableValue(true));
     }
+
+#undef WITH_ICON
   };
 
   // static

@@ -63,6 +63,8 @@ class TrayIcon {
     if (kDebugMode) _plugin._noop();
   }
 
+  final __callbacks = <WinEvent, _EventCallback>{};
+
   @override
   String toString() =>
       "TrayIcon(${_id.hex}, active: $_isActive, visible: $_isVisible)";
