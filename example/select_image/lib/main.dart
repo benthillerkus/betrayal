@@ -120,7 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
           case "png":
             var resized = await compute((String path) {
               var org = img.decodePng(File(path).readAsBytesSync());
-              var resized = img.copyResizeCropSquare(org!, 32);
+              final height = TrayIcon.preferredImageSize.height.toInt();
+              final width = TrayIcon.preferredImageSize.width.toInt();
+              var resized = img.copyResize(org!,
+                  height: height,
+                  width: width,
+                  interpolation: img.Interpolation.average);
               return resized.getBytes().buffer;
             }, path);
 
