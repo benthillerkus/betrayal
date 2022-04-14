@@ -223,12 +223,12 @@ namespace Betrayal
 #undef WITH_HWND
 #undef WITH_ARGS
 
-#define WITH_ICON                  \
-  auto icon = icons.get(hWnd, id); \
-  if (icon == nullptr)             \
-  {                                \
-    result->Error("Icon found");   \
-    return;                        \
+#define WITH_ICON                    \
+  auto icon = icons.get(hWnd, id);   \
+  if (icon == nullptr)               \
+  {                                  \
+    result->Error("Icon not found"); \
+    return;                          \
   }
 
     void AddTray(

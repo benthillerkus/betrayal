@@ -26,7 +26,14 @@ public:
 
   TrayIcon *const get(HWND hWnd, UINT id)
   {
-    return all_icons.at(hWnd).at(id);
+    try
+    {
+      return all_icons.at(hWnd).at(id);
+    }
+    catch (std::out_of_range &)
+    {
+      return nullptr;
+    }
   }
 
   void dispose(HWND hWnd, UINT id)

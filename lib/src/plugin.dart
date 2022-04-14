@@ -1,6 +1,7 @@
 /// This library is not part of the public API, but feel free to use it.
 /// However, note that trying to interfere with icons managed by a [TrayIcon]´
 /// will break stuff.
+import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 

@@ -150,7 +150,10 @@ extension InteractionHandling on TrayIcon {
 
   Map<WinEvent, _EventCallback> get _callbacks => __callbacks;
 
-  void _manageEventSubscription(WinEvent event, _EventCallback callback) {
+  Future<void> _manageEventSubscription(
+      WinEvent event, _EventCallback callback) async {
+    _ensureIsActive();
+    await _makeRealIfNeeded();
     final oldCallback = __callbacks[event];
     if (callback == oldCallback) return;
     if (callback != null && oldCallback == null) {
