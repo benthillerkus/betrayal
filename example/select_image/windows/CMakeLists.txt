@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(edit_icon LANGUAGES CXX)
+project(select_image LANGUAGES CXX)
 
-set(BINARY_NAME "edit_icon")
+set(BINARY_NAME "select_image")
 
 cmake_policy(SET CMP0063 NEW)
 
