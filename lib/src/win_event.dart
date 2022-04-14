@@ -111,4 +111,24 @@ extension EventCodes on WinEvent {
         return 0x0209;
     }
   }
+
+  /// Get the opposite event (left = right, right = left)
+  WinEvent get inverted {
+    switch (this) {
+      case WinEvent.leftButtonUp:
+        return WinEvent.rightButtonUp;
+      case WinEvent.leftButtonDown:
+        return WinEvent.rightButtonDown;
+      case WinEvent.leftButtonDoubleClick:
+        return WinEvent.rightButtonDoubleClick;
+      case WinEvent.rightButtonUp:
+        return WinEvent.leftButtonUp;
+      case WinEvent.rightButtonDown:
+        return WinEvent.leftButtonDown;
+      case WinEvent.rightButtonDoubleClick:
+        return WinEvent.leftButtonDoubleClick;
+      default:
+        return this;
+    }
+  }
 }

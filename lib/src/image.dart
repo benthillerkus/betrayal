@@ -60,14 +60,20 @@ Continuing under the assumption that only the file extension is wrong""");
 
   /// A [TrayIconImageDelegate] that uses an RGBA image buffer.
   ///
-  /// The buffer is expected to be in the format of a 32x32 RGBA image.
+  /// {@template betrayal.image.pixels}
+  /// The buffer is expected to be in the format of an RGBA image
+  /// where the size equals [TrayIcon.preferredImageSize].
+  /// {@endtemplate}
   TrayIconImageDelegate.fromBytes(ByteBuffer pixels) {
-    if (pixels.lengthInBytes != 32 * 32 * 4) {
+    final size = TrayIcon.preferredImageSize;
+    int x = size.width.toInt();
+    int y = size.height.toInt();
+    if (pixels.lengthInBytes != x * y * 4) {
       throw ArgumentError(
-          "The buffer must be 32x32 pixels and 4 bytes per pixel.");
+          "The buffer must have $x×$y pixels and 4 bytes per pixel.");
     }
     setIcon = (id, plugin) =>
-        plugin.setImageFromPixels(id, 32, 32, pixels.asInt32List());
+        plugin.setImageFromPixels(id, x, y, pixels.asInt32List());
   }
 
   /// A [TrayIconImageDelegate] that uses no image and will remove existing images.

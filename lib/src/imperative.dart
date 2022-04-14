@@ -48,6 +48,16 @@ class TrayIcon {
   /// This is deferred until usage, because constructors can't be `async`.
   bool _isReal = false;
 
+  /// The size an icon image set via [setImage] should be.
+  static Size get preferredImageSize => BetrayalPlugin.preferredImageSize;
+
+  /// The size a large icon, for example for a notification bubble
+  /// should be.
+  ///
+  /// For a tray icon, use [preferredImageSize].
+  static Size get preferredLargeImageSize =>
+      BetrayalPlugin.preferredLargeImageSize;
+
   /// Creates a new [TrayIcon] that controls a single icon in the system tray.
   TrayIcon() : _id = _newId() {
     _logger = Logger("betrayal.icon.${_id.hex}");
@@ -181,6 +191,13 @@ class TrayIcon {
   /// 5. [winIcon]
   ///
   /// If no argument is passed, the image is removed.
+  ///
+  /// {@template betrayal.icon.image_parameters}
+  /// For [pixels], you should note that
+  /// {@macro betrayal.image.pixels}
+  ///
+  /// For more information on the parameters, check out [TrayIconImageDelegate].
+  /// {@endtemplate}
   Future<void> setImage({
     TrayIconImageDelegate? delegate,
     Uri? path,

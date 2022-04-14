@@ -1,7 +1,6 @@
 /// This library is not part of the public API, but feel free to use it.
 /// However, note that trying to interfere with icons managed by a [TrayIcon]´
 /// will break stuff.
-
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -13,8 +12,8 @@ import 'package:logging/logging.dart';
 
 import 'image.dart';
 import 'stock_icon.dart';
-import 'win_icon.dart';
 import 'win_event.dart';
+import 'win_icon.dart';
 
 part 'imperative.dart';
 part 'interaction.dart';
@@ -50,6 +49,48 @@ class BetrayalPlugin {
   final _logger = Logger('betrayal.plugin');
   final _nativeLogger = Logger('betrayal.native');
 
+  /// {@template betrayal.preferredImageSize}
+  /// The small icon size
+  ///
+  /// See: [docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics#:~:text=same%20as%20SM_CXFRAME.-,SM_CXSMICON,-49)
+  ///
+  /// Used by [TrayIcon.preferredImageSize].
+  ///
+  /// Set through [BetrayalPlugin._updateSystemMetrics].
+  /// {@endtemplate}
+  static Size _preferredImageSize = const Size(16, 16);
+
+  /// {@macro betrayal.preferredLargeImageSize}
+  static Size get preferredImageSize => _preferredImageSize;
+
+  /// {@template betrayal.preferredLargeImageSize}
+  /// The standard icon size
+  ///
+  /// See: [docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics#:~:text=bar%2C%20in%20pixels.-,SM_CXICON,-11)
+  ///
+  /// Used by [TrayIcon.preferredLargeImageSize].
+  ///
+  /// Set through [BetrayalPlugin._updateSystemMetrics].
+  /// {@endtemplate}
+  static Size _preferredLargeImageSize = const Size(32, 32);
+
+  /// {@macro betrayal.preferredLargeImageSize}
+  static Size get preferredLargeImageSize => _preferredImageSize;
+
+  /// {@template betrayal.primaryAndSecondarySwapped}
+  /// If the user has inverted their mouse buttons.
+  ///
+  /// Windows will automatically normalize inputs, but it still might be
+  /// interesting what button actually was pressed / be able to prompt
+  /// the user to press the correct button.
+  ///
+  /// Set through [BetrayalPlugin._updateSystemMetrics].
+  /// {@endtemplate}
+  static bool _primaryAndSecondarySwapped = false;
+
+  /// {@macro betrayal.primaryAndSecondarySwapped}
+  static bool get primaryAndSecondarySwapped => _primaryAndSecondarySwapped;
+
   /// The singleton constructor.
   ///
   /// Once it is invoked, it will try to clear up any icons registered
@@ -62,7 +103,9 @@ class BetrayalPlugin {
     WidgetsFlutterBinding.ensureInitialized();
 
     _channel.setMethodCallHandler(_handleMethod);
+    _updateSystemMetrics();
     reset();
+
     _logger.info('connection initialized');
   }
 
@@ -81,24 +124,50 @@ class BetrayalPlugin {
         final int hWnd = args["hWnd"];
         final Offset position =
             Offset(args["x"].toDouble(), args["y"].toDouble());
-        final int event = args["event"];
+        final int code = args["event"];
         final Id id = args["id"];
 
         try {
-          if (event == WinEvent.mouseFirst.code && id == 0) {
+          if (code == WinEvent.mouseFirst.code && id == 0) {
             final icon = TrayIcon._allIcons[message - 0x0400]!;
             icon._logger.info("added to tray at $position");
           } else {
             final icon = TrayIcon._allIcons[id]!;
-            icon._handleInteraction(
-                _TrayIconInteraction(fromCode(event), position, id, hWnd));
+            final event = fromCode(code);
+            final eventRaw =
+                primaryAndSecondarySwapped ? event.inverted : event;
+            icon._handleInteraction(_TrayIconInteraction(
+                event: event,
+                rawEvent: eventRaw,
+                position: position,
+                id: id,
+                hWnd: hWnd));
           }
         } on Error {
           _logger.warning(
-              "message: 10b$message ${message.hex}, id: ${id.hex}, event: ${event.toRadixString(16)}, position: $position}, hWnd: $hWnd");
+              "message: 10b$message ${message.hex}, id: ${id.hex}, event: ${code.toRadixString(16)}, position: $position}, hWnd: $hWnd");
         }
         break;
     }
+  }
+
+  /// Updates [preferredImageSize], [preferredLargeImageSize] and [primaryAndSecondarySwapped]
+  @protected
+  Future<void> _updateSystemMetrics() async {
+    final metrics =
+        await _channel.invokeMapMethod<String, dynamic>('getSystemMetrics');
+
+    _preferredImageSize = Size(metrics!["preferredImageSizeX"].toDouble(),
+        metrics["preferredImageSizeY"].toDouble());
+
+    _preferredLargeImageSize = Size(
+        metrics["preferredLargeImageSizeX"].toDouble(),
+        metrics["preferredLargeImageSizeY"].toDouble());
+
+    _primaryAndSecondarySwapped = metrics["primaryAndSecondarySwapped"] != 0;
+
+    _logger.fine(
+        "preferredImageSize: $preferredImageSize preferredLargeImageSize $preferredLargeImageSize primaryAndSecondarySwapped: $primaryAndSecondarySwapped");
   }
 
   /// Asks the plugin to call [_handleMethod] whenever [id] + [event] happens.

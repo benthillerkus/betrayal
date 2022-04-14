@@ -59,16 +59,17 @@ namespace Betrayal
         auto x = GET_X_LPARAM(wParam);
         auto y = GET_Y_LPARAM(wParam);
 
-        try {
-            auto icon = icons.get(hWnd, id);
-            if (icon != nullptr && icon->is_subscribed(event))
-            {
-                invokeInteraction(hWnd, message, event, id, x, y);
-                return result;
-            }
+        try
+        {
+          auto icon = icons.get(hWnd, id);
+          if (icon != nullptr && icon->is_subscribed(event))
+          {
+            invokeInteraction(hWnd, message, event, id, x, y);
+            return result;
+          }
         }
-        catch (const std::out_of_range&) {
-
+        catch (const std::out_of_range &)
+        {
         }
         if (event == WM_CONTEXTMENU)
         {
@@ -114,6 +115,16 @@ namespace Betrayal
       if (method.compare("reset") == 0)
       {
         icons.clear_all();
+      }
+      else if (method.compare("getSystemMetrics") == 0)
+      {
+        result->Success(flutter::EncodableMap({
+            {flutter::EncodableValue("preferredImageSizeX"), flutter::EncodableValue(::GetSystemMetrics(SM_CXSMICON))},
+            {flutter::EncodableValue("preferredImageSizeY"), flutter::EncodableValue(::GetSystemMetrics(SM_CYSMICON))},
+            {flutter::EncodableValue("preferredLargeImageSizeX"), flutter::EncodableValue(::GetSystemMetrics(SM_CXICON))},
+            {flutter::EncodableValue("preferredLargeImageSizeY"), flutter::EncodableValue(::GetSystemMetrics(SM_CYICON))},
+            {flutter::EncodableValue("primaryAndSecondarySwapped"), flutter::EncodableValue(::GetSystemMetrics(SM_SWAPBUTTON))},
+        }));
       }
       else if (method.compare("subscribeTo") == 0)
       {

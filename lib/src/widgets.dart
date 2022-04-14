@@ -53,6 +53,8 @@ class TrayIconWidget extends StatefulWidget {
   /// are `null`, the current values are kept. This is to ensure that rebuilds
   /// don't interfere with using the [TrayIcon] widget directly through.
   /// [TrayIcon.of(BuildContext context)].
+  ///
+  /// {@macro betrayal.icon.image_parameters}
   TrayIconWidget(
       {Key? key,
       required this.child,

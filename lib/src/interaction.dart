@@ -2,19 +2,36 @@ part of 'plugin.dart';
 
 /// A data class to store events fired by native code.
 ///
-/// Interactions / events are identifer by [id] + [event] + [hWnd].
+/// Interactions / events are identified by [id] + [event] + [hWnd].
 ///
-/// It might be useful to expose more of these
+/// If the user has set their mouse buttons to be inverted,
+/// [rawEvent] will be the event that was *actually* fired,
+/// and [event] will be the semantically correct one.
+///
+/// {@template betrayal.expose_more_members_on_interaction}
+/// If you need access to more data than the [_TrayIconInteraction.position], please [file an issue](https://github.com/benthillerkus/betrayal/issues/new).
+/// {@endtemplate}
+@immutable
 class _TrayIconInteraction {
   final Offset position;
   final int hWnd;
   final WinEvent event;
+  final WinEvent rawEvent;
   final Id id;
 
-  _TrayIconInteraction(this.event, this.position, this.id, this.hWnd);
+  const _TrayIconInteraction(
+      {required this.event,
+      required this.rawEvent,
+      required this.position,
+      required this.id,
+      required this.hWnd});
 
   @override
   String toString() {
+    if (rawEvent != event) {
+      return "${rawEvent.name} (interpreted as ${event.name}) at $position";
+    }
+
     return "${event.name} at $position";
   }
 }
@@ -25,14 +42,14 @@ typedef _EventCallback = void Function(Offset position)?;
 ///
 /// Relies on the [TrayIcon.__callbacks] map to store the callbacks.
 extension InteractionHandling on TrayIcon {
-  /// {@template interaction_handling.set}
+  /// {@template betrayal.interaction_handling.set}
   /// Register this callback to be called, whenever the associated [WinEvent] is fired.
   ///
   /// If `null` is passed, the callback will be removed.
   /// This should mean better performance as the native code
   /// won't have to call into dart for this even anymore.
   ///
-  /// If you need access to more data than the position, please file an issue.
+  /// {@macro betrayal.expose_more_members_on_interaction}
   ///
   /// It would be possible to also expose the [hWnd] and [WinEvent] as well (See [_TrayIconInteraction]).
   /// {@endtemplate}
