@@ -1,4 +1,4 @@
 dartdoc:
   link-to-source:
     root: "."
-    uriTemplate: "https://github.com/benthillerkus/betrayal/blob/1.0.0-dev.6/%f%#L%l%" # x-release-please-version
+    uriTemplate: "https://github.com/benthillerkus/betrayal/blob/1.0.0-dev.7/%f%#L%l%" # x-release-please-version

@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.0.0-dev.7](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2022-04-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* The internal API for [_TrayIconInteraction](https://github.com/benthillerkus/betrayal/blob/b83703b7c56095ee2eca74a7e53436fa773789fd/lib/src/interaction.dart#L19-L20) changed by introducing the new [rawEvent].
+
+### Features
+
+* retrieve the correct icon dimensions ([e8fed3b](https://github.com/benthillerkus/betrayal/commit/e8fed3b012cdf3489d7754b3e3a7a4c7c977be7a))
+
+
+### Bug Fixes
+
+* ensure that setting onTap on a not-yet-realized icon is safe ([5d2a1d6](https://github.com/benthillerkus/betrayal/commit/5d2a1d6bff2acc9aeb052352e6d0b1d0496880fd))
+* make getter for large image size return \"\" ([f01d655](https://github.com/benthillerkus/betrayal/commit/f01d65587e9f517d824b1154f06edc2013881f5a))
+
+
+### Miscellaneous
+
+* update some lock file ([393759d](https://github.com/benthillerkus/betrayal/commit/393759d1f5a2c2c3384545160957d3780aaff2f9))
+
+
+### Documentation
+
+* **example:** finish renaming into `select_image` ([95db76e](https://github.com/benthillerkus/betrayal/commit/95db76ed3a4be01eb51a472c61b612bb29c606eb))
+* **example:** improve downscaling quality ([0c08f84](https://github.com/benthillerkus/betrayal/commit/0c08f84bc51fb1845b08781ea78f1ab0b238d6cb))
+* **example:** rename `edit_icon` into `select_image` ([5e377ea](https://github.com/benthillerkus/betrayal/commit/5e377eaedd0c66774dc92c272fb9e1c8862e76ba))
+
 ## [1.0.0-dev.6](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2022-04-12)
 
 
