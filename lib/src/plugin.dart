@@ -75,7 +75,7 @@ class BetrayalPlugin {
   static Size _preferredLargeImageSize = const Size(32, 32);
 
   /// {@macro betrayal.preferredLargeImageSize}
-  static Size get preferredLargeImageSize => _preferredImageSize;
+  static Size get preferredLargeImageSize => _preferredLargeImageSize;
 
   /// {@template betrayal.primaryAndSecondarySwapped}
   /// If the user has inverted their mouse buttons.
