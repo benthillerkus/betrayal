@@ -18,14 +18,14 @@
       "flutterMode": "release"
     },
     {
-      "name": "edit_icon",
-      "cwd": "example\\edit_icon",
+      "name": "select_image",
+      "cwd": "example\\select_image",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "edit_icon (release mode)",
-      "cwd": "example\\edit_icon",
+      "name": "select_image (release mode)",
+      "cwd": "example\\select_image",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

@@ -1,4 +1,4 @@
-# Betrayal *`edit_icon`* example
+# Betrayal *`select_image`* example
 
 This example shows you how…
 

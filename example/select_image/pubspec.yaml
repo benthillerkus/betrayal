@@ -1,4 +1,4 @@
-name: edit_icon
+name: select_image
 description: Shows how to use the imperative api in Betrayal in a more complex app.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev

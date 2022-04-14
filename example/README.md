@@ -75,7 +75,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-Check out the [edit_icon](https://github.com/benthillerkus/betrayal/blob/main/example/edit_icon) example for a more complex app that uses the imperative api.
+Check out the [select_image](https://github.com/benthillerkus/betrayal/blob/main/example/select_image) example for a more complex app that uses the imperative api.
 
 If you want to see how *Betrayal* can work with multiple icons and how to generate images at runtime through `Canvas` please look at the [add_many](https://github.com/benthillerkus/betrayal/blob/main/example/add_many/lib/main.dart)
 
