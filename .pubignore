@@ -15,6 +15,9 @@ example/select_image/
 example/widgets_api/
 example/skeleton_example/
 
+# Docs assets
+asset/
+
 # IntelliJ related
 *.iml
 *.ipr
