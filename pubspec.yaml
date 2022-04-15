@@ -1,6 +1,6 @@
 name: betrayal
 description: "A capable tray icon plugin for Windows. Manage multiple icons, generate their images at runtime and compose them as if they were a regular widget"
-version: 1.0.0-dev.7 # x-release-please-version
+version: 1.0.0 # x-release-please-version
 homepage: https://betrayal.bent.party/
 
 environment:
