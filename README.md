@@ -41,6 +41,12 @@ Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at run
   - Use default system icons like the ❔ or the elevation prompt 🛡️
 - Widget api - treat the tray icon as part of your UI and compose it in your build methods
 
+
+
+https://user-images.githubusercontent.com/29630575/163495162-1cbdbc94-095f-48c6-ad86-a1f5ee809481.mp4
+
+
+
 ## Usage
 ```dart
 import 'package:betrayal/betrayal.dart';
