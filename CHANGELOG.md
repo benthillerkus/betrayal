@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.7...v1.0.0) (2022-04-15)
+
+
+### Documentation
+
+* **readme:** add demo video ([4d95454](https://github.com/benthillerkus/betrayal/commit/4d9545474ceddd9eed92bd0f31912dc2973f126f))
+* **readme:** use assets to make readme a bit prettier ([1a5094f](https://github.com/benthillerkus/betrayal/commit/1a5094f179fa5de9893d10c7a9c626a7fbc57133))
+* upload assets ([82a5946](https://github.com/benthillerkus/betrayal/commit/82a5946936043f7c3fd836952e00ea6addb28a8c))
+
 ## [1.0.0-dev.7](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2022-04-14)
 
 
