@@ -3,20 +3,43 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:betrayal/betrayal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  // This is only necessary if icons seem to persist after hot restarting.
+  // That happens when after restarting the app is not immediately interacting
+  // with [TrayIcon]s again.
+  if (kDebugMode) TrayIcon.clearAll();
   runApp(const MyApp());
 }
 
-class Lol extends CustomPainter {
-  ui.Image img;
-
-  Lol(this.img);
+class DebugGraphic extends CustomPainter {
+  int count;
+  DebugGraphic(this.count);
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawImage(img, Offset.zero, Paint());
+    Offset center = size.center(Offset.zero);
+    final Paint paint = Paint()..color = const Color(0xFFF400BB);
+    canvas.drawRect(Rect.fromLTWH(0, 0, center.dx, center.dy), paint);
+    canvas.drawRect(Rect.fromLTWH(center.dx, 0, center.dx, center.dy),
+        paint..color = Colors.green);
+    canvas.drawRect(Rect.fromLTWH(0, center.dy, center.dx, center.dy),
+        paint..color = Colors.blue);
+    canvas.drawCircle(center, sqrt(count),
+        paint..color = const Color.fromARGB(255, 211, 168, 202));
+    TextPainter(
+        text: TextSpan(text: "$count"),
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr,
+        maxLines: 1)
+      ..layout()
+      ..paint(canvas, Offset.zero);
+    canvas.drawRect(
+        const Rect.fromLTWH(1, 0, 1, 1), paint..color = Colors.green);
+    canvas.drawRect(
+        const Rect.fromLTWH(2, 0, 1, 1), paint..color = Colors.blue);
   }
 
   @override
@@ -40,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     _icons.add(icon);
     icon.setTooltip("${_icons.length}");
 
-    await draw();
+    await draw(size: TrayIcon.preferredImageSize);
 
     setState(() {});
 
@@ -61,48 +84,20 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.light),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Imperative System Tray Api Example'),
+          title: const Center(child: Text('draw canvas into tray example')),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                child: img == null
-                    ? null
-                    : CustomPaint(
-                        painter: Lol(img!),
-                      ),
-                width: 32,
-                height: 32,
+          child: AnimatedScale(
+            duration: const Duration(milliseconds: 200),
+            scale: sqrt(sqrt(_icons.length + 1)),
+            curve: Curves.easeOutBack,
+            child: SizedBox(
+              child: CustomPaint(
+                painter: DebugGraphic(_icons.length),
               ),
-              const Text('Number of Icons:'),
-              SizedBox.fromSize(
-                size: const Size.fromHeight(20),
-              ),
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: AnimatedScale(
-                  duration: const Duration(milliseconds: 200),
-                  scale: sqrt(sqrt(_icons.length + 1)),
-                  curve: Curves.easeOutBack,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        shape: BoxShape.circle),
-                    child: Transform.translate(
-                      offset: const Offset(0, -2),
-                      child: Center(
-                          child: Text(
-                        '${_icons.length}',
-                        style: Theme.of(context).textTheme.headline4,
-                      )),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              width: 32,
+              height: 32,
+            ),
           ),
         ),
         persistentFooterButtons: [
@@ -120,33 +115,13 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<void> draw() async {
+  Future<void> draw({Size size = const Size(32, 32)}) async {
     final recorder = PictureRecorder();
     final canvas = Canvas(recorder);
-    const center = Offset(16, 16);
-    final Paint paint = Paint()..color = const Color(0xFFF400BB);
-    canvas.drawRect(const Rect.fromLTWH(0, 0, 16, 16), paint);
-    canvas.drawRect(
-        const Rect.fromLTWH(16, 0, 16, 16), paint..color = Colors.green);
-    canvas.drawRect(
-        const Rect.fromLTWH(0, 16, 16, 16), paint..color = Colors.blue);
-    canvas.drawCircle(center, sqrt(_icons.length.ceilToDouble()),
-        paint..color = const Color.fromARGB(255, 211, 168, 202));
-    TextPainter(
-        text: TextSpan(text: "${_icons.length}"),
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
-        maxLines: 1)
-      ..layout()
-      ..paint(canvas, Offset.zero);
-    canvas.drawRect(
-        const Rect.fromLTWH(1, 0, 1, 1), paint..color = Colors.green);
-    canvas.drawRect(
-        const Rect.fromLTWH(2, 0, 1, 1), paint..color = Colors.blue);
-
+    DebugGraphic(_icons.length).paint(canvas, size);
     final picture = recorder.endRecording();
 
-    img = await picture.toImage(32, 32);
+    img = await picture.toImage(size.width.toInt(), size.height.toInt());
   }
 
   void remove() async {
@@ -156,9 +131,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void removeAll() async {
-    for (var icon in _icons) {
-      icon.dispose();
-    }
+    TrayIcon.clearAll();
     _icons.clear();
     await draw();
     setState(() {});
