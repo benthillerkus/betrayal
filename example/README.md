@@ -93,3 +93,13 @@ BetrayalLogConfig.level = "OFF";
 ```
 
 To learn more about logging in *betrayal* have a look at the implementation in [logging.dart](https://github.com/benthillerkus/betrayal/blob/main/lib/src/logging.dart).
+
+## Why are my icons still there after restarting the app?
+
+There is no hook for plugin devs to detect a hot restart. The best we can do is to reset state once the restarted app starts to interact with the library again and to provide an optional reset method users can call before `runApp` runs.
+
+```dart
+// hot restart is only possible in debug mode
+if (kDebugMode) TrayIcon.clearAll();
+runApp(const MyApp());
+```
