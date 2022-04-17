@@ -42,6 +42,7 @@ class BetrayalPlugin {
   static final BetrayalPlugin _instance = BetrayalPlugin._internal();
 
   /// Retrieves the singleton instance.
+  @protected
   static BetrayalPlugin get instance => _instance;
 
   static const MethodChannel _channel = MethodChannel('betrayal');
