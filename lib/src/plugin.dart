@@ -43,7 +43,7 @@ class BetrayalPlugin {
   static final BetrayalPlugin _instance = BetrayalPlugin._internal();
 
   /// Retrieves the singleton instance.
-  factory BetrayalPlugin() => _instance;
+  static BetrayalPlugin get instance => _instance;
 
   static const MethodChannel _channel = MethodChannel('betrayal');
 
@@ -97,7 +97,6 @@ class BetrayalPlugin {
   /// Once it is invoked, it will try to clear up any icons registered
   /// with the plugin.
   BetrayalPlugin._internal() {
-    BetrayalLogConfig();
     _logger.finer('initializing plugin...');
     // This makes sure the plugin can be invoked
     // before `runApp` is called in main

@@ -17,7 +17,7 @@ part of 'plugin.dart';
 ///
 /// To nuke all existing icons, use [TrayIcon.clearAll]
 class TrayIcon {
-  static final BetrayalPlugin _plugin = BetrayalPlugin();
+  static final BetrayalPlugin _plugin = BetrayalPlugin.instance;
   static final Map<Id, TrayIcon> _allIcons = {};
   static final Random _random = Random();
 

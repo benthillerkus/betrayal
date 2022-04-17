@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:logging/logging.dart';
-import 'dart:developer';
 
 /// Manager for logging in the *betrayal* package.
 ///
@@ -11,7 +11,7 @@ import 'dart:developer';
 /// to initialize everything.
 class BetrayalLogConfig {
   /// Retrieves the singleton instance.
-  factory BetrayalLogConfig() => _instance;
+  static BetrayalLogConfig get instance => _instance;
 
   static final _instance = BetrayalLogConfig._internal();
 
@@ -90,7 +90,7 @@ class BetrayalLogConfig {
     _logger.level = _level;
 
     // Ensure that the following message is logged.
-    BetrayalLogConfig();
+    instance;
 
     _logger.info("logging level changed to ${_level.name}");
   }
