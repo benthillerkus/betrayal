@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.1.0](https://github.com/benthillerkus/betrayal/compare/v1.0.0...v1.1.0) (2022-04-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* `BetrayalPlugin()` and `BetrayalLogConfig()` have been replaced with `.instance` respectively.
+
+### Bug Fixes
+
+* remove unused import ([bb52101](https://github.com/benthillerkus/betrayal/commit/bb52101a35a9bb94360a28eace44779720c80298))
+
+
+### Documentation
+
+* **example:** `add_many` visualize all icons as a grid ([315aa0f](https://github.com/benthillerkus/betrayal/commit/315aa0f9e7b0bfe7cbe4d3984f30d587a4fd7a66))
+* **example:** refactor add_many example. ([cca1c42](https://github.com/benthillerkus/betrayal/commit/cca1c4235e247782eb6c644494c1ff304998bbdb))
+* **readme:** add short section about hot restart ([0e52401](https://github.com/benthillerkus/betrayal/commit/0e524019c94571bb4ca6eee337f5aec309c823eb))
+
+
+### Miscellaneous
+
+* **branding:** improve font kerning in art assets ([18fbd94](https://github.com/benthillerkus/betrayal/commit/18fbd9427addb759fb9063e7a41b642d8a9d4f17))
+* make singletons explicit ([772730e](https://github.com/benthillerkus/betrayal/commit/772730e153661a9461e6b5e198161f2bf1df0e62))
+* mark `.instance`s as protected ([7d9dafd](https://github.com/benthillerkus/betrayal/commit/7d9dafdf57070410d9dd188b728b3d0ba7e8878a))
+
 ## [1.0.0](https://github.com/benthillerkus/betrayal/compare/v1.0.0-dev.7...v1.0.0) (2022-04-15)
 
 
