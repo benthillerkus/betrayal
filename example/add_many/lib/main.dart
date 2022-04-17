@@ -86,19 +86,41 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Center(child: Text('draw canvas into tray example')),
         ),
-        body: Center(
-          child: AnimatedScale(
-            duration: const Duration(milliseconds: 200),
-            scale: sqrt(sqrt(_icons.length + 1)),
-            curve: Curves.easeOutBack,
-            child: SizedBox(
-              child: CustomPaint(
-                painter: DebugGraphic(_icons.length),
+        body: Stack(
+          children: [
+            Center(
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 200),
+                scale: sqrt(sqrt(_icons.length + 1)),
+                curve: Curves.easeOutBack,
+                child: SizedBox(
+                  child: CustomPaint(
+                    painter: DebugGraphic(_icons.length),
+                  ),
+                  width: 32,
+                  height: 32,
+                ),
               ),
-              width: 32,
-              height: 32,
             ),
-          ),
+            Opacity(
+              opacity: .4,
+              child: GridView.builder(
+                itemCount: _icons.length,
+                padding: const EdgeInsets.all(8),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 32 + 16),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Tooltip(
+                    message: "$index",
+                    child: CustomPaint(
+                      painter: DebugGraphic(index),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
         persistentFooterButtons: [
           TextButton.icon(
