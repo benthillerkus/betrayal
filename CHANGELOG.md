@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/benthillerkus/betrayal/compare/v1.1.0...v1.2.0) (2022-04-18)
+
+
+### Features
+
+* allow setting a custom value for icon id ([829c287](https://github.com/benthillerkus/betrayal/commit/829c287a866dc1688720bdb34a95584d35ae4042))
+
+
+### Bug Fixes
+
+* don't return default values for `preferredImageSize` ([b2540f2](https://github.com/benthillerkus/betrayal/commit/b2540f26197d93dd388f5e37e0ba650519bd43c8)), closes [#10](https://github.com/benthillerkus/betrayal/issues/10)
+
 ## [1.1.0](https://github.com/benthillerkus/betrayal/compare/v1.0.0...v1.1.0) (2022-04-17)
 
 
