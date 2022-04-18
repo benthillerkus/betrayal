@@ -27,6 +27,9 @@ part 'widgets.dart';
 /// and call the plugin directly with it!
 typedef Id = int;
 
+const Id _kMaximumId = 0x8FFF;
+const Id _kMinimumId = 0x7FFF;
+
 /// Allows adding members to [Id] typedef.
 extension HexRepresentation on Id {
   /// Value in hex [String] notation. (e.g. `0x1234`)

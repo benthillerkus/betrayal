@@ -27,10 +27,10 @@ class TrayIcon {
   /// to identify the icon and address it
   /// when it has been clicked.
   static Id _newId() {
-    Id temp = 0x8FFF;
-    do {
-      temp = _random.nextInt(0x8FFF - 0x7FFF);
-    } while (_allIcons.containsKey(temp));
+    Id temp = 0;
+    while (_allIcons.containsKey(temp)) {
+      temp = _random.nextInt(_kMaximumId - _kMinimumId);
+    }
     return temp;
   }
 
@@ -66,8 +66,12 @@ class TrayIcon {
 
   /// Creates a new [TrayIcon] that controls a single icon in the system tray.
   ///
-  /// If provided, [id] has to be between `0x8FFF` and `0x7FFF`.
+  /// If provided, [id] has to be between `0` and `4096`.
   TrayIcon({Id? id}) : _id = id ?? _newId() {
+    if (_id < 0 || _id >= (_kMaximumId - _kMinimumId)) {
+      throw ArgumentError.value(id, "id",
+          "The Id needs to be in between 0 and ${_kMaximumId - _kMinimumId}");
+    }
     _logger = Logger("betrayal.icon.${_id.hex}");
     _allIcons[_id] = this;
     _isActive = true;
