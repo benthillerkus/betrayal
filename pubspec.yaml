@@ -1,7 +1,13 @@
 name: betrayal
-description: "A capable tray icon plugin for Windows. Manage multiple icons, generate their images at runtime and compose them as if they were a regular widget"
+description: > 
+  Integrate your app into the system tray 
+  and add custom icons and react to user input.
+  Use widget wrappers to treat the notification
+  area as a part of your UI.
 version: 1.2.1 # x-release-please-version
 homepage: https://betrayal.bent.party/
+repository: https://github.com/benthillerkus/betrayal
+issue_tracker: https://github.com/benthillerkus/betrayal/issues
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
