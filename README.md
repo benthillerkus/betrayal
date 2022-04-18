@@ -1,6 +1,8 @@
+[skip to content](#usage)
+
 <p align="center">
   <a href="https://betrayal.bent.party">
-    <img src="https://raw.githubusercontent.com/benthillerkus/betrayal/main/asset/logo.webp" height="300">
+    <img src="https://raw.githubusercontent.com/benthillerkus/betrayal/main/asset/logo.webp" height="280">
   </a>
 </p>
 
@@ -48,6 +50,10 @@ https://user-images.githubusercontent.com/29630575/163495162-1cbdbc94-095f-48c6-
 
 
 ## Usage
+
+After you've added *betrayal* to your dependencies via `flutter pub add betrayal` and `flutter pub get`,
+you can start to use it:
+
 ```dart
 import 'package:betrayal/betrayal.dart';
 
@@ -60,6 +66,7 @@ Widget build(BuildContext context) => MaterialApp(
       title: const Text("Look at the system tray 👀")
     ),
     body: Center(
+      // The icon will be visible aslong as the [TrayIconWidget] will be built
       child: TrayIconWidget(
         winIcon: WinIcon.application,
         tooltip: "Here I am!"
@@ -70,7 +77,11 @@ Widget build(BuildContext context) => MaterialApp(
 );
 ```
 
-Please refer to the [example subdirectory](https://github.com/benthillerkus/betrayal/tree/main/example) for more [information](https://github.com/benthillerkus/betrayal/blob/main/example/README.md) and code.
+If you just want a tray icon, that's pretty much all you need to know.
+
+There is, however, also a quick-guide [README.md](https://github.com/benthillerkus/betrayal/tree/main/example), four example applications and of course the [API docs](https://pub.dev/documentation/betrayal/latest/betrayal/betrayal-library.html), if you do want to learn more.
+
+Don't hesitate to [file an issue](https://github.com/benthillerkus/betrayal/issues), I'll have a look at it eventually 😊
 
 # Development
 
