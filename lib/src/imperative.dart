@@ -26,7 +26,13 @@ class TrayIcon {
   /// This [Id] is used by the operating system
   /// to identify the icon and address it
   /// when it has been clicked.
-  static Id _newId() => _random.nextInt(0x8FFF - 0x7FFF);
+  static Id _newId() {
+    Id temp = 0x8FFF;
+    do {
+      temp = _random.nextInt(0x8FFF - 0x7FFF);
+    } while (_allIcons.containsKey(temp));
+    return temp;
+  }
 
   /// The id used by Windows to distinguish this icon.
   final Id _id;
@@ -59,7 +65,9 @@ class TrayIcon {
       BetrayalPlugin.preferredLargeImageSize;
 
   /// Creates a new [TrayIcon] that controls a single icon in the system tray.
-  TrayIcon() : _id = _newId() {
+  ///
+  /// If provided, [id] has to be between `0x8FFF` and `0x7FFF`.
+  TrayIcon({Id? id}) : _id = id ?? _newId() {
     _logger = Logger("betrayal.icon.${_id.hex}");
     _allIcons[_id] = this;
     _isActive = true;
