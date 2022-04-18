@@ -59,10 +59,10 @@ class BetrayalPlugin {
   ///
   /// Set through [BetrayalPlugin._updateSystemMetrics].
   /// {@endtemplate}
-  static Size _preferredImageSize = const Size(16, 16);
+  late Size _preferredImageSize;
 
   /// {@macro betrayal.preferredLargeImageSize}
-  static Size get preferredImageSize => _preferredImageSize;
+  static Size get preferredImageSize => instance._preferredImageSize;
 
   /// {@template betrayal.preferredLargeImageSize}
   /// The standard icon size
@@ -73,10 +73,10 @@ class BetrayalPlugin {
   ///
   /// Set through [BetrayalPlugin._updateSystemMetrics].
   /// {@endtemplate}
-  static Size _preferredLargeImageSize = const Size(32, 32);
+  late Size _preferredLargeImageSize;
 
   /// {@macro betrayal.preferredLargeImageSize}
-  static Size get preferredLargeImageSize => _preferredLargeImageSize;
+  static Size get preferredLargeImageSize => instance._preferredLargeImageSize;
 
   /// {@template betrayal.primaryAndSecondarySwapped}
   /// If the user has inverted their mouse buttons.
