@@ -8,6 +8,7 @@ version: 1.2.1 # x-release-please-version
 homepage: https://betrayal.bent.party/
 repository: https://github.com/benthillerkus/betrayal
 issue_tracker: https://github.com/benthillerkus/betrayal/issues
+documentation: https://github.com/benthillerkus/betrayal/tree/main/example
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
