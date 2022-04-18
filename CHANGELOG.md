@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.2.1](https://github.com/benthillerkus/betrayal/compare/v1.2.0...v1.2.1) (2022-04-18)
+
+
+### Bug Fixes
+
+* improve code quality for custom ids feature ([35583f7](https://github.com/benthillerkus/betrayal/commit/35583f7fdd4e583d832af32cbcaed27e237a0c51))
+* **native:** let Windows handle all unhandled user type messages ([22625a4](https://github.com/benthillerkus/betrayal/commit/22625a46a9a2bd8ca03b62cc1ca11a8dce5cf98d))
+
+
+### Documentation
+
+* **example:** make `add_many` example more understandable ([5cadfb8](https://github.com/benthillerkus/betrayal/commit/5cadfb8f53446d98fede979d702394c8d023d337))
+
 ## [1.2.0](https://github.com/benthillerkus/betrayal/compare/v1.1.0...v1.2.0) (2022-04-18)
 
 
