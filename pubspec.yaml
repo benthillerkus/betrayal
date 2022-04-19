@@ -1,9 +1,7 @@
 name: betrayal
 description: > 
-  Integrate your app into the system tray 
-  and add custom icons and react to user input.
-  Use widget wrappers to treat the notification
-  area as part of your UI.
+  A plugin to setup custom system tray icons 
+  through composable widgets.
 version: 1.2.2 # x-release-please-version
 homepage: https://betrayal.bent.party/
 repository: https://github.com/benthillerkus/betrayal
