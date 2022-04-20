@@ -77,9 +77,11 @@ WinEvent fromCode(int code) {
 }
 
 /// This extension allows adding members to the [WinEvent] enum.
-///
-/// In Dart 2.17 and later, this will be possible doable
+/// 
+/// {@template betrayal.enum_extension}
+/// In Dart 2.17 and later, this will be doable
 /// without an extension.
+/// {@endtemplate}
 extension EventCodes on WinEvent {
   /// The internal constant used by Windows.
   int get code {

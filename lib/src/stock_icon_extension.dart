@@ -2,8 +2,7 @@ part of 'stock_icon.dart';
 
 /// This extension allows adding members to the [StockIcon] enum.
 ///
-/// In Dart 2.17 and later, this will be possible doable
-/// without an extension.
+/// {@macro betrayal.enum_extension}
 extension StockIconCodes on StockIcon {
   /// The internal `SHSTOCKICONID` used by Windows.
   int get code {

@@ -26,8 +26,7 @@ enum WinIcon {
 
 /// This extension allows adding members to the [WinIcon] enum.
 ///
-/// In Dart 2.17 and later, this will be possible doable
-/// without an extension.
+/// {@macro betrayal.enum_extension}
 extension IconCodes on WinIcon {
   /// The internal resource id used by Windows.
   int get code {
