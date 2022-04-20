@@ -1,5 +1,18 @@
 # Changelog
 
+### [1.2.3](https://github.com/benthillerkus/betrayal/compare/v1.2.2...v1.2.3) (2022-04-20)
+
+
+### Documentation
+
+* fix typo in generic description for enum extensions ([47c01c0](https://github.com/benthillerkus/betrayal/commit/47c01c0a48e01626cbdd04f7a84c66bd35ebe28b))
+
+
+### Miscellaneous
+
+* **pubspec:** slightly reduce cringiness of description ([78e47f6](https://github.com/benthillerkus/betrayal/commit/78e47f653eb19d26f9c9d9d7a4e05159f7a19101)), closes [#24](https://github.com/benthillerkus/betrayal/issues/24)
+* update deps, format file ([03ca002](https://github.com/benthillerkus/betrayal/commit/03ca002b6bad9abec47207790ad437a04ff22dbd))
+
 ### [1.2.2](https://github.com/benthillerkus/betrayal/compare/v1.2.1...v1.2.2) (2022-04-18)
 
 
