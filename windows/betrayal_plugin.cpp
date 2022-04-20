@@ -59,22 +59,13 @@ namespace Betrayal
         auto x = GET_X_LPARAM(wParam);
         auto y = GET_Y_LPARAM(wParam);
 
-        try
+        auto icon = icons.get(hWnd, id);
+        if (icon != nullptr && icon->is_subscribed(event))
         {
-          auto icon = icons.get(hWnd, id);
-          if (icon != nullptr && icon->is_subscribed(event))
-          {
-            invokeInteraction(hWnd, message, event, id, x, y);
-            return result;
-          }
+          invokeInteraction(hWnd, message, event, id, x, y);
+          return result;
         }
-        catch (const std::out_of_range &)
-        {
-        }
-        if (event == WM_CONTEXTMENU)
-        {
-          DefWindowProc(hWnd, message, wParam, lParam);
-        }
+        DefWindowProc(hWnd, message, wParam, lParam);
       }
 
       return result;

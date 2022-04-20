@@ -27,6 +27,9 @@ part 'widgets.dart';
 /// and call the plugin directly with it!
 typedef Id = int;
 
+const Id _kMaximumId = 0x8FFF;
+const Id _kMinimumId = 0x7FFF;
+
 /// Allows adding members to [Id] typedef.
 extension HexRepresentation on Id {
   /// Value in hex [String] notation. (e.g. `0x1234`)
@@ -59,10 +62,10 @@ class BetrayalPlugin {
   ///
   /// Set through [BetrayalPlugin._updateSystemMetrics].
   /// {@endtemplate}
-  static Size _preferredImageSize = const Size(16, 16);
+  late Size _preferredImageSize;
 
   /// {@macro betrayal.preferredLargeImageSize}
-  static Size get preferredImageSize => _preferredImageSize;
+  static Size get preferredImageSize => instance._preferredImageSize;
 
   /// {@template betrayal.preferredLargeImageSize}
   /// The standard icon size
@@ -73,10 +76,10 @@ class BetrayalPlugin {
   ///
   /// Set through [BetrayalPlugin._updateSystemMetrics].
   /// {@endtemplate}
-  static Size _preferredLargeImageSize = const Size(32, 32);
+  late Size _preferredLargeImageSize;
 
   /// {@macro betrayal.preferredLargeImageSize}
-  static Size get preferredLargeImageSize => _preferredLargeImageSize;
+  static Size get preferredLargeImageSize => instance._preferredLargeImageSize;
 
   /// {@template betrayal.primaryAndSecondarySwapped}
   /// If the user has inverted their mouse buttons.

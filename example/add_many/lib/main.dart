@@ -68,10 +68,11 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
 
     icon.setImage(
-        pixels:
-            (await img?.toByteData(format: ui.ImageByteFormat.rawRgba))?.buffer,
-        // asset: "assets/flutter.ico",
-        winIcon: WinIcon.shield);
+      pixels:
+          (await img?.toByteData(format: ui.ImageByteFormat.rawRgba))?.buffer,
+      // asset: "assets/flutter.ico",
+      // winIcon: WinIcon.shield
+    );
     icon.show();
   }
 
@@ -91,7 +92,7 @@ class _MyAppState extends State<MyApp> {
             Center(
               child: AnimatedScale(
                 duration: const Duration(milliseconds: 200),
-                scale: sqrt(sqrt(_icons.length + 1)),
+                scale: _icons.isEmpty ? 0 : sqrt(sqrt(_icons.length + 1)),
                 curve: Curves.easeOutBack,
                 child: SizedBox(
                   child: CustomPaint(
@@ -105,16 +106,16 @@ class _MyAppState extends State<MyApp> {
             Opacity(
               opacity: .4,
               child: GridView.builder(
-                itemCount: _icons.length,
+                itemCount: max(0, _icons.length - 1),
                 padding: const EdgeInsets.all(8),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 32 + 16),
                 itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Tooltip(
-                    message: "$index",
+                    message: "${index + 1}", // There is no 0th item
                     child: CustomPaint(
-                      painter: DebugGraphic(index),
+                      painter: DebugGraphic(index + 1),
                     ),
                   ),
                 ),

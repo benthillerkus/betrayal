@@ -1,5 +1,44 @@
 # Changelog
 
+### [1.2.2](https://github.com/benthillerkus/betrayal/compare/v1.2.1...v1.2.2) (2022-04-18)
+
+
+### Miscellaneous
+
+* **pubspec:** fix typo ([1210cdc](https://github.com/benthillerkus/betrayal/commit/1210cdce271bcf5c73cf0347277e38d0b8af111f))
+* **pubspec:** improve metadata for pub.dev ([6e9309d](https://github.com/benthillerkus/betrayal/commit/6e9309d89d2eea88e17868ea7c72baefa5c9fd0a))
+
+
+### Documentation
+
+* **pubspec:** add example readme as link to external documentation ([1f740bc](https://github.com/benthillerkus/betrayal/commit/1f740bc8a494ee5307509743ca9367cd484a60ad))
+* **readme:** improve readability a bit ([ce33aff](https://github.com/benthillerkus/betrayal/commit/ce33aff5a7364d827ff58ee0b7fb406dd23a2b59))
+
+### [1.2.1](https://github.com/benthillerkus/betrayal/compare/v1.2.0...v1.2.1) (2022-04-18)
+
+
+### Bug Fixes
+
+* improve code quality for custom ids feature ([35583f7](https://github.com/benthillerkus/betrayal/commit/35583f7fdd4e583d832af32cbcaed27e237a0c51))
+* **native:** let Windows handle all unhandled user type messages ([22625a4](https://github.com/benthillerkus/betrayal/commit/22625a46a9a2bd8ca03b62cc1ca11a8dce5cf98d))
+
+
+### Documentation
+
+* **example:** make `add_many` example more understandable ([5cadfb8](https://github.com/benthillerkus/betrayal/commit/5cadfb8f53446d98fede979d702394c8d023d337))
+
+## [1.2.0](https://github.com/benthillerkus/betrayal/compare/v1.1.0...v1.2.0) (2022-04-18)
+
+
+### Features
+
+* allow setting a custom value for icon id ([829c287](https://github.com/benthillerkus/betrayal/commit/829c287a866dc1688720bdb34a95584d35ae4042))
+
+
+### Bug Fixes
+
+* don't return default values for `preferredImageSize` ([b2540f2](https://github.com/benthillerkus/betrayal/commit/b2540f26197d93dd388f5e37e0ba650519bd43c8)), closes [#10](https://github.com/benthillerkus/betrayal/issues/10)
+
 ## [1.1.0](https://github.com/benthillerkus/betrayal/compare/v1.0.0...v1.1.0) (2022-04-17)
 
 
