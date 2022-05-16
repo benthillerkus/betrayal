@@ -118,16 +118,16 @@ class _HomeScreenState extends State<HomeScreen> {
             iconSource = TrayIconImageDelegate.fromPath(path: path);
             break;
           case "png":
-            var resized = await compute((String path) {
+            var resized = await compute((Tuple<String, Size> arg) {
+              final path = arg.first;
+              final size = arg.second;
               var org = img.decodePng(File(path).readAsBytesSync());
-              final height = TrayIcon.preferredImageSize.height.toInt();
-              final width = TrayIcon.preferredImageSize.width.toInt();
               var resized = img.copyResize(org!,
-                  height: height,
-                  width: width,
+                  height: size.height.toInt(),
+                  width: size.width.toInt(),
                   interpolation: img.Interpolation.average);
               return resized.getBytes().buffer;
-            }, path);
+            }, Tuple(path, TrayIcon.preferredImageSize));
 
             iconSource = TrayIconImageDelegate.fromBytes(resized);
             break;
@@ -156,4 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
     _icon.setImage(delegate: element.delegate);
     _icon.show();
   }
+}
+
+class Tuple<A, B> {
+  final A first;
+  final B second;
+
+  const Tuple(this.first, this.second);
 }
