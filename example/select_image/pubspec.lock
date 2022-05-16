@@ -21,7 +21,7 @@ packages:
       path: "../.."
       relative: true
     source: path
-    version: "1.2.2"
+    version: "1.2.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -163,15 +163,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  native_context_menu:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: patch-1
-      resolved-ref: "62d45f1e088e40c51099512c73c66a5e15e9d672"
-      url: "https://github.com/benthillerkus/native_context_menu.git"
-    source: git
-    version: "0.2.0+3"
   path:
     dependency: transitive
     description:
