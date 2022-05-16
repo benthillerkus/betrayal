@@ -1,5 +1,15 @@
 # Changelog
 
+### [1.2.4](https://github.com/benthillerkus/betrayal/compare/v1.2.3...v1.2.4) (2022-05-16)
+
+
+### Documentation
+
+* demonstrate integration with leanflutter/contextual_menu ([9704cf6](https://github.com/benthillerkus/betrayal/commit/9704cf6ac191a346e3c8c5653cc334e93c11a882)), closes [#4](https://github.com/benthillerkus/betrayal/issues/4)
+* **example:** fix crash when trying to downscale image on isolate ([dacf5ae](https://github.com/benthillerkus/betrayal/commit/dacf5ae3139da6abc8cc0a1b862597ed8c1d7af2))
+* **example:** make context menu usable through leanflutter/window_manager ([37d0789](https://github.com/benthillerkus/betrayal/commit/37d07896cece0f62667570de7ca27558b33dc237))
+* **example:** remove unused dependency ([c1ad065](https://github.com/benthillerkus/betrayal/commit/c1ad0659e7fd11fa19ff61dc7f6aa83c64fee954))
+
 ### [1.2.3](https://github.com/benthillerkus/betrayal/compare/v1.2.2...v1.2.3) (2022-04-20)
 
 
