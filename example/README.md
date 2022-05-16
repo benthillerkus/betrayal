@@ -94,6 +94,13 @@ BetrayalLogConfig.level = "OFF";
 
 To learn more about logging in *betrayal* have a look at the implementation in [logging.dart](https://github.com/benthillerkus/betrayal/blob/main/lib/src/logging.dart).
 
+## Why is there no built-in method for opening a context menu?
+
+Because it's unrelated from displaying and managing a tray icon.
+
+There are already great plugins for doing so, such as [leanflutter/contextual_menu](https://github.com/leanflutter/contextual_menu)!<br>
+In the [select_image](https://github.com/benthillerkus/betrayal/blob/main/example/select_image) example you can see that it plays well with *betrayal*
+
 ## Why are my icons still there after restarting the app?
 
 There is no hook for plugin devs to detect a hot restart. The best we can do is to reset state once the restarted app starts to interact with the library again and to provide an optional reset method users can call before `runApp` runs.

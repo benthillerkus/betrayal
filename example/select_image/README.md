@@ -4,6 +4,7 @@ This example shows you how…
 
 - …to use the imperative api in a more complex application
 - …use the `image` library to set any image from disk as a tray icon
+- …use the `contextual_menu` library to create a context menu
 
 ## WTF is going on in the code?
 

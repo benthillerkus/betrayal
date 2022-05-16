@@ -3,10 +3,11 @@
 import 'dart:io';
 
 import 'package:betrayal/betrayal.dart';
+import 'package:contextual_menu/contextual_menu.dart';
 import 'package:select_image/view/view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:image/image.dart' as img;
 
 void main() {
@@ -152,8 +153,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _setTrayIcon(MyData element) {
-    _icon.setTooltip(element.name ?? element.key.toString());
+    final name = element.name ?? element.key.toString();
+    _icon.setTooltip(name);
     _icon.setImage(delegate: element.delegate);
+    _icon.onSecondaryTap = (_) => popUpContextualMenu(
+        Menu(items: [
+          MenuItem(label: "select_image example app", sublabel: name),
+          MenuItem.separator(),
+          MenuItem(label: "Exit")
+        ]),
+        placement: Placement.bottomLeft);
     _icon.show();
   }
 }
