@@ -9,8 +9,18 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:image/image.dart' as img;
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  WindowOptions windowOptions = WindowOptions(
+    backgroundColor: Colors.green,
+    skipTaskbar: false,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, windowManager.show);
+
   runApp(const MyApp());
 }
 
@@ -156,11 +166,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final name = element.name ?? element.key.toString();
     _icon.setTooltip(name);
     _icon.setImage(delegate: element.delegate);
+    _icon.onTap = (_) => windowManager.show();
     _icon.onSecondaryTap = (_) => popUpContextualMenu(
         Menu(items: [
           MenuItem(label: "select_image example app", sublabel: name),
           MenuItem.separator(),
-          MenuItem(label: "Exit")
+          MenuItem(
+              label: "Exit",
+              toolTip: "Closes the App",
+              onClick: (_) => windowManager.close())
         ]),
         placement: Placement.bottomLeft);
     _icon.show();
