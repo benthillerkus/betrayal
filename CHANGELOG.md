@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.5](https://github.com/benthillerkus/betrayal/compare/v1.2.4...v1.2.5) (2022-07-27)
+
+
+### Documentation
+
+* **readme:** improve rendering on pub.dev ([167edb4](https://github.com/benthillerkus/betrayal/commit/167edb4268f01120c1fac0bb3a990c994c6d3862))
+
+
+### Miscellaneous
+
+* **deps:** bump flutter_lints from 1.0.4 to 2.0.1 ([#28](https://github.com/benthillerkus/betrayal/issues/28)) ([5b36e87](https://github.com/benthillerkus/betrayal/commit/5b36e87fec134668b0ad046d222ba8cffc90f126))
+
 ### [1.2.4](https://github.com/benthillerkus/betrayal/compare/v1.2.3...v1.2.4) (2022-05-16)
 
 
