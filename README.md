@@ -33,7 +33,6 @@ Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at run
 
 [![pub score](https://badges.bar/betrayal/pub%20points)](https://pub.dev/packages/betrayal/score)
 [![pub version (including pre-releases)](https://img.shields.io/pub/v/betrayal?include_prereleases)](https://pub.dev/packages/betrayal/versions)
-[![joke shield[^1]](https://img.shields.io/badge/supports-windows%202000*-blue)](#)
 [![pub publisher](https://img.shields.io/pub/publisher/betrayal)](https://pub.dev/publishers/bent.party/packages)
 
 - Control multiple tray icons
@@ -92,6 +91,9 @@ Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guid
 
 ## Overview
 
+<details>
+  <summary>Mermaid diagram of the architecture</summary>
+  
 ```mermaid
   graph LR;
     BetrayalPlugin o----o |connects via platform channel to| betrayal_plugin.cpp
@@ -114,4 +116,4 @@ Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guid
     click TrayIcon.hpp "https://github.com/benthillerkus/betrayal/blob/main/windows/tray_icon.hpp"
 ```
 
-[^1]: This is a lie. Flutter does not support Windows 2000. Betrayal.
+</details>
