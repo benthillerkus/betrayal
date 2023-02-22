@@ -40,7 +40,7 @@ class TrayIconWidget extends StatefulWidget {
 
   late final TrayIconImageDelegate? _delegate;
 
-  late final Map<WinEvent, _EventCallback> _callbacks;
+  late final Map<WinEvent, EventCallback> _callbacks;
 
   /// Manages a [TrayIcon] as a [StatefulWidget].
   ///
@@ -61,18 +61,18 @@ class TrayIconWidget extends StatefulWidget {
       this.visible = true,
       this.addToContext = true,
       this.tooltip,
-      _EventCallback onTap,
-      _EventCallback onSecondaryTap,
-      _EventCallback onTapDown,
-      _EventCallback onSecondaryTapDown,
-      _EventCallback onTertiaryTapDown,
-      _EventCallback onTapUp,
-      _EventCallback onSecondaryTapUp,
-      _EventCallback onTertiaryTapUp,
-      _EventCallback onDoubleTap,
-      _EventCallback onSecondaryDoubleTap,
-      _EventCallback onTertiaryDoubleTap,
-      _EventCallback onPointerMove,
+      EventCallback onTap,
+      EventCallback onSecondaryTap,
+      EventCallback onTapDown,
+      EventCallback onSecondaryTapDown,
+      EventCallback onTertiaryTapDown,
+      EventCallback onTapUp,
+      EventCallback onSecondaryTapUp,
+      EventCallback onTertiaryTapUp,
+      EventCallback onDoubleTap,
+      EventCallback onSecondaryDoubleTap,
+      EventCallback onTertiaryDoubleTap,
+      EventCallback onPointerMove,
       TrayIconImageDelegate? imageDelegate,
       ByteBuffer? imagePixels,
       String? imageAsset,
@@ -141,7 +141,7 @@ class _TrayIconWidgetState extends State<TrayIconWidget> {
 
   @override
   Widget build(BuildContext context) => widget.addToContext
-      ? _TrayIconHeritage(child: widget.child, icon: _icon)
+      ? _TrayIconHeritage(icon: _icon, child: widget.child)
       : widget.child;
 
   @override

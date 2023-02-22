@@ -85,7 +85,7 @@ class TrayIcon {
     if (kDebugMode) _plugin._noop();
   }
 
-  final __callbacks = <WinEvent, _EventCallback>{};
+  final __callbacks = <WinEvent, EventCallback>{};
 
   @override
   String toString() =>
@@ -156,7 +156,7 @@ class TrayIcon {
   void _ensureIsActive() {
     if (!_isActive) {
       throw StateError(
-          'TrayIcon is not active anymore.\n\nIt was disposed at:\n${_disposedAt.toString()}\nCurrent StackTrace:');
+          'TrayIcon is not active anymore.\n\nIt was disposed at:\n$_disposedAt\nCurrent StackTrace:');
     }
   }
 

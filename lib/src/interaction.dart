@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 part of 'plugin.dart';
 
 /// A data class to store events fired by native code.
@@ -36,7 +38,9 @@ class _TrayIconInteraction {
   }
 }
 
-typedef _EventCallback = void Function(Offset position)?;
+/// A callback run upon interacting with a tray icon.
+/// It can use the mouse `position` to spawn menus (for example).
+typedef EventCallback = void Function(Offset position)?;
 
 /// Gives the [TrayIcon] the ability to react to [WinEvent]s.
 ///
@@ -53,7 +57,7 @@ extension InteractionHandling on TrayIcon {
   ///
   /// It would be possible to also expose the [hWnd] and [WinEvent] as well (See [_TrayIconInteraction]).
   /// {@endtemplate}
-  set onTap(_EventCallback onTap) =>
+  set onTap(EventCallback onTap) =>
       _manageEventSubscription(WinEvent.select, onTap);
 
   /// {@template betrayal.interaction_handling.get}
@@ -61,97 +65,97 @@ extension InteractionHandling on TrayIcon {
   ///
   /// If `null`, this [WinEvent] can be skipped.
   /// {@endtemplate}
-  _EventCallback get onTap => _callbacks[WinEvent.select];
+  EventCallback get onTap => _callbacks[WinEvent.select];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onSecondaryTap(_EventCallback onSecondaryTap) =>
+  set onSecondaryTap(EventCallback onSecondaryTap) =>
       _manageEventSubscription(WinEvent.contextMenu, onSecondaryTap);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onSecondaryTap => _callbacks[WinEvent.contextMenu];
+  EventCallback get onSecondaryTap => _callbacks[WinEvent.contextMenu];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onTapDown(_EventCallback onTapDown) =>
+  set onTapDown(EventCallback onTapDown) =>
       _manageEventSubscription(WinEvent.leftButtonDown, onTapDown);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onTapDown => _callbacks[WinEvent.leftButtonDown];
+  EventCallback get onTapDown => _callbacks[WinEvent.leftButtonDown];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onSecondaryTapDown(_EventCallback onSecondaryTapDown) =>
+  set onSecondaryTapDown(EventCallback onSecondaryTapDown) =>
       _manageEventSubscription(WinEvent.rightButtonDown, onSecondaryTapDown);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onSecondaryTapDown => _callbacks[WinEvent.rightButtonDown];
+  EventCallback get onSecondaryTapDown => _callbacks[WinEvent.rightButtonDown];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onTertiaryTapDown(_EventCallback onTertiaryTapDown) =>
+  set onTertiaryTapDown(EventCallback onTertiaryTapDown) =>
       _manageEventSubscription(WinEvent.middleButtonDown, onTertiaryTapDown);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onTertiaryTapDown => _callbacks[WinEvent.middleButtonDown];
+  EventCallback get onTertiaryTapDown => _callbacks[WinEvent.middleButtonDown];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onTapUp(_EventCallback onTapUp) =>
+  set onTapUp(EventCallback onTapUp) =>
       _manageEventSubscription(WinEvent.leftButtonUp, onTapUp);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onTapUp => _callbacks[WinEvent.leftButtonUp];
+  EventCallback get onTapUp => _callbacks[WinEvent.leftButtonUp];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onSecondaryTapUp(_EventCallback onSecondaryTapUp) =>
+  set onSecondaryTapUp(EventCallback onSecondaryTapUp) =>
       _manageEventSubscription(WinEvent.rightButtonUp, onSecondaryTapUp);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onSecondaryTapUp => _callbacks[WinEvent.rightButtonUp];
+  EventCallback get onSecondaryTapUp => _callbacks[WinEvent.rightButtonUp];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onTertiaryTapUp(_EventCallback onTertiaryTapUp) =>
+  set onTertiaryTapUp(EventCallback onTertiaryTapUp) =>
       _manageEventSubscription(WinEvent.middleButtonUp, onTertiaryTapUp);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onTertiaryTapUp => _callbacks[WinEvent.middleButtonUp];
+  EventCallback get onTertiaryTapUp => _callbacks[WinEvent.middleButtonUp];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onDoubleTap(_EventCallback onDoubleTap) =>
+  set onDoubleTap(EventCallback onDoubleTap) =>
       _manageEventSubscription(WinEvent.select, onDoubleTap);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onDoubleTap => _callbacks[WinEvent.select];
+  EventCallback get onDoubleTap => _callbacks[WinEvent.select];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onSecondaryDoubleTap(_EventCallback onSecondaryDoubleTap) =>
+  set onSecondaryDoubleTap(EventCallback onSecondaryDoubleTap) =>
       _manageEventSubscription(
           WinEvent.rightButtonDoubleClick, onSecondaryDoubleTap);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onSecondaryDoubleTap =>
+  EventCallback get onSecondaryDoubleTap =>
       _callbacks[WinEvent.rightButtonDoubleClick];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onTertiaryDoubleTap(_EventCallback onTertiaryDoubleTap) =>
+  set onTertiaryDoubleTap(EventCallback onTertiaryDoubleTap) =>
       _manageEventSubscription(
           WinEvent.middleButtonDoubleClick, onSecondaryDoubleTap);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onTertiaryDoubleTap =>
+  EventCallback get onTertiaryDoubleTap =>
       _callbacks[WinEvent.middleButtonDoubleClick];
 
   /// {@macro betrayal.interaction_handling.set}
-  set onPointerMove(_EventCallback onPointerMove) =>
+  set onPointerMove(EventCallback onPointerMove) =>
       _manageEventSubscription(WinEvent.mouseMove, onPointerMove);
 
   /// {@macro betrayal.interaction_handling.get}
-  _EventCallback get onPointerMove => _callbacks[WinEvent.mouseMove];
+  EventCallback get onPointerMove => _callbacks[WinEvent.mouseMove];
 
-  set _callbacks(Map<WinEvent, _EventCallback> _callbacks) {
+  set _callbacks(Map<WinEvent, EventCallback> _callbacks) {
     _callbacks.forEach(_manageEventSubscription);
   }
 
-  Map<WinEvent, _EventCallback> get _callbacks => __callbacks;
+  Map<WinEvent, EventCallback> get _callbacks => __callbacks;
 
   Future<void> _manageEventSubscription(
-      WinEvent event, _EventCallback callback) async {
+      WinEvent event, EventCallback callback) async {
     _ensureIsActive();
     await _makeRealIfNeeded();
     final oldCallback = __callbacks[event];

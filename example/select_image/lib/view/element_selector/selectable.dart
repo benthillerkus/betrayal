@@ -157,7 +157,7 @@ class _SelectableState extends State<Selectable> with TickerProviderStateMixin {
           offset: Offset(
               0,
               widget.dimension / 2 +
-                  (theme.textTheme.caption?.fontSize ?? 14) / 2 +
+                  (theme.textTheme.bodySmall?.fontSize ?? 14) / 2 +
                   8),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Opacity(
@@ -177,7 +177,7 @@ class _SelectableState extends State<Selectable> with TickerProviderStateMixin {
                 child: EditableText(
                   readOnly: !_isSelected,
                   textAlign: TextAlign.center,
-                  style: theme.textTheme.caption!,
+                  style: theme.textTheme.bodySmall!,
                   showSelectionHandles: true,
                   textScaleFactor: 1.5,
                   keyboardAppearance: theme.brightness,
