@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/benthillerkus/betrayal/compare/v1.2.5...v2.0.0) (2023-02-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* bumps minimum Flutter version to 3.7 and Dart to 2.19
+
+### Miscellaneous
+
+* update deps ([b8f79ad](https://github.com/benthillerkus/betrayal/commit/b8f79ad843d10873eb43b642a22f7e6fa8fe7df3))
+
 ## [1.2.5](https://github.com/benthillerkus/betrayal/compare/v1.2.4...v1.2.5) (2022-07-27)
 
 
