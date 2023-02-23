@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.4](https://github.com/benthillerkus/betrayal/compare/v1.3.3...v1.3.4) (2023-02-23)
+
+
+### Meta
+
+* **publish:** use on create? ([fe0194d](https://github.com/benthillerkus/betrayal/commit/fe0194dedb36f56aa00fbe99a9ad51831094e425))
+
+
+### Miscellaneous
+
+* **readme:** fix broken pub score badge ([0915bce](https://github.com/benthillerkus/betrayal/commit/0915bcecbeee49855815ad4bfb36a694ba6516c7))
+
 ## [1.3.3](https://github.com/benthillerkus/betrayal/compare/v1.3.2...v1.3.3) (2023-02-23)
 
 
