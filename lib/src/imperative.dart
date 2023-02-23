@@ -149,7 +149,7 @@ class TrayIcon {
   /// Ensures the icon has been constructed in native code.
   ///
   /// This is deferred until usage, because constructors can't be `async`.
-  Future<void> _makeRealIfNeeded() async {
+  Future<void> _ensureIsReal() async {
     if (_makingReal) {
       final completer = Completer();
       _waitingUntilMadeReal.addLast(completer);
@@ -184,7 +184,7 @@ class TrayIcon {
   Future<void> show() async {
     _ensureIsActive();
     if (_isVisible) return;
-    await _makeRealIfNeeded();
+    await _ensureIsReal();
     await _plugin.showIcon(_id);
     _isVisible = true;
   }
@@ -205,7 +205,7 @@ class TrayIcon {
   /// Sets the tooltip text. If [message] is `null`, the tooltip is removed.
   Future<void> setTooltip(String? message) async {
     _ensureIsActive();
-    await _makeRealIfNeeded();
+    await _ensureIsReal();
     if (message != null) {
       await _plugin.setTooltip(_id, message);
     } else {
@@ -239,7 +239,7 @@ class TrayIcon {
     WinIcon? winIcon,
   }) async {
     _ensureIsActive();
-    await _makeRealIfNeeded();
+    await _ensureIsReal();
 
     if (delegate != null) {
     } else if (pixels != null) {

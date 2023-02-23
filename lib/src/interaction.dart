@@ -157,7 +157,7 @@ extension InteractionHandling on TrayIcon {
   Future<void> _manageEventSubscription(
       WinEvent event, EventCallback callback) async {
     _ensureIsActive();
-    await _makeRealIfNeeded();
+    await _ensureIsReal();
     final oldCallback = __callbacks[event];
     if (callback == oldCallback) return;
     if (callback != null && oldCallback == null) {
