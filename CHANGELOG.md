@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.1](https://github.com/benthillerkus/betrayal/compare/v1.3.0...v1.3.1) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ci:** specify version of publish workflow ([6968e3c](https://github.com/benthillerkus/betrayal/commit/6968e3c8e1b09237fa6b17943e157eb000070cd4))
+* prevent (unproblematic) race condition when realizing ([c6aed27](https://github.com/benthillerkus/betrayal/commit/c6aed27b0be6fb9719d18c666120c4ae28b716ab))
+
+
+### Documentation
+
+* remove example lockfiles ([2eb4e06](https://github.com/benthillerkus/betrayal/commit/2eb4e0688ceb6d265637a834e927a9681c7ffc7b))
+
+
+### Miscellaneous
+
+* include id in error message ([a8743d5](https://github.com/benthillerkus/betrayal/commit/a8743d508e0cf45a838263ff1d770b6b7aa09d88))
+
 ## [1.3.0](https://github.com/benthillerkus/betrayal/compare/v1.2.5...v1.3.0) (2023-02-23)
 
 
