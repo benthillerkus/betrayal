@@ -156,17 +156,20 @@ class TrayIcon {
       await completer.future;
     }
     _makingReal = true;
-    if (!_isReal) {
-      await _plugin.addTray(_id);
-      _isReal = true;
-      final njobs = _waitingUntilMadeReal.length;
-      while (_waitingUntilMadeReal.isNotEmpty) {
-        _waitingUntilMadeReal.removeFirst().complete();
+    try {
+      if (!_isReal) {
+        await _plugin.addTray(_id);
+        _isReal = true;
+        final njobs = _waitingUntilMadeReal.length;
+        while (_waitingUntilMadeReal.isNotEmpty) {
+          _waitingUntilMadeReal.removeFirst().complete();
+        }
+        _logger
+            .fine("made real (created in native code). unblocked $njobs tasks");
       }
-      _logger
-          .fine("made real (created in native code). unblocked $njobs tasks");
+    } finally {
+      _makingReal = false;
     }
-    _makingReal = false;
   }
 
   /// Tests if this instance has already been disposed of.
