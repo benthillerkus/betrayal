@@ -2,7 +2,6 @@
 /// However, note that trying to interfere with icons managed by a [TrayIcon]´
 /// will break stuff.
 import 'dart:async';
-import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -10,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+import 'package:synchronized/extension.dart';
+import 'package:synchronized/synchronized.dart';
 
 import 'image.dart';
 import 'stock_icon.dart';
