@@ -31,7 +31,7 @@ Manage multiple icons 👨‍👩‍👦‍👦,<br>generate their images at run
 
 ## Features
 
-[![pub score](https://badges.bar/betrayal/pub%20points)](https://pub.dev/packages/betrayal/score)
+[![pub score](https://img.shields.io/pub/points/betrayal)](https://pub.dev/packages/betrayal/score)
 [![pub version (including pre-releases)](https://img.shields.io/pub/v/betrayal?include_prereleases)](https://pub.dev/packages/betrayal/versions)
 [![pub publisher](https://img.shields.io/pub/publisher/betrayal)](https://pub.dev/publishers/bent.party/packages)
 
