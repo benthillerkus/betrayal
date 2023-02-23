@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
-import 'package:synchronized/extension.dart';
 import 'package:synchronized/synchronized.dart';
 
 import 'image.dart';
