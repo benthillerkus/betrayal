@@ -3,7 +3,7 @@ name: publish to pub.dev
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
   publishing:
