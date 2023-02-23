@@ -156,7 +156,7 @@ class TrayIcon {
   void _ensureIsActive() {
     if (!_isActive) {
       throw StateError(
-          'TrayIcon is not active anymore.\n\nIt was disposed at:\n$_disposedAt\nCurrent StackTrace:');
+          'TrayIcon${_id.hex} is not active anymore.\n\nIt was disposed at:\n$_disposedAt\nCurrent StackTrace:');
     }
   }
 
