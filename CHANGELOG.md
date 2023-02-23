@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.2](https://github.com/benthillerkus/betrayal/compare/v1.3.1...v1.3.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* ensure `_makingReal` guard is always unlocked ([7aceb56](https://github.com/benthillerkus/betrayal/commit/7aceb560d172c2b129db47b50ce566a636b244ef))
+* replace homegrown mutex with the `synchronized` package ([6ec3702](https://github.com/benthillerkus/betrayal/commit/6ec37029806b7f5dc10263324ff735e43afe38eb))
+
+
+### Miscellaneous
+
+* rename `_makeRealIfNeeded` into `_ensureIsReal` ([a0bf306](https://github.com/benthillerkus/betrayal/commit/a0bf306d2f945d95ad19930fd7fb6a6510a82ea3))
+
 ## [1.3.1](https://github.com/benthillerkus/betrayal/compare/v1.3.0...v1.3.1) (2023-02-23)
 
 
