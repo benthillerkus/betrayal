@@ -141,15 +141,32 @@ class TrayIcon {
     _logger.fine("disposed", null, _disposedAt);
   }
 
+  /// Mutex guard for [_isReal]
+  bool _makingReal = false;
+
+  final _waitingUntilMadeReal = Queue<Completer<void>>();
+
   /// Ensures the icon has been constructed in native code.
   ///
   /// This is deferred until usage, because constructors can't be `async`.
   Future<void> _makeRealIfNeeded() async {
+    if (_makingReal) {
+      final completer = Completer();
+      _waitingUntilMadeReal.addLast(completer);
+      await completer.future;
+    }
+    _makingReal = true;
     if (!_isReal) {
       await _plugin.addTray(_id);
       _isReal = true;
-      _logger.fine("made real (created in native code)");
+      final njobs = _waitingUntilMadeReal.length;
+      while (_waitingUntilMadeReal.isNotEmpty) {
+        _waitingUntilMadeReal.removeFirst().complete();
+      }
+      _logger
+          .fine("made real (created in native code). unblocked $njobs tasks");
     }
+    _makingReal = false;
   }
 
   /// Tests if this instance has already been disposed of.

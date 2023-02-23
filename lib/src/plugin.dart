@@ -2,6 +2,7 @@
 /// However, note that trying to interfere with icons managed by a [TrayIcon]´
 /// will break stuff.
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 
