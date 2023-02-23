@@ -95,11 +95,11 @@ class _MyAppState extends State<MyApp> {
                 scale: _icons.isEmpty ? 0 : sqrt(sqrt(_icons.length + 1)),
                 curve: Curves.easeOutBack,
                 child: SizedBox(
+                  width: 32,
+                  height: 32,
                   child: CustomPaint(
                     painter: DebugGraphic(_icons.length),
                   ),
-                  width: 32,
-                  height: 32,
                 ),
               ),
             ),

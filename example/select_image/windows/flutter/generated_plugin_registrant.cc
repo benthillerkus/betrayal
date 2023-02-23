@@ -8,6 +8,7 @@
 
 #include <betrayal/betrayal_plugin.h>
 #include <contextual_menu/contextual_menu_plugin.h>
+#include <screen_retriever/screen_retriever_plugin.h>
 #include <window_manager/window_manager_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
@@ -15,6 +16,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("BetrayalPlugin"));
   ContextualMenuPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ContextualMenuPlugin"));
+  ScreenRetrieverPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ScreenRetrieverPlugin"));
   WindowManagerPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("WindowManagerPlugin"));
 }

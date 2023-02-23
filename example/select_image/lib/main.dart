@@ -7,7 +7,7 @@ import 'package:contextual_menu/contextual_menu.dart';
 import 'package:select_image/view/view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:window_manager/window_manager.dart';
 
@@ -15,8 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
 
-  WindowOptions windowOptions = WindowOptions(
-    backgroundColor: Colors.green,
+  WindowOptions windowOptions = const WindowOptions(
     skipTaskbar: false,
   );
   windowManager.waitUntilReadyToShow(windowOptions, windowManager.show);
@@ -129,13 +128,13 @@ class _HomeScreenState extends State<HomeScreen> {
             iconSource = TrayIconImageDelegate.fromPath(path: path);
             break;
           case "png":
-            var resized = await compute((Tuple<String, Size> arg) {
+            final resized = await compute((Tuple<String, Size> arg) {
               final path = arg.first;
               final size = arg.second;
-              var org = img.decodePng(File(path).readAsBytesSync());
-              var resized = img.copyResize(org!,
-                  height: size.height.toInt(),
-                  width: size.width.toInt(),
+              final org = img.decodePng(File(path).readAsBytesSync());
+              final resized = img.copyResize(org!,
+                  height: size.height.round(),
+                  width: size.width.round(),
                   interpolation: img.Interpolation.average);
               return resized.getBytes().buffer;
             }, Tuple(path, TrayIcon.preferredImageSize));
