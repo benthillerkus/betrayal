@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/benthillerkus/betrayal/compare/v1.3.2...v1.3.3) (2023-02-23)
+
+
+### Miscellaneous
+
+* remove unused import ([3855762](https://github.com/benthillerkus/betrayal/commit/3855762be9e3a0ea928bec71f303da93b919b401))
+
 ## [1.3.2](https://github.com/benthillerkus/betrayal/compare/v1.3.1...v1.3.2) (2023-02-23)
 
 
