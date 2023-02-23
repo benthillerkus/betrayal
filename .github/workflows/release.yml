@@ -25,7 +25,9 @@ jobs:
               { "type": "feat", "section": "Features", "hidden": false },
               { "type": "fix", "section": "Bug Fixes", "hidden": false },
               { "type": "chore", "section": "Miscellaneous", "hidden": false },
-              { "type": "refactor","section": "Miscellaneous", "hidden": false },
-              { "type": "ci","section": "Miscellaneous", "hidden": true },
+              { "type": "refactor", "section": "Miscellaneous", "hidden": false },
+              { "type": "style", "section": "Miscellaneous", "hidden": false },
+              { "type": "misc", "section": "Miscellaneous", "hidden": false },
+              { "type": "ci","section": "Meta", "hidden": true },
               { "type": "docs", "section": "Documentation", "hidden": false }
             ]
