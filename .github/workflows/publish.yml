@@ -1,18 +1,17 @@
 name: publish to pub.dev
 
 on:
-  create:
-    tags:
-      - 'v*'
+  push:
+    branches:
+      - main
+    paths:
+      - 'version.txt'
 
 jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v2 # required!
-
-      - name: ">> Dart package <<"
-        uses: k-paxian/dart-package-publisher@master
+      - uses: actions/checkout@v2
+      - uses: k-paxian/dart-package-publisher@master
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
