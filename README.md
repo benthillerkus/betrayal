@@ -87,6 +87,7 @@ Don't hesitate to [file an issue](https://github.com/benthillerkus/betrayal/issu
 ## Style
 
 Use [conventionalcommits.org/en/v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) for commits. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;see [release.yml](https://github.com/benthillerkus/betrayal/blob/main/.github/workflows/release.yml) for a list of currently allowed commit types <br>
 Use [dart.dev/guides/language/effective-dartdocumentation](https://dart.dev/guides/language/effective-dart/documentation) for docs.
 
 ## Overview
