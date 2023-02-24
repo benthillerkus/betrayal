@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.7](https://github.com/benthillerkus/betrayal/compare/v1.3.6...v1.3.7) (2023-02-24)
+
+
+### Bug Fixes
+
+* broken ID generation lead to first icon always being 0x0000 ([1ba0991](https://github.com/benthillerkus/betrayal/commit/1ba0991399d0b168dfbd5348de72272895c8bd16)), closes [#30](https://github.com/benthillerkus/betrayal/issues/30)
+* remove `mouseFirst` from `win_event` ([55431e9](https://github.com/benthillerkus/betrayal/commit/55431e91060e9f67592f83945751a1fceafcf6c3))
+* respond to `clear_all()` from plugin ([00aa236](https://github.com/benthillerkus/betrayal/commit/00aa2369efce2449260145791e7e5645ff3ddbbc)), closes [#31](https://github.com/benthillerkus/betrayal/issues/31)
+
 ## [1.3.6](https://github.com/benthillerkus/betrayal/compare/v1.3.5...v1.3.6) (2023-02-24)
 
 

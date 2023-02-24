@@ -2,7 +2,7 @@ name: betrayal
 description: > 
   A plugin to setup custom system tray icons 
   through composable widgets.
-version: 1.3.6 # x-release-please-version
+version: 1.3.7 # x-release-please-version
 homepage: https://betrayal.bent.party/
 repository: https://github.com/benthillerkus/betrayal
 issue_tracker: https://github.com/benthillerkus/betrayal/issues
