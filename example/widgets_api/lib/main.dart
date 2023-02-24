@@ -101,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: ListView.builder(
                                   itemExtent: 75,
                                   scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
                                   itemCount: StockIcon.values.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
