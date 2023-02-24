@@ -40,7 +40,7 @@ namespace Betrayal
     int window_proc_id = -1;
     IconManager icons;
 
-    // Called when a method is called on this plugin's channel from Dart.
+    // Called by the Windows Event Loop
     std::optional<LRESULT> BetrayalPlugin::HandleWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
       std::optional<LRESULT> result;
@@ -98,6 +98,7 @@ namespace Betrayal
 #define WITH_ID const int id = std::get<int>(args.at(flutter::EncodableValue("id")));
 #define WITH_ARGS_HWND_ID WITH_ARGS WITH_HWND WITH_ID
 
+    // Called when a method is called on this plugin's channel from Dart.
     void HandleMethodCall(
         const flutter::MethodCall<flutter::EncodableValue> &method_call,
         std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result)
@@ -106,6 +107,7 @@ namespace Betrayal
       if (method.compare("reset") == 0)
       {
         icons.clear_all();
+        result->Success(flutter::EncodableValue(0));
       }
       else if (method.compare("getSystemMetrics") == 0)
       {

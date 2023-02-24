@@ -146,6 +146,8 @@ class BetrayalPlugin {
               "message: 10b$message ${message.hex}, id: ${id.hex}, event: ${code.toRadixString(16)}, position: $position}, hWnd: $hWnd");
         }
         break;
+      default:
+        _logger.warning("asked to call unknown method by plugin!");
     }
   }
 
