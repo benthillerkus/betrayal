@@ -27,11 +27,10 @@ class TrayIcon {
   /// to identify the icon and address it
   /// when it has been clicked.
   static Id _newId() {
-    Id temp = 0;
-    while (_allIcons.containsKey(temp)) {
-      temp = _random.nextInt(_kMaximumId - _kMinimumId);
+    while (true) {
+      Id id = _random.nextInt(_kMaximumId - _kMinimumId);
+      if (!_allIcons.containsKey(id)) return id;
     }
-    return temp;
   }
 
   /// The id used by Windows to distinguish this icon.
