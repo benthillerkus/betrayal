@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.5](https://github.com/benthillerkus/betrayal/compare/v1.3.4...v1.3.5) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** run on version.txt change ([030c430](https://github.com/benthillerkus/betrayal/commit/030c4301a2c882d3de90ca3e2291f6e3e30f6bfa))
+
+
+### Documentation
+
+* **example:** add bouncing scroll physics ([4b59f32](https://github.com/benthillerkus/betrayal/commit/4b59f32e4cb47c0a09d20fe0dd7e217b529b980e))
+
 ## [1.3.4](https://github.com/benthillerkus/betrayal/compare/v1.3.3...v1.3.4) (2023-02-23)
 
 
