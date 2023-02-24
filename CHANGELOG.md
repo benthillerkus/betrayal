@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.6](https://github.com/benthillerkus/betrayal/compare/v1.3.5...v1.3.6) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ci:** re-add refresh token ([e904fcf](https://github.com/benthillerkus/betrayal/commit/e904fcf5c28d68c4f5ce29ef7a90c6398a2640e4))
+
+
+### Documentation
+
+* just add some alibi stuff to trigger `release-please` again ([be5c4ce](https://github.com/benthillerkus/betrayal/commit/be5c4cef592524695f2d913a968a9ec8fa654a88))
+
 ## [1.3.5](https://github.com/benthillerkus/betrayal/compare/v1.3.4...v1.3.5) (2023-02-24)
 
 
