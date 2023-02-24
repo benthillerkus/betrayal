@@ -132,21 +132,15 @@ class BetrayalPlugin {
         final Id id = args["id"];
 
         try {
-          if (code == WinEvent.mouseFirst.code && id == 0) {
-            final icon = TrayIcon._allIcons[message - 0x0400]!;
-            icon._logger.info("added to tray at $position");
-          } else {
-            final icon = TrayIcon._allIcons[id]!;
-            final event = fromCode(code);
-            final eventRaw =
-                primaryAndSecondarySwapped ? event.inverted : event;
-            icon._handleInteraction(_TrayIconInteraction(
-                event: event,
-                rawEvent: eventRaw,
-                position: position,
-                id: id,
-                hWnd: hWnd));
-          }
+          final icon = TrayIcon._allIcons[id]!;
+          final event = fromCode(code);
+          final eventRaw = primaryAndSecondarySwapped ? event.inverted : event;
+          icon._handleInteraction(_TrayIconInteraction(
+              event: event,
+              rawEvent: eventRaw,
+              position: position,
+              id: id,
+              hWnd: hWnd));
         } on Error {
           _logger.warning(
               "message: 10b$message ${message.hex}, id: ${id.hex}, event: ${code.toRadixString(16)}, position: $position}, hWnd: $hWnd");

@@ -11,9 +11,6 @@ enum WinEvent {
   contextMenu,
 
   /// `0x0200`
-  mouseFirst,
-
-  /// `0x0200`
   mouseMove,
 
   /// `0x0201` equivalent to `onTapDown`
@@ -90,7 +87,6 @@ extension EventCodes on WinEvent {
         return 0x0400;
       case WinEvent.contextMenu:
         return 0x007b;
-      case WinEvent.mouseFirst:
       case WinEvent.mouseMove:
         return 0x0200;
       case WinEvent.leftButtonDown:
